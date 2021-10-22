@@ -7,7 +7,7 @@ using namespace std;
 
 class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 	
-	private:
+	protected:
 
 		defOStepperMotorDriver* stepperMotorDriver;
 	

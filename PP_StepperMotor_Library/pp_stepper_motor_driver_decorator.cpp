@@ -6,7 +6,7 @@ defOStepperMotorDriverDecorator::defOStepperMotorDriverDecorator(defOStepperMoto
 	
 }
 
-//ustawienie maski powodującej obrót silnika o jeden krok do tylu
+
 void defOStepperMotorDriverDecorator::rotateBackwards(){	
 
 	stepperMotorDriver->rotateBackwards();
