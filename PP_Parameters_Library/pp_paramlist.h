@@ -43,4 +43,4 @@ public:
     void checksParamsValue();
 };
 
-#endif // COORDINATES_WEDM_H
+#endif 

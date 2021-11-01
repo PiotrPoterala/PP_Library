@@ -20,7 +20,7 @@ private:
 		defOParam* baseCoord;
 	
 	public:
-		defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, defOParam* pCoord, defOParam* bCoord, int corrUM=0);	
+		defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParam*> pCoord, defOParam* bCoord, int corrUM=0);	
 	
 		virtual void rotateForward();
 		virtual void rotateBackwards();

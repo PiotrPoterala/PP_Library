@@ -9,9 +9,12 @@ class defOStepperMotorDriver{
 	
 	
 	public:
-		defOStepperMotorDriver(){};	
-			
+		char acronim;	
 		int signalsMask;
+		int counter;
+	
+		defOStepperMotorDriver(){acronim='0';};	
+			
 
 		virtual void rotateForward() =0;
 		virtual void rotateBackwards() =0;

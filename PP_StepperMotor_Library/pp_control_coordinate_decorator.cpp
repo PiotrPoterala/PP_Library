@@ -1,8 +1,11 @@
 #include "pp_control_coordinate_decorator.h"
 
-defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, defOParam* pCoord, defOParam* bCoord, int corrUM):
-																															defOStepperMotorDriverDecorator(stepMotorDriver), phyCoord(pCoord), baseCoord(bCoord){
+defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParam*> pCoord, defOParam* bCoord, int corrUM):
+																															defOStepperMotorDriverDecorator(stepMotorDriver), baseCoord(bCoord){
 	
+		acronim=pCoord.first;		
+		phyCoord=pCoord.second;																																
+																																
 	if(corrUM>0){
 		correctionUM=corrUM;
 		typeOfCorrection=ADD_STEP;
