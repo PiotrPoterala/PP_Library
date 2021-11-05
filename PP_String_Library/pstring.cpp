@@ -26,10 +26,10 @@ PString::PString(string &str):string (str)
 
 
 double PString::toDouble(bool *ok){
-		uint32_t character=0;
+		unsigned int character=0;
 		bool comma=false;
 		int decimal_place=0;
-		int32_t znak=1;
+		int znak=1;
 		double result=0;
 
 		for(uint32_t i=0; i<size(); i++){
@@ -103,16 +103,15 @@ uint32_t PString::charToInt(char sign){
 				}
 }
 
-double PString::findValueAfterAcronim(char acronim, int defValue, int precision){
-        uint32_t i=0;
-        PString line=PString();
-        double value=0;
+string PString::findDataAfterAcronim(char acronim){
+        int i=0;
+        string line;
 
 				i=find(acronim);
 
 				if(i!=string::npos){
             i++;
-            for(uint32_t j=0; j<size(); j++){
+            for(int j=0; j<size(); j++){
                 if((at(i)>='0' && at(i)<='9') || at(i)=='-' || at(i)=='+' || at(i)=='.'){
                     line+=at(i);
                     i++;
@@ -120,18 +119,55 @@ double PString::findValueAfterAcronim(char acronim, int defValue, int precision)
 
             }
         }
+ //       if(line.empty())return defValue;
+				
+				
+//        if(precision>0){
+//            double val=0;
+//            val=line.toDouble();
+
+//            value=static_cast<int>(val*pow(10.0, precision));
+//        }else{
+//            value=line.toInt();
+//        }
+
+        return line;
+}
+
+double PString::findValueAfterAcronim(char acronim, double defValue){
+        PString line=findDataAfterAcronim(acronim);
+				double val=0;
+
         if(line.empty())return defValue;
+				val=line.toDouble();
+				
+//        if(precision>0){
+//            double val=0;
+//            val=line.toDouble();
 
-        if(precision>0){
-            double val=0;
-            val=line.toDouble();
+//            value=static_cast<int>(val*pow(10.0, precision));
+//        }else{
+//            value=line.toInt();
+//        }
 
-            value=static_cast<int>(val*pow(10.0, precision));
-        }else{
-            value=line.toInt();
-        }
+        return val;
+}
 
-        return value;
+map<char, double> PString::findValuesAfterAcronims(){
+				PString data=0;
+				map<char, double> valuesMap;
+	
+				for(int i='a'; i<'z'; i++){
+					
+					data=findDataAfterAcronim(i);
+					if(!data.empty()){
+						valuesMap.insert(pair<char, double>(i, data.toDouble()));
+						
+					}
+					
+				}
+
+        return valuesMap;
 }
 
 vector<string> PString::split(char sep){
@@ -139,7 +175,7 @@ vector<string> PString::split(char sep){
 		vector<string> stringList;
 		string data;
   
-    for(uint32_t i=0; i<size(); i++){
+    for(int i=0; i<size(); i++){
 
         if(at(i)==sep){
           j++;

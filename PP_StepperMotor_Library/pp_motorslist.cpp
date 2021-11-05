@@ -21,6 +21,12 @@ defOStepperMotorDriver* defOMotorsList::getMotor(char acronim){
 	return nullptr;
 }
 
+vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(){
+
+	return motors.begin();
+	
+}
+
 
 vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(char acronim){
 
@@ -32,4 +38,14 @@ vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(char acron
 	}
 	
 	return it;
+}
+
+void defOMotorsList::clearCounters(){
+
+	vector<defOStepperMotorDriver*>::iterator it;
+	
+	for(it=motors.begin(); it!=motors.end(); ++it){
+		(*it)->counter=0;
+	}
+	
 }

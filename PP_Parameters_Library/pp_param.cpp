@@ -3,7 +3,6 @@
 defOParam::defOParam(string pname, int pvalue, int pdefaultValue, int pprecision, int punit, int plowerLimit, int pupperLimit)
 {
     name=pname;
-  //  acronim=pacronim;
     value=pvalue;
     defaultValue=pdefaultValue;
     lowerLimit=plowerLimit;
@@ -17,7 +16,6 @@ defOParam::defOParam(string pname, int pvalue, int pdefaultValue, int pprecision
 defOParam::defOParam(defOParam &param){
 
     name=param.name;
-//    acronim=param.acronim;
     value=param.value;
     defaultValue=param.defaultValue;
     lowerLimit=param.lowerLimit;
@@ -48,11 +46,6 @@ int & defOParam::getRvalue(void){
     return value;
 }
 
-
-//char defOParam::getAcronim(void){
-
-//    return acronim;
-//}
 
 int defOParam::getLowerLimit(void){
 

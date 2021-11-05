@@ -207,7 +207,7 @@ void defOParamList::getParamsFromString(PString *data){
    int val=0;
 
 	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
-		    val=(*it).second->checkRange(data->findValueAfterAcronim((*it).first, (*it).second->getValue(), (*it).second->getUnit()));
+		    val=(*it).second->checkRange(data->findValueAfterAcronim((*it).first, (*it).second->getValue())*pow(10, (*it).second->getUnit()));
         val-=val%(*it).second->getPrecision();
         (*it).second->setValue(val);
 	}

@@ -18,7 +18,9 @@ public:
 
 		vector<defOStepperMotorDriver*>* getMotors(void);
     defOStepperMotorDriver* getMotor(char acronim);
+		vector<defOStepperMotorDriver*>::iterator getIterator();
 		vector<defOStepperMotorDriver*>::iterator getIterator(char acronim);
+		void clearCounters();
 
 };
 

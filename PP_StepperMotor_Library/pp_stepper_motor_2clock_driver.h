@@ -23,7 +23,7 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriver{
 		vector<int> maskMicroStep={2,2,2,2};
 	
 	public:
-		defOStepperMotor2clockDriver(int tOfStep=FULL_STEP);	
+		defOStepperMotor2clockDriver(int paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep=FULL_STEP);	
 	
 		void setTypeOfStep(int tOfStep);
 	
