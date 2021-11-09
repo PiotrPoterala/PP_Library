@@ -1,7 +1,7 @@
 #include "pp_rtos_uart_queue.h"
 
 
-defOUartQueues::defOUartQueues(USART_TypeDef* UARTx):port(UARTx){
+defOUartQueues::defOUartQueues(){
 
 
 }

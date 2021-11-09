@@ -9,14 +9,13 @@
 
 	class defOUartQueues{
 		
-		protected:
-			USART_TypeDef* port;	
+		protected:	
 		
 			bool getStringFlag;
 			string receiveString;
 		
 		public:
-			defOUartQueues(USART_TypeDef* UARTx);
+			defOUartQueues();
 		
 			virtual void putStringToSendQueueAndStartSend(string &data)=0;
 			virtual int sendSignFromSendQueue()=0;

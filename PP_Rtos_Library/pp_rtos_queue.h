@@ -3,6 +3,7 @@
 
   #include "stm32xx.h"
 
+	#include <vector>
 	
 	using namespace std;
 
@@ -10,10 +11,10 @@
 		
 		
 		public:
-			defOTaskQueues();
+			defOTaskQueues(){};
 
 			virtual void xQueueSendToBackWithSemaphore(unsigned int data)=0;
-			virtual void xQueueSendMapToBackWithSemaphore(map<char, int> data)=0;
+			virtual void xQueueSendConteinerToBackWithSemaphore(vector<int> &data)=0;
 		
 	};
 

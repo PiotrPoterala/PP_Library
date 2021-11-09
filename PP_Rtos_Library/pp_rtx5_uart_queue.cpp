@@ -1,11 +1,10 @@
 #include "pp_rtx5_uart_queue.h"
 
 
-defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx, osMessageQueueId_t qSend, osMessageQueueId_t qReceive):defOUartQueues(UARTx), sendQueue(qSend), receiveQueue(qReceive){
+defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx, osMessageQueueId_t qSend, osMessageQueueId_t qReceive):port(UARTx), sendQueue(qSend), receiveQueue(qReceive){
 
 
 }
-
 
 
 void defOUartRTX5queues::putStringToSendQueueAndStartSend(string &data){
@@ -20,6 +19,7 @@ void defOUartRTX5queues::putStringToSendQueueAndStartSend(string &data){
 
 
 }
+
 
 
 int defOUartRTX5queues::sendSignFromSendQueue(){

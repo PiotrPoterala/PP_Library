@@ -12,6 +12,7 @@
 class defOUartRTX5queues : public defOUartQueues{
 		
 		private:
+			USART_TypeDef* port;
 			osMessageQueueId_t receiveQueue;
 			osMessageQueueId_t sendQueue;
 		
