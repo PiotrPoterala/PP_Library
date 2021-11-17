@@ -16,13 +16,20 @@ class defOUartRTX5queues : public defOUartQueues{
 			osMessageQueueId_t receiveQueue;
 			osMessageQueueId_t sendQueue;
 		
+			bool getStringFlag=false;
+			string receiveString="\0";
+		
 		public:
-			defOUartRTX5queues(USART_TypeDef* UARTx, osMessageQueueId_t qSend, osMessageQueueId_t qReceive);
-	
-			virtual void putStringToSendQueueAndStartSend(string &data);
-			virtual int sendSignFromSendQueue();
-			virtual void receiveSignAndWriteToReceiveQueue();
-			virtual void getStringFromReceiveQueue();
+			defOUartRTX5queues(USART_TypeDef* UARTx);
+			virtual ~defOUartRTX5queues();
+			virtual void putStringToSendQueueAndStartSend(string &data) override ;
+			virtual int sendSignFromSendQueue() override ;
+			virtual void receiveSignAndWriteToReceiveQueue() override ;
+			virtual void getStringFromReceiveQueue() override ;
+		
+			virtual bool isReceiveString() override ;
+			virtual string getReceiveString() override ;
+			virtual void clearReceiveString() override ;
 
 	};
 

@@ -126,9 +126,10 @@ void defOParam::copyListOfParams(list<int> &allowedValuesList){
         allowedValues.clear();
     }
 
-		for (list<int>::iterator it=allowedValuesList.begin(); it != allowedValuesList.end(); ++it){
+		for(auto it : allowedValuesList){
+		//for (auto it=allowedValuesList.begin(); it != allowedValuesList.end(); ++it){
 
-        allowedValues.push_back(*it);
+        allowedValues.push_back(it);
     }
 
 

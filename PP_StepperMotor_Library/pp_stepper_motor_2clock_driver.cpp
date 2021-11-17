@@ -2,7 +2,6 @@
 
 defOStepperMotor2clockDriver::defOStepperMotor2clockDriver(int paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep){
 	
-	posOfSequence=0;
 	
 	accelerationMMperSEC2=paccelerationMMperSEC2;
 	velocityUMperSEC=pvelocityUMperSEC;
@@ -26,31 +25,25 @@ void defOStepperMotor2clockDriver::setTypeOfStep(int tOfStep){
 			maskStep=&maskMicroStep;
 			break;
 	}
-	
+	maskIter=maskStep->begin();
 }
+
 
 
 //ustawienie maski powodującej obrót silnika o jeden krok do tylu
 void defOStepperMotor2clockDriver::rotateBackwards(){	
 
 
-			posOfSequence--;
-			if(posOfSequence<0)posOfSequence=maskStep->size()-1;
-
-			signalsMask=maskStep->at(posOfSequence);// & PHASAES_MASK;
-//			microsteppingMask=(maskStep->at(posOfSequence)>>2) & INPUTS_MASK;
+			if(maskIter==maskStep->begin())maskIter=maskStep->end();
+			else maskIter--;
 			
 		
 }
 
 void defOStepperMotor2clockDriver::rotateForward(){	
 
-			posOfSequence++;
-			
-			if(posOfSequence>=maskStep->size())posOfSequence=0;
-			
-			signalsMask=maskStep->at(posOfSequence);// & PHASAES_MASK;
-	//		microsteppingMask=(maskStep->at(posOfSequence)>>2) & INPUTS_MASK;
+			if(maskIter==maskStep->end())maskIter=maskStep->begin();
+			else maskIter++;
 				
 }
 

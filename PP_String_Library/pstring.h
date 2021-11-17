@@ -25,7 +25,7 @@ public:
 //		uint32_t toInt(bool *ok=NULL);
  //   double findValueAfterAcronim(char acronim, int defValue, int precision);
 		string findDataAfterAcronim(char acronim);
-		double findValueAfterAcronim(char acronim, double defValue);
+		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();
     vector<string> split(char sep);
 		vector<string> splitWithClamps(char sep, char clamps);

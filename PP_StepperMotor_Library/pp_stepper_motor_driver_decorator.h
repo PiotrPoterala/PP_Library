@@ -12,10 +12,15 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 		defOStepperMotorDriver* stepperMotorDriver;
 	
 	public:
-		defOStepperMotorDriverDecorator(defOStepperMotorDriver* stepMotorDriver);	
+		defOStepperMotorDriverDecorator(defOStepperMotorDriver* stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
 	
-		virtual void rotateForward();
-		virtual void rotateBackwards();
+		virtual void rotateForward(){stepperMotorDriver->rotateBackwards();};
+		virtual void rotateBackwards(){stepperMotorDriver->rotateForward();};
+	
+		virtual void setAcronim(char pacronim){stepperMotorDriver->setAcronim(pacronim);};
+		virtual char getAcronim(){return stepperMotorDriver->getAcronim();};
+		
+		virtual int getSignalMask(){return stepperMotorDriver->getSignalMask();};
 
 	
 };

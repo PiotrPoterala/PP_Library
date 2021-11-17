@@ -1,5 +1,5 @@
 #include "pstring.h"
-#include "math.h"
+//#include "math.h"
 
 
 PString::PString():string ()
@@ -137,7 +137,6 @@ string PString::findDataAfterAcronim(char acronim){
 double PString::findValueAfterAcronim(char acronim, double defValue){
         PString line=findDataAfterAcronim(acronim);
 				double val=0;
-
         if(line.empty())return defValue;
 				
 //        if(precision>0){
@@ -148,19 +147,19 @@ double PString::findValueAfterAcronim(char acronim, double defValue){
 //        }else{
 //            value=line.toInt();
 //        }
-
-        return stod(line);
+				return atof( line.c_str());
+  //      return stof(line);
 }
 
 map<char, double> PString::findValuesAfterAcronims(){
-				string data=0;
+				string data;
 				map<char, double> valuesMap;
 	
 				for(int i='a'; i<'z'; i++){
 					
 					data=findDataAfterAcronim(i);
 					if(!data.empty()){
-						valuesMap.insert(pair<char, double>(i, stod(data)));
+						valuesMap.insert(pair<char, double>(i, atof(data.c_str())));
 						
 					}
 					

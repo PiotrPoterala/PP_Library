@@ -11,7 +11,7 @@ void defOControl2ClockSignalsDecorator::setStateOfPins(){
 		for(int i=0; i<phasesPins->size(); i++){
 			if(phasesPins->at(i)>=0 && phasesPins->at(i)<16){
 				phasesMask|=(1<<phasesPins->at(i));
-				stateOfPhases|=((((stepperMotorDriver->signalsMask & PHASAES_MASK)>>i) & 0x1)<<phasesPins->at(i));
+				stateOfPhases|=((((defOStepperMotorDriverDecorator::getSignalMask() & PHASAES_MASK)>>i) & 0x1)<<phasesPins->at(i));
 			}
 		}
 
@@ -21,7 +21,7 @@ void defOControl2ClockSignalsDecorator::setStateOfPins(){
 		for(int i=0; i<inputsPins->size(); i++){
 			if(inputsPins->at(i)>=0 && inputsPins->at(i)<16){
 				microStepMask|=(1<<inputsPins->at(i));
-				stateOfMicroStep|=((((stepperMotorDriver->signalsMask & MICROSTEPPING_MASK)>>i) & 0x1)<<inputsPins->at(i));
+				stateOfMicroStep|=((((defOStepperMotorDriverDecorator::getSignalMask() & MICROSTEPPING_MASK)>>i) & 0x1)<<inputsPins->at(i));
 			}
 		}
 

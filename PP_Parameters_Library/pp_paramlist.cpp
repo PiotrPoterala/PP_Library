@@ -31,9 +31,9 @@ defOParamList* defOParamList::clone() const{
 
 defOParam* defOParamList::getParam(char acronim){
 
-  map<char,defOParam*>::iterator it;
+ // map<char,defOParam*>::iterator it;
 
-	it=param.find(acronim);
+	auto it=param.find(acronim);
 	
 	if(it!=param.end())return it->second;
 	
@@ -42,9 +42,9 @@ defOParam* defOParamList::getParam(char acronim){
 
 pair<char, defOParam*> defOParamList::getParamPair(char acronim){
 
-  map<char,defOParam*>::iterator it;
+ // map<char,defOParam*>::iterator it;
 
-	it=param.find(acronim);
+	auto it=param.find(acronim);
 	
 	if(it!=param.end())return pair<char, defOParam*>(it->first, it->second);
 	
@@ -63,7 +63,7 @@ int defOParamList::getParamValue(char acronim){
 map<char, int> defOParamList::getParamsValues(){
 	map<char, int> values;
 	
-	for(map<char,defOParam*>::iterator it=param.begin(); it != param.end(); ++it){
+	for(auto it=param.begin(); it != param.end(); ++it){
 		values.insert(pair<char,int>((*it).first, (*it).second->getValue()));
 		
 	}
@@ -107,7 +107,7 @@ void defOParamList::copyListOfParams(map<char, defOParam*> &copyParams){
 //	}
 	
     if(param.empty()==false){
-			for (map<char,defOParam*>::iterator it=param.begin(); it != param.end(); ++it){
+			for (auto it=param.begin(); it != param.end(); ++it){
 				delete (*it).second;
 			}
        param.clear();
@@ -123,7 +123,7 @@ void defOParamList::copyListOfParams(map<char, defOParam*> &copyParams){
 
 void defOParamList::clearParams(void){
 
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
+	for(auto it=param.begin(); it!=param.end(); ++it){
 		(*it).second->setValue(0);
 	}
 	
@@ -132,7 +132,7 @@ void defOParamList::clearParams(void){
 void defOParamList::setParamsByValue(int value){
 
 	
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
+	for(auto it=param.begin(); it!=param.end(); ++it){
 		(*it).second->setValue(value);
 	}
 	
@@ -140,7 +140,7 @@ void defOParamList::setParamsByValue(int value){
 
 void defOParamList::setParamsByDefaultValue(){
 	
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
+	for(auto it=param.begin(); it!=param.end(); ++it){
 		(*it).second->setValue((*it).second->getDefaultValue());
 	}
 	
@@ -149,8 +149,8 @@ void defOParamList::setParamsByDefaultValue(){
 
 void defOParamList::setParamsValue(map<char, defOParam*> &copyParams){
 
-	map<char,defOParam*>::iterator it=param.begin();
-	map<char,defOParam*>::iterator it_copy=copyParams.begin();
+	auto it=param.begin();
+	auto it_copy=copyParams.begin();
 	
 	for(; it!=param.end() && it_copy!=copyParams.end(); ++it, ++it_copy){
 		(*it).second->setValue((*it_copy).second->getValue());
@@ -163,10 +163,9 @@ void defOParamList::setParamsValue(map<char, defOParam*> &copyParams){
 bool defOParamList::comparingParamsValue(map<char, defOParam*> &paramToComp){
     bool same=true;
 
-	map<char,defOParam*>::iterator it_to_comp;
-	
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end();  ++it){
-		it_to_comp=paramToComp.find((*it).first);
+
+	for(auto it=param.begin(); it!=param.end();  ++it){
+		auto it_to_comp=paramToComp.find((*it).first);
 		if(it_to_comp!=paramToComp.end()){
 			if((*it).second->getValue()!=(*it_to_comp).second->getValue()){
 					same=false;
@@ -183,11 +182,9 @@ bool defOParamList::comparingParamsValue(map<char, defOParam*> &paramToComp){
 
 bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
     bool same=true;
-
-	map<char,int>::iterator it_to_comp;
 	
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end();  ++it){
-		it_to_comp=paramToComp.find((*it).first);
+	for(auto it=param.begin(); it!=param.end();  ++it){
+		auto it_to_comp=paramToComp.find((*it).first);
 		if(it_to_comp!=paramToComp.end()){
 			if((*it).second->getValue()!=(*it_to_comp).second){
 					same=false;
@@ -206,7 +203,7 @@ bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
 void defOParamList::getParamsFromString(PString *data){
    int val=0;
 
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
+	for(auto it=param.begin(); it!=param.end(); ++it){
 		    val=(*it).second->checkRange(data->findValueAfterAcronim((*it).first, (*it).second->getValue())*pow(10, (*it).second->getUnit()));
         val-=val%(*it).second->getPrecision();
         (*it).second->setValue(val);
@@ -218,7 +215,7 @@ void defOParamList::getParamsFromString(PString *data){
 void defOParamList::checksParamsValue(){
 	 int val=0;
 
-	for(map<char,defOParam*>::iterator it=param.begin(); it!=param.end(); ++it){
+	for(auto it=param.begin(); it!=param.end(); ++it){
 		    val=(*it).second->checkRange((*it).second->getValue());
         val-=val%(*it).second->getPrecision();
         (*it).second->setValue(val);

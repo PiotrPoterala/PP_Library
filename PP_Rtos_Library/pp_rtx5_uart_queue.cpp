@@ -1,9 +1,39 @@
 #include "pp_rtx5_uart_queue.h"
 
 
-defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx, osMessageQueueId_t qSend, osMessageQueueId_t qReceive):port(UARTx), sendQueue(qSend), receiveQueue(qReceive){
+defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx):port(UARTx){
 
+	sendQueue=osMessageQueueNew(64, sizeof(char), NULL);
+	receiveQueue=osMessageQueueNew(64, sizeof(char), NULL);
 
+}
+
+defOUartRTX5queues::~defOUartRTX5queues(){
+	
+	osMessageQueueDelete(sendQueue);
+	osMessageQueueDelete(receiveQueue);
+	
+}
+
+bool defOUartRTX5queues::isReceiveString(){
+	
+	return getStringFlag;
+	
+	
+}
+
+string defOUartRTX5queues::getReceiveString(){
+	
+	return receiveString;
+	
+	
+}
+
+void defOUartRTX5queues::clearReceiveString(){
+	
+	receiveString.clear();
+	getStringFlag=false;
+	
 }
 
 

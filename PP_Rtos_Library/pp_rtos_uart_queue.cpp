@@ -1,12 +1,6 @@
 #include "pp_rtos_uart_queue.h"
 
 
-defOUartQueues::defOUartQueues(){
-
-
-}
-
-
 
 bool defOUartQueues::isReceiveString(){
 	

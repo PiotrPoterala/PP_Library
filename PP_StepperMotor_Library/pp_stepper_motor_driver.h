@@ -9,21 +9,16 @@ class defOStepperMotorDriver{
 	
 	
 	public:
-		char acronim;	
-		int signalsMask;
-		int counter;
-
-		int accelerationMMperSEC2;
-		defOParam* velocityUMperSEC;
 	
-		defOStepperMotorDriver(){
-			acronim='\0';
-		};	
+		defOStepperMotorDriver(){};	
 			
-
 		virtual void rotateForward() =0;
 		virtual void rotateBackwards() =0;
 
+		virtual void setAcronim(char pacronim)=0;
+		virtual char getAcronim()=0;
+			
+		virtual int getSignalMask()=0;
 	
 };
 

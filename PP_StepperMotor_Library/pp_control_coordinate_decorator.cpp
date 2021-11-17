@@ -3,7 +3,7 @@
 defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParam*> pCoord, defOParam* bCoord, int corrUM):
 																															defOStepperMotorDriverDecorator(stepMotorDriver), baseCoord(bCoord){
 	
-		acronim=pCoord.first;		
+	//	acronim=pCoord.first;		
 		phyCoord=pCoord.second;																																
 																																
 	if(corrUM>0){

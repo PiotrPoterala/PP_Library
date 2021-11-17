@@ -33,7 +33,7 @@ vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(char acron
 	vector<defOStepperMotorDriver*>::iterator it;
 	
 	for(it=motors.begin(); it!=motors.end(); ++it){
-		if((*it)->acronim==acronim) break;
+	//	if((*it)->acronim==acronim) break;
 		
 	}
 	
@@ -45,7 +45,7 @@ void defOMotorsList::clearCounters(){
 	vector<defOStepperMotorDriver*>::iterator it;
 	
 	for(it=motors.begin(); it!=motors.end(); ++it){
-		(*it)->counter=0;
+	//	(*it)->counter=0;
 	}
 	
 }

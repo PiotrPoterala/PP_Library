@@ -10,16 +10,20 @@
 
 class defOUartQueuesDecorator: public defOUartQueues{
 		
-		protected:
+		private:
 			defOUartQueues* uartQueues;	
 		
 		public:
-			defOUartQueuesDecorator(defOUartQueues* uQueues):uartQueues(uQueues){};
-		
-			virtual void putStringToSendQueueAndStartSend(string &data){uartQueues->putStringToSendQueueAndStartSend(data);};
-			virtual int sendSignFromSendQueue(){return uartQueues->sendSignFromSendQueue();};
-			virtual void receiveSignAndWriteToReceiveQueue(){uartQueues->receiveSignAndWriteToReceiveQueue();};
-			virtual void getStringFromReceiveQueue(){uartQueues->getStringFromReceiveQueue();};
+			defOUartQueuesDecorator(defOUartQueues* uQueues){uartQueues=uQueues;}
+			virtual ~defOUartQueuesDecorator(){};
+			virtual void putStringToSendQueueAndStartSend(string &data) override {uartQueues->putStringToSendQueueAndStartSend(data);};
+			virtual int sendSignFromSendQueue() override {return uartQueues->sendSignFromSendQueue();};
+			virtual void receiveSignAndWriteToReceiveQueue() override {uartQueues->receiveSignAndWriteToReceiveQueue();};
+			virtual void getStringFromReceiveQueue() override {uartQueues->getStringFromReceiveQueue();};
+			
+			virtual bool isReceiveString() override {return uartQueues->isReceiveString();};
+			virtual string getReceiveString() override {return uartQueues->getReceiveString();};
+			virtual void clearReceiveString() override {uartQueues->clearReceiveString();};
 	};
 
 

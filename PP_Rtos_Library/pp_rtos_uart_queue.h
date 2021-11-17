@@ -9,21 +9,18 @@
 
 	class defOUartQueues{
 		
-		protected:	
-		
-			bool getStringFlag;
-			string receiveString;
-		
 		public:
-			defOUartQueues();
-		
-			virtual void putStringToSendQueueAndStartSend(string &data)=0;
-			virtual int sendSignFromSendQueue()=0;
-			virtual void receiveSignAndWriteToReceiveQueue()=0;
+			defOUartQueues(){};
+			virtual ~defOUartQueues(){};
+			virtual void putStringToSendQueueAndStartSend(string &data) =0;
+			virtual int sendSignFromSendQueue() =0;
+			virtual void receiveSignAndWriteToReceiveQueue() =0;
 			virtual void getStringFromReceiveQueue()=0;
-			bool isReceiveString();
-			string getReceiveString();
-			void clearReceiveString();
+		
+		
+			virtual bool isReceiveString() =0;
+			virtual string getReceiveString() =0;
+			virtual void clearReceiveString() =0;
 	};
 
 
