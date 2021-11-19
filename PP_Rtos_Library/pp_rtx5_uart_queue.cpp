@@ -3,8 +3,8 @@
 
 defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx):port(UARTx){
 
-	sendQueue=osMessageQueueNew(64, sizeof(char), NULL);
-	receiveQueue=osMessageQueueNew(64, sizeof(char), NULL);
+	sendQueue=osMessageQueueNew(128, sizeof(char), NULL);
+	receiveQueue=osMessageQueueNew(128, sizeof(char), NULL);
 
 }
 
@@ -36,11 +36,20 @@ void defOUartRTX5queues::clearReceiveString(){
 	
 }
 
+void defOUartRTX5queues::portListen(){
+	
+	if(port->SR & USART_SR_RXNE){  
+		receiveSignAndWriteToReceiveQueue();
+  }else if(port->SR & USART_SR_TXE){  
+		sendSignFromSendQueue();
+  }
+}
+
 
 void defOUartRTX5queues::putStringToSendQueueAndStartSend(string &data){
 	
-		for(string::iterator it=data.begin(); it!=data.end();  ++it){
-			if(osMessageQueuePut(sendQueue, &(*it), 0, osWaitForever)==osOK){
+		for(auto it: data){
+			if(osMessageQueuePut(sendQueue, &it, 0, osWaitForever)==osOK){
 				port->CR1&=~USART_CR1_RE;	
 				port->CR1|=USART_CR1_TXEIE;
 			}	
@@ -50,6 +59,20 @@ void defOUartRTX5queues::putStringToSendQueueAndStartSend(string &data){
 
 }
 
+defOUartQueues& defOUartRTX5queues::operator<<(string &data){
+	
+	putStringToSendQueueAndStartSend(data);
+	
+	return (*this);
+}
+
+defOUartQueues& defOUartRTX5queues::operator<<(const char *data){
+	
+	string str(data);
+	
+	putStringToSendQueueAndStartSend(str);
+	return (*this);
+}
 
 
 int defOUartRTX5queues::sendSignFromSendQueue(){
@@ -88,8 +111,9 @@ void defOUartRTX5queues::getStringFromReceiveQueue(){
 
 					getStringFlag=true;
 
-				}else{
-					if(receiveString.size()>64)receiveString.clear();
+				}else if(receiveString.size()>64){
+						receiveString.clear();
+					
 				}
 
 			}  

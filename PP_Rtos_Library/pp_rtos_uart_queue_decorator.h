@@ -16,7 +16,10 @@ class defOUartQueuesDecorator: public defOUartQueues{
 		public:
 			defOUartQueuesDecorator(defOUartQueues* uQueues){uartQueues=uQueues;}
 			virtual ~defOUartQueuesDecorator(){};
+			virtual void portListen() override {uartQueues->portListen();};
 			virtual void putStringToSendQueueAndStartSend(string &data) override {uartQueues->putStringToSendQueueAndStartSend(data);};
+			virtual defOUartQueues& operator<<(string &data) override{ return uartQueues->operator<<(data);};
+			virtual defOUartQueues& operator<<(const char *data) override{return uartQueues->operator<<(data);};
 			virtual int sendSignFromSendQueue() override {return uartQueues->sendSignFromSendQueue();};
 			virtual void receiveSignAndWriteToReceiveQueue() override {uartQueues->receiveSignAndWriteToReceiveQueue();};
 			virtual void getStringFromReceiveQueue() override {uartQueues->getStringFromReceiveQueue();};

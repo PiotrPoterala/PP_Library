@@ -12,7 +12,10 @@
 		public:
 			defOUartQueues(){};
 			virtual ~defOUartQueues(){};
+			virtual void portListen()=0;
 			virtual void putStringToSendQueueAndStartSend(string &data) =0;
+			virtual defOUartQueues& operator<<(string &data)=0;	
+			virtual defOUartQueues& operator<<(const char *data)=0;
 			virtual int sendSignFromSendQueue() =0;
 			virtual void receiveSignAndWriteToReceiveQueue() =0;
 			virtual void getStringFromReceiveQueue()=0;

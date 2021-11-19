@@ -25,84 +25,6 @@ PString::PString(string &str):string (str)
 }
 
 
-//double PString::toDouble(bool *ok){
-//		unsigned int character=0;
-//		bool comma=false;
-//		int decimal_place=0;
-//		int znak=1;
-//		double result=0;
-
-//		for(uint32_t i=0; i<size(); i++){
-//			character=charToInt(at(i));
-//			if(character==ZNAK_MINUS && i==0)znak=(-1);
-//			else if(character==ZNAK_PLUS && i==0)znak=1;
-//			else if(character<=9 || character==KROPKA){
-//				if(character==KROPKA){
-//					if(comma==true){
-//						if(ok!=NULL)*ok=false;
-//						return 0;
-//					}else{
-//						comma=true;
-//					}
-//				}else{
-//					if(comma==false){
-//						result=result*10+character;	
-//					}else{
-//							decimal_place++;
-//							result+=(static_cast<double>(character)/(pow(10.0, decimal_place)));	
-//					}
-//						
-//				}
-//			}else{
-//				if(ok!=NULL)*ok=false;
-//				return 0;
-//			}
-//		}
-//		result*=znak;
-//		if(ok!=NULL)*ok=true;
-//		return result;
-//}
-
-//unsigned int PString::toInt(bool *ok){
-//		bool success=false;
-//		double result=toDouble(&success);
-//	
-//		if(success==true){
-//			if(ok!=NULL)*ok=true;
-//			return static_cast<int>(result);
-//		}else{
-//			if(ok!=NULL)*ok=false;
-//			return 0;
-//		}
-//}
-
-//unsigned int PString::charToInt(char sign){
-//		
-//		switch(sign){
-//					case '-':	return ZNAK_MINUS;
-//					case '+':	return ZNAK_PLUS;	
-//					case '0':	return 0;					
-//					case '1':	return 1;
-//					case '2':	return 2;
-//					case '3':	return 3;
-//					case '4':	return 4;
-//					case '5':	return 5;
-//					case '6':	return 6;
-//					case '7':	return 7;
-//					case '8':	return 8;
-//					case '9':	return 9;
-//					case 'A':	return 10;
-//					case 'B':	return 11;
-//					case 'C':	return 12;
-//					case 'D':	return 13;
-//					case 'E':	return 14;
-//					case 'F':	return 15;
-//					case '.':	return KROPKA;
-//					case ',':	return KROPKA;
-//					default: return SIGN_NULL;
-//				}
-//}
-
 string PString::findDataAfterAcronim(char acronim){
         int i=0;
         string line;
@@ -110,45 +32,24 @@ string PString::findDataAfterAcronim(char acronim){
 				i=find(acronim);
 
 				if(i!=string::npos){
-            i++;
-            for(int j=0; j<size(); j++){
+            for(i=i+1; i<size(); i++){
                 if((at(i)>='0' && at(i)<='9') || at(i)=='-' || at(i)=='+' || at(i)=='.'){
                     line+=at(i);
-                    i++;
                 }else break;
 
             }
         }
- //       if(line.empty())return defValue;
-				
-				
-//        if(precision>0){
-//            double val=0;
-//            val=line.toDouble();
 
-//            value=static_cast<int>(val*pow(10.0, precision));
-//        }else{
-//            value=line.toInt();
-//        }
 
         return line;
 }
 
 double PString::findValueAfterAcronim(char acronim, double defValue){
-        PString line=findDataAfterAcronim(acronim);
+        string line=findDataAfterAcronim(acronim);
 				double val=0;
         if(line.empty())return defValue;
 				
-//        if(precision>0){
-//            double val=0;
-//            val=line.toDouble();
-
-//            value=static_cast<int>(val*pow(10.0, precision));
-//        }else{
-//            value=line.toInt();
-//        }
 				return atof( line.c_str());
-  //      return stof(line);
 }
 
 map<char, double> PString::findValuesAfterAcronims(){
@@ -156,15 +57,15 @@ map<char, double> PString::findValuesAfterAcronims(){
 				map<char, double> valuesMap;
 	
 				for(int i='a'; i<'z'; i++){
-					
 					data=findDataAfterAcronim(i);
-					if(!data.empty()){
-						valuesMap.insert(pair<char, double>(i, atof(data.c_str())));
-						
-					}
-					
+					if(!data.empty())valuesMap.insert(pair<char, double>(i, atof(data.c_str())));
 				}
 
+				for(int i='A'; i<'Z'; i++){
+					data=findDataAfterAcronim(i);
+					if(!data.empty())valuesMap.insert(pair<char, double>(i, atof(data.c_str())));
+				}
+				
         return valuesMap;
 }
 
