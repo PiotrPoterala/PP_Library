@@ -74,6 +74,21 @@ defOUartQueues& defOUartRTX5queues::operator<<(const char *data){
 	return (*this);
 }
 
+defOUartQueues& defOUartRTX5queues::operator<<(map<char, int> &values){
+	
+	string str;
+	
+	for(auto it=values.begin(); it!=values.end(); it++){
+		str+=(*it).first;
+		str+=to_string((*it).second);
+		str+=" ";
+	}
+	
+	
+	putStringToSendQueueAndStartSend(str);
+	return (*this);
+}
+
 
 int defOUartRTX5queues::sendSignFromSendQueue(){
 		char sign;	

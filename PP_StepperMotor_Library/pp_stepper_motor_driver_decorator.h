@@ -14,13 +14,16 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 	public:
 		defOStepperMotorDriverDecorator(defOStepperMotorDriver* stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
 	
-		virtual void rotateForward(){stepperMotorDriver->rotateBackwards();};
-		virtual void rotateBackwards(){stepperMotorDriver->rotateForward();};
+		virtual void rotateForward()override{stepperMotorDriver->rotateForward();};
+		virtual void rotateBackwards()override{stepperMotorDriver->rotateBackwards();};
 	
-		virtual void setAcronim(char pacronim){stepperMotorDriver->setAcronim(pacronim);};
-		virtual char getAcronim(){return stepperMotorDriver->getAcronim();};
+		virtual void setAcronim(char pacronim)override{stepperMotorDriver->setAcronim(pacronim);};
+		virtual char getAcronim()override{return stepperMotorDriver->getAcronim();};
 		
-		virtual int getSignalMask(){return stepperMotorDriver->getSignalMask();};
+		virtual int getAccelerationMMperSEC2Value()override{return stepperMotorDriver->getAccelerationMMperSEC2Value();};
+		virtual int getVelocityUMperSECValue()override{return stepperMotorDriver->getVelocityUMperSECValue();};
+		
+		virtual int getSignalMask()override{return stepperMotorDriver->getSignalMask();};
 
 	
 };

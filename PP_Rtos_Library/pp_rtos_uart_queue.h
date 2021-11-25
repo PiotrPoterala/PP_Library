@@ -4,6 +4,7 @@
   #include "stm32xx.h"
 
 	#include <string>
+	#include <map>
 	
 	using namespace std;
 
@@ -16,6 +17,7 @@
 			virtual void putStringToSendQueueAndStartSend(string &data) =0;
 			virtual defOUartQueues& operator<<(string &data)=0;	
 			virtual defOUartQueues& operator<<(const char *data)=0;
+			virtual defOUartQueues& operator<<(map<char, int> &values)=0;
 			virtual int sendSignFromSendQueue() =0;
 			virtual void receiveSignAndWriteToReceiveQueue() =0;
 			virtual void getStringFromReceiveQueue()=0;

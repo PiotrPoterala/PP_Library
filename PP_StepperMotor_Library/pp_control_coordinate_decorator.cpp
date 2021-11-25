@@ -1,9 +1,10 @@
 #include "pp_control_coordinate_decorator.h"
 
-defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParam*> pCoord, defOParam* bCoord, int corrUM):
+defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParamGeneral*> pCoord, defOParamGeneral* bCoord, int corrUM):
 																															defOStepperMotorDriverDecorator(stepMotorDriver), baseCoord(bCoord){
-	
-	//	acronim=pCoord.first;		
+																						
+		defOStepperMotorDriverDecorator::setAcronim(pCoord.first);																							
+																																
 		phyCoord=pCoord.second;																																
 																																
 	if(corrUM>0){
@@ -24,13 +25,13 @@ defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorD
 
 void defOControlCoordinateDecorator::rotateBackwards(){	
 
-		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%(int32_t)(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
 			phyCoord->decrementValue();
 			baseCoord->decrementValue();
 		}else{
 			defOStepperMotorDriverDecorator::rotateBackwards();
 	
-			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%(int32_t)(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
 				phyCoord->decrementValue();
 				baseCoord->decrementValue();
 			}
@@ -41,14 +42,14 @@ void defOControlCoordinateDecorator::rotateBackwards(){
 
 void defOControlCoordinateDecorator::rotateForward(){	
 
-		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%(int32_t)(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
 			phyCoord->incrementValue();
 			baseCoord->incrementValue();
 		}else{
 			
 			defOStepperMotorDriverDecorator::rotateForward();
 			
-			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%(int32_t)(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
 				phyCoord->incrementValue();
 				baseCoord->incrementValue();
 			}

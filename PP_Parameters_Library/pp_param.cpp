@@ -25,7 +25,6 @@ defOParam::defOParam(defOParam &param){
 	
 		checkCorrectnes();
 
-    copyListOfParams(param.allowedValues);
 
 }
 
@@ -41,10 +40,6 @@ int defOParam::getValue(void){
     return value;
 }
 
-int & defOParam::getRvalue(void){
-
-    return value;
-}
 
 
 int defOParam::getLowerLimit(void){
@@ -78,11 +73,6 @@ int defOParam::getDefaultValue(void){
     return defaultValue;
 }
 
-list<int>* defOParam::getAllowedValues(void){
-
-    return &allowedValues;
-
-}
 
 void defOParam::resetValue(void){
 
@@ -105,13 +95,6 @@ int defOParam::checkRange(int val){
     return val;
 }
 
-int defOParam::checkRange(int val, int upperLim, int lowerLim){
-
-    if(val>=upperLim)val=upperLim;
-    else if(val<=lowerLim)val=lowerLim;
-
-    return val;
-}
 
 void defOParam::checkCorrectnes(){
 
@@ -120,20 +103,6 @@ void defOParam::checkCorrectnes(){
 	
 }
 
-void defOParam::copyListOfParams(list<int> &allowedValuesList){
-
-    if(allowedValues.empty()==false){
-        allowedValues.clear();
-    }
-
-		for(auto it : allowedValuesList){
-		//for (auto it=allowedValuesList.begin(); it != allowedValuesList.end(); ++it){
-
-        allowedValues.push_back(it);
-    }
-
-
-}
 
 bool defOParam::decrementValue(){
 	bool changeParam=false;

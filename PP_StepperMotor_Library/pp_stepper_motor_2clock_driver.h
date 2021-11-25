@@ -14,9 +14,8 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriver{
 	
 	private:
 		char acronim;	
-		int counter;
 
-		int accelerationMMperSEC2;
+		defOParam* accelerationMMperSEC2;
 		defOParam* velocityUMperSEC;	
 	
 	
@@ -28,17 +27,20 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriver{
 		vector<int> maskMicroStep={2,2,2,2};
 	
 	public:
-		defOStepperMotor2clockDriver(int paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep=FULL_STEP);	
+		defOStepperMotor2clockDriver(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep=FULL_STEP);	
 	
 		void setTypeOfStep(int tOfStep);
 	
-		virtual void rotateForward();
-		virtual void rotateBackwards();
+		virtual void rotateForward()override;
+		virtual void rotateBackwards()override;
 
-		virtual void setAcronim(char pacronim) {acronim=pacronim;};
-		virtual char getAcronim(){return acronim;};
+		virtual void setAcronim(char pacronim) override{acronim=pacronim;};
+		virtual char getAcronim()override{return acronim;};
 		
-		virtual int getSignalMask(){return *maskIter;};
+		virtual int getAccelerationMMperSEC2Value()override{return accelerationMMperSEC2->getValue();};
+		virtual int getVelocityUMperSECValue()override{return velocityUMperSEC->getValue();};
+		
+		virtual int getSignalMask()override{return *maskIter;};
 	
 };
 

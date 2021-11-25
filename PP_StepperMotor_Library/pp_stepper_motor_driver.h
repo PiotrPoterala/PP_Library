@@ -18,6 +18,9 @@ class defOStepperMotorDriver{
 		virtual void setAcronim(char pacronim)=0;
 		virtual char getAcronim()=0;
 			
+		virtual int getAccelerationMMperSEC2Value()=0;
+		virtual int getVelocityUMperSECValue()=0;
+			
 		virtual int getSignalMask()=0;
 	
 };

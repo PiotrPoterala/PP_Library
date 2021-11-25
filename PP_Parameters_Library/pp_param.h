@@ -1,51 +1,49 @@
 #ifndef _PP_PARAM_H
 #define _PP_PARAM_H
 #include <string>
-#include <list>
+#include "pp_param_general.h"
 
 #include "stm32xx.h"
 
 using namespace std;
 
-class defOParam
+class defOParam : public defOParamGeneral
 {
 
 private:
     string name;
-//    char acronim;
     int value;
     int defaultValue;
-    list<int> allowedValues;
     int lowerLimit;
     int upperLimit;
     int precision;
     int unit;
+
 public:
     defOParam(defOParam &param);
     defOParam(string pname, int pvalue=0, int pdefaultValue=0, int pprecision=1, int punit=0, int plowerLimit=0, int pupperLimit=0);
-    string getName(void);
- //   char getAcronim(void);
-    int getValue(void);
-    int & getRvalue(void);
-    int getLowerLimit(void);
-    int getUpperLimit(void);
-    int getPrecision(void);
-    int getUnit(void);
-    int getDefaultValue(void);
-    list<int>* getAllowedValues(void);
-    void setValue(int newValue);
-    void resetValue(void);
+		virtual ~defOParam(){};
+    virtual string getName(void) override;
+    virtual int getValue(void) override;
+    virtual int getLowerLimit(void) override;
+    virtual int getUpperLimit(void) override;
+    virtual int getPrecision(void) override;
+    virtual int getUnit(void) override;
+    virtual int getDefaultValue(void) override;
 
-		void checkCorrectnes();
-		void checkRange();
-    int checkRange(int val);
-    static int checkRange(int val, int upperLim, int lowerLim);
-    void copyListOfParams(list<int> &allowedValuesList);
+    virtual int checkRange(int val) override;
 
-		bool decrementValue();
-		bool decrementValue(int val);
-		bool incrementValue();
-		bool incrementValue(int val);
+    virtual void setValue(int newValue) override;
+    virtual void resetValue(void) override;
+
+		virtual void checkCorrectnes() override;
+		virtual void checkRange() override;
+
+		virtual bool decrementValue() override;
+		virtual bool decrementValue(int val) override;
+		virtual bool incrementValue() override;
+		virtual bool incrementValue(int val) override;
+		
 
 };
 

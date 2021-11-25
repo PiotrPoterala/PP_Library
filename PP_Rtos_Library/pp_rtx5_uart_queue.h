@@ -26,6 +26,9 @@ class defOUartRTX5queues : public defOUartQueues{
 			virtual void putStringToSendQueueAndStartSend(string &data) override ;
 			virtual defOUartQueues& operator<<(string &data) override;	
 			virtual defOUartQueues& operator<<(const char *data) override;
+		
+			virtual defOUartQueues& operator<<(map<char, int> &values)override;
+		
 			virtual int sendSignFromSendQueue() override ;
 			virtual void receiveSignAndWriteToReceiveQueue() override ;
 			virtual void getStringFromReceiveQueue() override ;
