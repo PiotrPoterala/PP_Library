@@ -33,17 +33,14 @@ void defOStepperMotor2clockDriver::setTypeOfStep(int tOfStep){
 //ustawienie maski powodującej obrót silnika o jeden krok do tylu
 void defOStepperMotor2clockDriver::rotateBackwards(){	
 
-
-			if(maskIter==maskStep->begin())maskIter=maskStep->end();
-			else maskIter--;
-			
-		
+		if(maskIter==maskStep->begin())maskIter=maskStep->end()-1;
+		else maskIter--;
+				
 }
 
 void defOStepperMotor2clockDriver::rotateForward(){	
 
+			maskIter++;
 			if(maskIter==maskStep->end())maskIter=maskStep->begin();
-			else maskIter++;
-				
 }
 

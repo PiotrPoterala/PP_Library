@@ -2,9 +2,20 @@
 	#define _CONTROL_2CLOCK_SIGNALS_DECORATOR_H
 
 #include "pp_stepper_motor_driver_decorator.h"
-#include <array>
+#include <vector>
+#include <map>
 
 using namespace std;
+
+typedef struct{
+	GPIO_TypeDef* port;
+	int pin;
+}uPin;
+
+typedef struct{
+	int clrMask;
+	int mask;
+}uPortMask;
 
 class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator{
 	
@@ -15,14 +26,12 @@ class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator
 	private:
 		void setStateOfPins();
 	
-		GPIO_TypeDef* phasesPort;
-		GPIO_TypeDef* inputsPort;
 	
-		array<int, 2> *phasesPins;
-		array<int, 8> *inputsPins;
+		vector<uPin> *inputsPins;
+		map<GPIO_TypeDef*, uPortMask*> portMask;
 	
 	public:
-		defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, GPIO_TypeDef* pPort, array<int, 2> *pPins, GPIO_TypeDef* iPort, array<int, 8> *iPins);	
+		defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins);	
 	
 		virtual void rotateForward();
 		virtual void rotateBackwards();
