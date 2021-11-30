@@ -1,8 +1,5 @@
 #include "pp_control_2clock_signals_decorator.h"
 
-#include "pp_rtx5_uart_queue.h"
-extern defOUartQueues* uartCommunicationQueues;
-
 defOControl2ClockSignalsDecorator::defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins):
 																																		defOStepperMotorDriverDecorator(stepMotorDriver),  inputsPins(iPins){
 	
@@ -16,16 +13,6 @@ defOControl2ClockSignalsDecorator::defOControl2ClockSignalsDecorator(defOStepper
 }
 
 void defOControl2ClockSignalsDecorator::setStateOfPins(){	
-//		int phasesMask=0, stateOfPhases=0, microStepMask=0, stateOfMicroStep=0;
-	
-//		for(int i=0; i<phasesPins->size(); i++){
-//			if(phasesPins->at(i).pin>=0 && phasesPins->at(i).pin<16){
-//				phasesMask|=(1<<phasesPins->at(i));
-//				stateOfPhases|=((((defOStepperMotorDriverDecorator::getSignalMask() & PHASAES_MASK)>>i) & 0x1)<<phasesPins->at(i));
-//			}
-//		}
-
-//		phasesPort->ODR=(phasesPort->ODR & ~phasesMask) | stateOfPhases;
 	
 		for(int i=0; i<inputsPins->size(); i++){
 			auto it=portMask.find(inputsPins->at(i).port);

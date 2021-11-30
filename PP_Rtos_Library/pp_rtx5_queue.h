@@ -5,8 +5,6 @@
 	#include <vector>
 	
 	#include "cmsis_os2.h"
-	
-//	using namespace std;
 
 template <typename Type>
 class defORTX5TaskQueues : public defOTaskQueues<Type>{
@@ -16,7 +14,6 @@ class defORTX5TaskQueues : public defOTaskQueues<Type>{
 			osMutexId_t	mutex;
 		
 		public:
-	//		defORTX5TaskQueues(osMessageQueueId_t pqueue, osMutexId_t	pmutex);
 		defORTX5TaskQueues();
 		~defORTX5TaskQueues();
 	
@@ -57,9 +54,6 @@ void defORTX5TaskQueues<Type>::xQueueSendConteinerToBackWithSemaphore(vector<Typ
 			for(int i=0; i<data.size(); i++){
 				osMessageQueuePut (queue, &data.at(i), 0, osWaitForever);
 			}
-//			for(vector<Type>::iterator it=data.begin(); it!=data.end(); ++it){
-//				
-//			}
 		}
 		osMutexRelease (mutex); 
 	}

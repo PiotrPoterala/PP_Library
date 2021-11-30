@@ -1,10 +1,7 @@
 #include "pp_stepper_motor_2clock_driver.h"
 
-defOStepperMotor2clockDriver::defOStepperMotor2clockDriver(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep){
+defOStepperMotor2clockDriver::defOStepperMotor2clockDriver(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep):defOStepperMotorDriverPar(paccelerationMMperSEC2, pvelocityUMperSEC){
 	
-	
-	accelerationMMperSEC2=paccelerationMMperSEC2;
-	velocityUMperSEC=pvelocityUMperSEC;
 	
 	setTypeOfStep(tOfStep);
 	

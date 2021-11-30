@@ -85,15 +85,6 @@ bool defOParamList::setParamValue(char acronim, int val){
     return false;
 }
 
-//vector<int>* defOParamList::getParamAllowedValues(char acronim){
-//    defOParam* par;
-//    par=getParam(acronim);
-//    if(par!=NULL){
-//        return par->getAllowedValues();
-//    }
-//    return NULL;
-//}
-
 int defOParamList::getParamUnit(char acronim){
     defOParamGeneral* par;
     par=getParam(acronim);

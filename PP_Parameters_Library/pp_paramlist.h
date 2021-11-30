@@ -16,10 +16,6 @@ private:
     map<char, defOParamGeneral*> param;
 
 
-//protected:
-//	defOParam* getParam(char acronim);
-
-
 public:
     defOParamList();
 		defOParamList(const defOParamList& other);
@@ -37,7 +33,6 @@ public:
 
 		pair<char, defOParamGeneral*> getParamPair(char acronim);
 		map<char, int> getParamsValues();
-    vector<int>* getParamAllowedValues(char acronim);
 		string getStringWithParams();
 
 		int checkRange(char acronim, int val);

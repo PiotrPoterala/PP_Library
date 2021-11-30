@@ -25,5 +25,28 @@ class defOStepperMotorDriver{
 	
 };
 
+class defOStepperMotorDriverPar : public defOStepperMotorDriver{
+	
+	private:
+		char acronim;	
+
+		defOParam* accelerationMMperSEC2;
+		defOParam* velocityUMperSEC;	
+	
+	public:
+		defOStepperMotorDriverPar(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC):accelerationMMperSEC2(paccelerationMMperSEC2), velocityUMperSEC(pvelocityUMperSEC){};	
+			
+		virtual void rotateForward(){};
+		virtual void rotateBackwards(){};
+
+		virtual void setAcronim(char pacronim) final {acronim=pacronim;};
+		virtual char getAcronim()final{return acronim;};
+		
+		virtual int getAccelerationMMperSEC2Value()final{return accelerationMMperSEC2->getValue();};
+		virtual int getVelocityUMperSECValue()final{return velocityUMperSEC->getValue();};
+			
+		virtual int getSignalMask(){return 0;};
+	
+};
 
 #endif

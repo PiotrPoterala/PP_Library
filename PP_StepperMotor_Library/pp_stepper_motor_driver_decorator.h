@@ -5,6 +5,12 @@
 
 using namespace std;
 
+
+typedef struct{
+	GPIO_TypeDef* port;
+	int pin;
+}uPin;
+
 class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 	
 	protected:

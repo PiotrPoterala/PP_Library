@@ -6,19 +6,14 @@
 
 using namespace std;
 
-class defOStepperMotor2clockDriver : public defOStepperMotorDriver{
+class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
 	
 	#define FULL_STEP		0
 	#define HALF_STEP		1
 	#define MICRO_STEP	2
 	
 	private:
-		char acronim;	
 
-		defOParam* accelerationMMperSEC2;
-		defOParam* velocityUMperSEC;	
-	
-	
 		int typeOfStep;	
 		vector<int>::iterator maskIter;
 		vector<int>* maskStep;
@@ -33,12 +28,6 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriver{
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;
-
-		virtual void setAcronim(char pacronim) override{acronim=pacronim;};
-		virtual char getAcronim()override{return acronim;};
-		
-		virtual int getAccelerationMMperSEC2Value()override{return accelerationMMperSEC2->getValue();};
-		virtual int getVelocityUMperSECValue()override{return velocityUMperSEC->getValue();};
 		
 		virtual int getSignalMask()override{return *maskIter;};
 	

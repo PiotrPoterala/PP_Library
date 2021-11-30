@@ -8,20 +8,13 @@
 using namespace std;
 
 typedef struct{
-	GPIO_TypeDef* port;
-	int pin;
-}uPin;
-
-typedef struct{
 	int clrMask;
 	int mask;
 }uPortMask;
 
 class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator{
 	
-	
-	#define PHASAES_MASK			0x3
-	#define MICROSTEPPING_MASK				0xff
+
 	
 	private:
 		void setStateOfPins();
