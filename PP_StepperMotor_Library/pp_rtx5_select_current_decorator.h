@@ -25,36 +25,48 @@
    ----------------------------------------------------------------------
 @endverbatim
  */
-
-#ifndef _RTX5_CONTROL_DIR_CLOCK_SIGNALS_DECORATOR_H
-	#define _RTX5_CONTROL_DIR_CLOCK_SIGNALS_DECORATOR_H
+#ifndef _RTX5_SELECT_CURRENT_DECORATOR_H
+	#define _RTX5_SELECT_CURRENT_DECORATOR_H
 
 #include "cmsis_os2.h"
-
+ #include "RTX_Config.h"
 #include "pp_stepper_motor_driver_decorator.h"
-#include <vector>
-
 using namespace std;
 
-#define FREQUENCY_OF_CLOCK_SIG	50000 //20us
-
-class defORTX5ControlDirClockSignalsDecorator : public defOStepperMotorDriverDecorator{
+class defORTX5SelectCurrentDecorator : public defOStepperMotorDriverDecorator{
 	
 	
 	
 	private:
 		osTimerId_t offClockTimer;	
 	
-		void setStateOfPins();
+		uPin *selectPin;
+		int selPolar;
 	
-		vector<uPin> *inputsPins;
+		int ticksToOff;
 	
 	public:
-		defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer=nullptr);	
+		defORTX5SelectCurrentDecorator(defOStepperMotorDriver* stepMotorDriver, uPin *sPin, osTimerId_t poffClockTimer, int sPolar=B_LOW, int ptimeToOff_MS=10000):
+																	defOStepperMotorDriverDecorator(stepMotorDriver), selectPin(sPin),offClockTimer(poffClockTimer), selPolar(sPolar){
+																	
+																	ticksToOff=ptimeToOff_MS*OS_TICK_FREQ/1000;
+																	};	
 	
-		virtual void rotateForward() override;
-		virtual void rotateBackwards()override;
-	
+		virtual void rotateForward()override{
+			defOStepperMotorDriverDecorator::rotateForward();
+			osTimerStart(offClockTimer, ticksToOff);
+			if(selPolar==B_LOW)PIN_SET(selectPin->port, (1<<selectPin->pin));
+			else PIN_CLR(selectPin->port, (1<<selectPin->pin));
+			
+		};
+		
+		virtual void rotateBackwards()override{
+			defOStepperMotorDriverDecorator::rotateBackwards();
+			osTimerStart(offClockTimer, ticksToOff);
+			if(selPolar==B_LOW)PIN_SET(selectPin->port, (1<<selectPin->pin));
+			else PIN_CLR(selectPin->port, (1<<selectPin->pin));
+			
+		}
 	
 };
 
