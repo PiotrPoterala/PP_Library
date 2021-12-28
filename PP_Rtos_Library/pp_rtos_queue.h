@@ -42,7 +42,7 @@
 		
 		public:
 			defOTaskQueues(){};
-
+			virtual ~defOTaskQueues(){};
 			virtual void xQueueSendToBackWithSemaphore(Type data)=0;
 			virtual void xQueueSendConteinerToBackWithSemaphore(vector<Type> &data)=0;
 			virtual int xQueueReceive(Type* data, unsigned int timeoutValue)=0;

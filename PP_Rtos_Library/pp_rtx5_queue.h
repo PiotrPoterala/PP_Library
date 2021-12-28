@@ -43,7 +43,9 @@ class defORTX5TaskQueues : public defOTaskQueues<Type>{
 		
 		public:
 		defORTX5TaskQueues();
-		~defORTX5TaskQueues();
+		defORTX5TaskQueues(const defORTX5TaskQueues &taskQueues);
+		defORTX5TaskQueues& operator=(const defORTX5TaskQueues &taskQueues);
+		virtual ~defORTX5TaskQueues();
 	
 		virtual void xQueueSendToBackWithSemaphore(Type data);
 		virtual void xQueueSendConteinerToBackWithSemaphore(vector<Type> &data);
@@ -56,6 +58,20 @@ template <typename Type>
 defORTX5TaskQueues<Type>::defORTX5TaskQueues(){
 			queue=osMessageQueueNew(64, sizeof(Type), NULL);
 			mutex=osMutexNew(NULL);
+};
+
+template <typename Type>
+defORTX5TaskQueues<Type>::defORTX5TaskQueues(const defORTX5TaskQueues<Type> &taskQueues){
+			queue=osMessageQueueNew(64, sizeof(Type), NULL);
+			mutex=osMutexNew(NULL);
+};
+
+template <typename Type>
+defORTX5TaskQueues<Type>& defORTX5TaskQueues<Type>::operator=(const defORTX5TaskQueues<Type> &taskQueues){
+			if(queue==nullptr)queue=osMessageQueueNew(64, sizeof(Type), NULL);
+			if(mutex==nullptr)mutex=osMutexNew(NULL);
+	
+			return (*this);
 };
 
 template <typename Type>
