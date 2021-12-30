@@ -1,6 +1,5 @@
 //kod odpowiadający za sprzętową obsługę fileu odczytywanego z karty SD
 #include "pp_file.h"
-#include <stdio.h>
 //#include "input_signals.h"
 //#include "configurations_config.h"
 
@@ -13,8 +12,10 @@
 //#endif
 
 
-PFile::PFile(const char* str){
+PFile::PFile(char vol, const char* str){
 
+		volume=vol;
+		name=str;
 
 }	
 
@@ -58,135 +59,144 @@ PFile::PFile(const char* str){
 //}
 
 
-//_Bool saveCharToFileFAT(defOPP_FATFS *oPP_FATFS, FIL *file, char *charakter, _Bool safeWrite){
-//		FRESULT fresult;
-//		UINT zapisanych_bajtow=0;
-
-//	if(safeWrite){
-//		#if defined(FREERTOS)
-//			taskENTER_CRITICAL();
-//		#else
-//			IRQ_DECL_PROTECT(v);
-//			IRQ_PROTECT(v, SD_IRQ_LEV_PROTECT);
-//		#endif
-//	}
-
-//		{
-//			oPP_FATFS->pp_f_lseek(file, file->obj.objsize);
-//			fresult=oPP_FATFS->pp_f_write(file, charakter, 1, &zapisanych_bajtow);
-//		}
-
-//	if(safeWrite){
-//		#if defined(FREERTOS)
-//				taskEXIT_CRITICAL();
-//		#else
-//			IRQ_UNPROTECT(v);
-//		#endif	
-//	}
-
-//		if(fresult==FR_OK) return true;
-//		return false;
-
-//}
-
-//_Bool saveStringToFileFAT(defOPP_FATFS *oPP_FATFS, FIL *file, char *string, uint32_t nrOfChar, _Bool safeWrite){
-//		FRESULT fresult;
-//		UINT zapisanych_bajtow=0;
 
 
-//	if(safeWrite){
-//		#if defined(FREERTOS)
-//			taskENTER_CRITICAL();
-//		#else
-//			IRQ_DECL_PROTECT(v);
-//			IRQ_PROTECT(v, SD_IRQ_LEV_PROTECT);
-//		#endif
-//	}
+bool PFile::isOpen(){
+	
+	return openFlag;
+	
+}
 
+int PFile::size(){
+	
+	return file.obj.objsize;
+	
+}
 
-//	oPP_FATFS->pp_f_lseek(file, file->obj.objsize);
-//	fresult=oPP_FATFS->pp_f_write(file, string, nrOfChar, &zapisanych_bajtow);
+int PFile::pos(){
+	
+	return position;
+}
 
-
-//	if(safeWrite){
-//		#if defined(FREERTOS)
-//			taskEXIT_CRITICAL();
-//		#else
-//			IRQ_UNPROTECT(v);
-//		#endif	
-//	}
-
-//		if(fresult==FR_OK) return true;
-//		return false;
-
-//}
+bool PFile::atEnd(){
+	
+	if(position==file.obj.objsize)return true;
+	
+	return false;
+	
+}
 
 bool PFile::open(int mode){
-		bool fresult;
-		char path[50];
+		int fresult;
+		string path;
 
-			fresult=f_mount(&g_sFatFs, volume, 1);
+			fresult=f_mount(&g_sFatFs, &volume, 1);
 			if(fresult==FR_OK){
-				sprintf(path, "%i:%s", volume, fileInfo.fname);
-				fresult=f_open(&file, name, mode);
+				path+=volume;
+				path+=":";
+				path+=name;
+				fresult=f_open(&file, path.c_str(), mode);
 			}
 		
-			if(fresult==FR_OK) return true;
+			if(fresult==FR_OK){
+				openFlag=true;
+				position=0;
+				return true;
+			}
 			return false;
 
 }
 
 bool PFile::close(){
-		bool fresult;
+		int fresult;
 
 
 			fresult=f_close(&file);
-			if(fresult==FR_OK)fresult=f_mount(0, volume, 1);
+			if(fresult==FR_OK)fresult=f_mount(0, &volume, 1);
 
 
-			if(fresult==FR_OK) return true;
+			if(fresult==FR_OK){
+				openFlag=false;
+				return true;
+			}
 			return false;
 }
 
+bool PFile::seek(int pos){
+	int fresult;
+	fresult=f_lseek(&file, pos);
+	
+	if(fresult==FR_OK) return true;
+	return false;
+	
+}
 
-//_Bool getTextLineFromFAT(defOCheckSignals *oCheckSignals, defOPP_FATFS *oPP_FATFS, uint32_t volume, FIL *file, char *bufor, uint32_t buforSize, uint32_t *cursor){
-//		UINT odczytanych_bajtow=0;
-//		uint32_t i;
+bool PFile::write(string *data){
+		int fresult;
+		unsigned int saveBytes=0;
+
+		fresult=f_write(&file, data->c_str(), data->size(), &saveBytes);
+
+		if(fresult==FR_OK) return true;
+		return false;
+
+}
+
+bool PFile::write(const char *data){
+		int fresult;
+		unsigned int saveBytes=0;
+
+		fresult=f_write(&file, data, strlen(data), &saveBytes);
+
+		if(fresult==FR_OK) return true;
+		return false;
+
+}
+
+bool PFile::writeAtTheEnd(string *data){
+		bool result=false;
+	
+		if(seek(file.obj.objsize)){
+			result=write(data);
+		}
+
+		return result;
+
+}
 
 
-//		if(volume==DEV_USB){
-//			if(TM_USB_MSCHOST_Device()!=TM_USB_MSCHOST_Result_Connected) return false;
-//		}else if(volume==DEV_SD){
-//			if(!(oCheckSignals->checkedResetSignals & mSD_DETECT) && !(oCheckSignals->checkedSetSignals & mSD_DETECT)) return false;
-//		}else{
-//			return false;
-//		}
 
-//		if((*cursor)<file->obj.objsize){
-//#if defined(FREERTOS)
-//		taskENTER_CRITICAL();
-//#else
-//		IRQ_DECL_PROTECT(v);
-//		IRQ_PROTECT(v, SD_IRQ_LEV_PROTECT);
-//#endif
-//		{
+string PFile::readLine(){
+		#define BUFOR_SIZE 64
+	
+		int fresult, i;
+		unsigned int readBytes=BUFOR_SIZE;
+		char bufor[BUFOR_SIZE];
+		string result;
+		bool isEndSign=false;
 
-//			for(i=0; i<buforSize; i++) bufor[i]=0;		//wyczyszczenie bufora
-//			oPP_FATFS->pp_f_lseek(file, *cursor);
-//			oPP_FATFS->pp_f_read(file, bufor, buforSize, &odczytanych_bajtow);	//pobranie n bajtów (wartość wskazywana przez ) z danego fileu i zapisanie ich do bufora  				
-//			for(i=0; bufor[i]!='\n' && (i+1)<buforSize; i++);   //odszukanie w buforze znaku końca linii
-//			bufor[++i]='\0'; 	//wstawienie na ostatniej pozycji bufora znaku końca łańcucha
-//			(*cursor)+=i;
 
-//		}
-//#if defined(FREERTOS)
-//		taskEXIT_CRITICAL();
-//#else
-//	IRQ_UNPROTECT(v);
-//#endif
-//					return true;
-//		}
-//		return false;
-//}
+		if(position<file.obj.objsize){
+
+			while(isEndSign==false && readBytes==BUFOR_SIZE){
+				f_lseek(&file, position);
+				f_read(&file, bufor, BUFOR_SIZE, &readBytes);	//pobranie n bajtów (wartość wskazywana przez ) z danego fileu i zapisanie ich do bufora  		
+
+				
+				for(i=0; bufor[i]!='\0' && i<BUFOR_SIZE; i++){
+					if(isEndSign)bufor[i]='\0'; 
+					if(bufor[i]=='\n'){
+						isEndSign=true;
+						position+=i;
+					}
+				}
+
+				result+=bufor;		
+			}
+		}
+
+		
+		return result;
+}
 
 

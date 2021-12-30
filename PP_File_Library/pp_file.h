@@ -2,6 +2,8 @@
 	#define _PP_FILE_H
 
 		#include "stm32xx.h"
+		
+		#include <string>
 
 		#include "ff.h"
 
@@ -9,21 +11,30 @@ using namespace std;
 
 		class PFile{
 			private:
-				const TCHAR* volume;
+				char volume;
+				string name;
 				FATFS g_sFatFs;
 				FIL file;
-				FILINFO fileInfo;
 
+				bool openFlag;
+				int position;
+			
 			public:
 				
+				PFile(char vol, const char* path);	
 			
-			
-				PFile(const char* str);	
+				int size();
+				bool isOpen();
+				int pos();
+				bool atEnd();
 			
 				bool open(int mode);
 				bool close();
-				bool seek();
-				bool write();
+				bool seek(int pos);
+				bool write(string *data);
+				bool write(const char *data);
+				bool writeAtTheEnd(string *data);
+				string readLine();
 
 		};
 #endif
