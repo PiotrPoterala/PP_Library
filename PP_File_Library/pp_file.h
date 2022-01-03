@@ -2,39 +2,49 @@
 	#define _PP_FILE_H
 
 		#include "stm32xx.h"
+		#include "pp_iodevice.h"
 		
 		#include <string>
 
 		#include "ff.h"
 
-using namespace std;
+		using namespace std;
 
-		class PFile{
-			private:
+		class PVolume{
+			
+			public:
 				char volume;
-				string name;
 				FATFS g_sFatFs;
-				FIL file;
+			
+		}
 
-				bool openFlag;
-				int position;
+		class PFile : public PIOdevice{
+			private:
+				string path;
+				PVolume *volume;
+				FIL file;
 			
 			public:
 				
-				PFile(char vol, const char* path);	
+				PFile(PVolume *volume, const char* path);	
 			
 				int size();
-				bool isOpen();
-				int pos();
-				bool atEnd();
+				virtual bool isOpen();
+				virtual int pos();
+				virtual bool atEnd();
 			
-				bool open(int mode);
-				bool close();
-				bool seek(int pos);
-				bool write(string *data);
-				bool write(const char *data);
+				virtual bool open(int mode);
+				virtual bool close();
+				virtual bool seek(int pos);
+				virtual bool write(string *data);
+				virtual bool write(const char *data);
 				bool writeAtTheEnd(string *data);
-				string readLine();
+				bool writeAtTheEnd(const char *data);
+				virtual string readLine();
+			
+				PFile& operator<<(const char *data);
+			
+				bool clear();
 
 		};
 #endif
