@@ -31,42 +31,49 @@
 	#define _RTX5_UART_QUEUE_H
 
   #include "stm32xx.h"
-	#include "pp_rtos_uart_queue.h"
+	#include "pp_iodevice.h"
+	
 	
 	#include "cmsis_os2.h"
 	
-	using namespace std;
 
-
-class defOUartRTX5queues : public defOUartQueues{
+class PSerialPortRTX5 : public PIOdevice{
 		
 		private:
 			USART_TypeDef* port;
 			osMessageQueueId_t receiveQueue;
 			osMessageQueueId_t sendQueue;
 		
+			bool openFlag=false;
+			int mode;
+		
 			bool getStringFlag=false;
 			string receiveString;
 		
 		public:
-			defOUartRTX5queues(USART_TypeDef* UARTx);
-			defOUartRTX5queues(const defOUartRTX5queues &uartQueues);
-			defOUartRTX5queues& operator=(const defOUartRTX5queues &uartQueues);
-			virtual ~defOUartRTX5queues();
+			PSerialPortRTX5(USART_TypeDef* UARTx);
+			PSerialPortRTX5(const PSerialPortRTX5 &serialPort);
+			PSerialPortRTX5& operator=(const PSerialPortRTX5 &serialPort);
+			virtual ~PSerialPortRTX5();
+			virtual bool open(int mode)override ;
+			virtual bool isOpen()override ;
+			virtual bool close()override ;
 			virtual void portListen() override ;
-			virtual void putStringToSendQueueAndStartSend(string &data) override ;
-			virtual defOUartQueues& operator<<(string &data) override;	
-			virtual defOUartQueues& operator<<(const char *data) override;
+			virtual bool write(string &data) override;
+			virtual bool write(const char *data) override ;
+//			virtual defOUartQueues& operator<<(string &data) override;	
+//			virtual defOUartQueues& operator<<(const char *data) override;
+//		
+//			virtual defOUartQueues& operator<<(map<char, int> &values)override;
 		
-			virtual defOUartQueues& operator<<(map<char, int> &values)override;
+			int sendSignFromSendQueue();
+			void receiveSignAndWriteToReceiveQueue();
 		
-			virtual int sendSignFromSendQueue() override ;
-			virtual void receiveSignAndWriteToReceiveQueue() override ;
-			virtual void getStringFromReceiveQueue() override ;
+			virtual void receiveQueueListen() override;
 		
-			virtual bool isReceiveString() override ;
-			virtual string getReceiveString() override ;
-			virtual void clearReceiveString() override ;
+			virtual bool canReadLine() override ;
+			virtual string readLine() override ;
+	//		virtual void clearReceiveString() override ;
 
 	};
 

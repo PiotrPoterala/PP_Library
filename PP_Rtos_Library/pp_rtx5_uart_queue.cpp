@@ -21,7 +21,7 @@
 #include "pp_rtx5_uart_queue.h"
 
 
-defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx):port(UARTx){
+PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx):port(UARTx){
 
 	sendQueue=osMessageQueueNew(128, sizeof(char), NULL);
 	receiveQueue=osMessageQueueNew(128, sizeof(char), NULL);
@@ -29,12 +29,12 @@ defOUartRTX5queues::defOUartRTX5queues(USART_TypeDef* UARTx):port(UARTx){
 }
 
 
-defOUartRTX5queues::defOUartRTX5queues(const defOUartRTX5queues &uartQueues){
+PSerialPortRTX5::PSerialPortRTX5(const PSerialPortRTX5 &serialPort){
 
-	port=uartQueues.port;
+	port=serialPort.port;
 		
-	getStringFlag=uartQueues.getStringFlag;
-	receiveString=uartQueues.receiveString;
+	getStringFlag=serialPort.getStringFlag;
+	receiveString=serialPort.receiveString;
 	
 	
 	sendQueue=osMessageQueueNew(128, sizeof(char), NULL);
@@ -42,12 +42,12 @@ defOUartRTX5queues::defOUartRTX5queues(const defOUartRTX5queues &uartQueues){
 
 }
 
-defOUartRTX5queues& defOUartRTX5queues::operator=(const defOUartRTX5queues &uartQueues){
+PSerialPortRTX5& PSerialPortRTX5::operator=(const PSerialPortRTX5 &serialPort){
 	
-	port=uartQueues.port;
+	port=serialPort.port;
 		
-	getStringFlag=uartQueues.getStringFlag;
-	receiveString=uartQueues.receiveString;
+	getStringFlag=serialPort.getStringFlag;
+	receiveString=serialPort.receiveString;
 	
 	if(sendQueue==nullptr)sendQueue=osMessageQueueNew(128, sizeof(char), NULL);
 	if(receiveQueue==nullptr)receiveQueue=osMessageQueueNew(128, sizeof(char), NULL);
@@ -56,35 +56,69 @@ defOUartRTX5queues& defOUartRTX5queues::operator=(const defOUartRTX5queues &uart
 }
 
 
-defOUartRTX5queues::~defOUartRTX5queues(){
+PSerialPortRTX5::~PSerialPortRTX5(){
 	
 	osMessageQueueDelete(sendQueue);
 	osMessageQueueDelete(receiveQueue);
 	
 }
 
-bool defOUartRTX5queues::isReceiveString(){
+bool PSerialPortRTX5::open(int mode){
+	
+	this->mode=mode;
+	
+	if(mode==ReadOnly || mode==ReadWrite){
+		port->CR1&=~USART_CR1_TXEIE;
+		port->CR1|=USART_CR1_RE;
+	}else if(mode==PIOdevice::WriteOnly){	
+		port->CR1&=~USART_CR1_RE;	
+		port->CR1|=USART_CR1_TXEIE;
+	}
+	
+	port->CR1|=USART_CR1_TE;
+	port->CR1|=USART_CR1_RXNEIE;
+	port->CR1|=USART_CR1_UE;	
+	openFlag=true;
+	return true;
+}
+
+bool PSerialPortRTX5::isOpen(){
+	return openFlag;
+}
+
+bool PSerialPortRTX5::close(){
+	
+	port->CR1&=~USART_CR1_UE;
+	openFlag=false;
+	return true;
+}
+
+
+bool PSerialPortRTX5::canReadLine(){
 	
 	return getStringFlag;
 	
 	
 }
 
-string defOUartRTX5queues::getReceiveString(){
+string PSerialPortRTX5::readLine(){
 	
-	return receiveString;
-	
-	
-}
-
-void defOUartRTX5queues::clearReceiveString(){
-	
+	string returnStr=receiveString;
 	receiveString.clear();
 	getStringFlag=false;
+	return returnStr;
+	
 	
 }
 
-void defOUartRTX5queues::portListen(){
+//void PSerialPortRTX5::clearReceiveString(){
+//	
+//	receiveString.clear();
+//	getStringFlag=false;
+//	
+//}
+
+void PSerialPortRTX5::portListen(){
 	
 	if(port->SR & USART_SR_RXNE){  
 		receiveSignAndWriteToReceiveQueue();
@@ -94,51 +128,78 @@ void defOUartRTX5queues::portListen(){
 }
 
 
-void defOUartRTX5queues::putStringToSendQueueAndStartSend(string &data){
+bool PSerialPortRTX5::write(string &data){
+	bool answer=true;
 	
+	if(mode==WriteOnly || mode==ReadWrite){
 		for(auto it: data){
 			if(osMessageQueuePut(sendQueue, &it, 0, osWaitForever)==osOK){
 				port->CR1&=~USART_CR1_RE;	
 				port->CR1|=USART_CR1_TXEIE;
-			}	
-			
+			}else{
+				answer=false;
+				break;
+			}				
 		}
+	}else{
+		answer=false;
+	}
 
-
+	return answer;
 }
 
-defOUartQueues& defOUartRTX5queues::operator<<(string &data){
+bool PSerialPortRTX5::write(const char *data){
+	bool answer=true;
 	
-	putStringToSendQueueAndStartSend(data);
-	
-	return (*this);
-}
-
-defOUartQueues& defOUartRTX5queues::operator<<(const char *data){
-	
-	string str(data);
-	
-	putStringToSendQueueAndStartSend(str);
-	return (*this);
-}
-
-defOUartQueues& defOUartRTX5queues::operator<<(map<char, int> &values){
-	
-	string str;
-	
-	for(auto it=values.begin(); it!=values.end(); it++){
-		str+=(*it).first;
-		str+=to_string((*it).second);
-		str+=" ";
+	if(mode==WriteOnly || mode==ReadWrite){
+		while(*(data++)){
+			if(osMessageQueuePut(sendQueue, data, 0, osWaitForever)==osOK){
+				port->CR1&=~USART_CR1_RE;	
+				port->CR1|=USART_CR1_TXEIE;
+			}else{
+				answer=false;
+				break;
+			}				
+		}
+	}else{
+		answer=false;
 	}
 	
-	
-	putStringToSendQueueAndStartSend(str);
-	return (*this);
+	return answer;
 }
 
+//defOUartQueues& PSerialPortRTX5::operator<<(string &data){
+//	
+//	putStringToSendQueueAndStartSend(data);
+//	
+//	return (*this);
+//}
 
-int defOUartRTX5queues::sendSignFromSendQueue(){
+//defOUartQueues& PSerialPortRTX5::operator<<(const char *data){
+//	
+//	string str(data);
+//	
+//	putStringToSendQueueAndStartSend(str);
+//	return (*this);
+//}
+
+//defOUartQueues& PSerialPortRTX5::operator<<(map<char, int> &values){
+//	
+//	string str;
+//	
+//	for(auto it=values.begin(); it!=values.end(); it++){
+//		str+=(*it).first;
+//		str+=to_string((*it).second);
+//		str+=" ";
+//	}
+//	
+//	
+//	putStringToSendQueueAndStartSend(str);
+//	return (*this);
+//}
+
+
+int PSerialPortRTX5::sendSignFromSendQueue(){
 		char sign;	
 		osStatus_t status;
 
@@ -146,14 +207,16 @@ int defOUartRTX5queues::sendSignFromSendQueue(){
 		if(status==osOK){
 			port->DR=sign;
 		}else{
-			port->CR1&=~USART_CR1_TXEIE;	
-			port->CR1|=USART_CR1_RE;			
+			if(mode==ReadOnly || mode==ReadWrite){
+				port->CR1&=~USART_CR1_TXEIE;	
+				port->CR1|=USART_CR1_RE;			
+			}
 		}
 
 		return status;
  }
 
-void defOUartRTX5queues::receiveSignAndWriteToReceiveQueue(){
+void PSerialPortRTX5::receiveSignAndWriteToReceiveQueue(){
 	char receiveChar;
 	
 	receiveChar=(uint8_t)(port->DR); 
@@ -162,7 +225,7 @@ void defOUartRTX5queues::receiveSignAndWriteToReceiveQueue(){
 }
 
 
-void defOUartRTX5queues::getStringFromReceiveQueue(){
+void PSerialPortRTX5::receiveQueueListen(){
 	char receiveChar;
 	
 		if(getStringFlag==false){

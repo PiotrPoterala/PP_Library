@@ -31,32 +31,34 @@
 
   #include "stm32xx.h"
 
-	#include "pp_rtos_uart_queue.h"
+	#include "pp_iodevice.h"
 	#include <string>
 	
 	using namespace std;
 
-class defOUartQueuesDecorator: public defOUartQueues{
+class PIOdeviceDecorator: public PIOdevice{
 		
 		private:
-			defOUartQueues* uartQueues;	
+			PIOdevice* IOdevice;	
 		
 		public:
-			defOUartQueuesDecorator(defOUartQueues* uQueues){uartQueues=uQueues;}
-			virtual ~defOUartQueuesDecorator(){};
-			virtual void portListen() override {uartQueues->portListen();};
-			virtual void putStringToSendQueueAndStartSend(string &data) override {uartQueues->putStringToSendQueueAndStartSend(data);};
-			virtual defOUartQueues& operator<<(string &data) override{ return uartQueues->operator<<(data);};
-			virtual defOUartQueues& operator<<(const char *data) override{return uartQueues->operator<<(data);};
-			virtual defOUartQueues& operator<<(map<char, int> &values)override {return uartQueues->operator<<(values);};
-			virtual int sendSignFromSendQueue() override {return uartQueues->sendSignFromSendQueue();};
-			virtual void receiveSignAndWriteToReceiveQueue() override {uartQueues->receiveSignAndWriteToReceiveQueue();};
-			virtual void getStringFromReceiveQueue() override {uartQueues->getStringFromReceiveQueue();};
+			PIOdeviceDecorator(PIOdevice* device){IOdevice=device;}
+			virtual ~PIOdeviceDecorator(){};
+			virtual bool open(int mode)override {return IOdevice->open(mode);};
+			virtual bool isOpen()override {return IOdevice->isOpen();};
+			virtual bool close()override {return IOdevice->close();};
+			virtual void portListen() override {IOdevice->portListen();};
+			virtual bool write(string &data) override {return IOdevice->write(data);};
+			virtual bool write(const char *data) override {return IOdevice->write(data);};
+//			virtual defOUartQueues& operator<<(string &data) override{ return uartQueues->operator<<(data);};
+//			virtual defOUartQueues& operator<<(const char *data) override{return uartQueues->operator<<(data);};
+//			virtual defOUartQueues& operator<<(map<char, int> &values)override {return uartQueues->operator<<(values);};
+			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
 			
-			virtual bool isReceiveString() override {return uartQueues->isReceiveString();};
-			virtual string getReceiveString() override {return uartQueues->getReceiveString();};
-			virtual void clearReceiveString() override {uartQueues->clearReceiveString();};
+			virtual bool canReadLine() override {return IOdevice->canReadLine();};
+			virtual string readLine() override {return IOdevice->readLine();};
 	};
 
+	
 
 #endif
