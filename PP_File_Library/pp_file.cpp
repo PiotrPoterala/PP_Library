@@ -122,14 +122,14 @@ bool PFile::writeAtTheEnd(const char *data){
 
 }
 
-PFile& PFile::operator<<(const char *data){
-	
-		if(open(FA_WRITE)){
-			writeAtTheEnd(data);
-			close();
-		}
-		return (*this);
-}
+//PFile& PFile::operator<<(const char *data){
+//	
+//		if(open(FA_WRITE)){
+//			writeAtTheEnd(data);
+//			close();
+//		}
+//		return (*this);
+//}
 
 
 string PFile::readLine(){

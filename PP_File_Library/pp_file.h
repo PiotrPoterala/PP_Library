@@ -28,10 +28,11 @@
 				
 				PFile(PVolume *volume, const char* path);	
 			
-				int size();
+				virtual int size();
 				virtual bool isOpen();
 				virtual int pos();
 				virtual bool atEnd();
+				virtual int mode() override {return mode;};
 			
 				virtual bool open(int mode);
 				virtual bool close();
@@ -42,7 +43,7 @@
 				bool writeAtTheEnd(const char *data);
 				virtual string readLine();
 			
-				PFile& operator<<(const char *data);
+	//			PFile& operator<<(const char *data);
 			
 				bool clear();
 

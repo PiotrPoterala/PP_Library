@@ -18,7 +18,7 @@
  */
 
 
-#include "pp_rtx5_uart_queue.h"
+#include "pp_rtx5_serial_port.h"
 
 
 PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx):port(UARTx){
@@ -65,7 +65,7 @@ PSerialPortRTX5::~PSerialPortRTX5(){
 
 bool PSerialPortRTX5::open(int mode){
 	
-	this->mode=mode;
+	openMode=mode;
 	
 	if(mode==ReadOnly || mode==ReadWrite){
 		port->CR1&=~USART_CR1_TXEIE;
@@ -131,7 +131,7 @@ void PSerialPortRTX5::portListen(){
 bool PSerialPortRTX5::write(string &data){
 	bool answer=true;
 	
-	if(mode==WriteOnly || mode==ReadWrite){
+	if(openMode==WriteOnly || openMode==ReadWrite){
 		for(auto it: data){
 			if(osMessageQueuePut(sendQueue, &it, 0, osWaitForever)==osOK){
 				port->CR1&=~USART_CR1_RE;	
@@ -151,7 +151,7 @@ bool PSerialPortRTX5::write(string &data){
 bool PSerialPortRTX5::write(const char *data){
 	bool answer=true;
 	
-	if(mode==WriteOnly || mode==ReadWrite){
+	if(openMode==WriteOnly || openMode==ReadWrite){
 		while(*(data++)){
 			if(osMessageQueuePut(sendQueue, data, 0, osWaitForever)==osOK){
 				port->CR1&=~USART_CR1_RE;	
@@ -168,37 +168,6 @@ bool PSerialPortRTX5::write(const char *data){
 	return answer;
 }
 
-//defOUartQueues& PSerialPortRTX5::operator<<(string &data){
-//	
-//	putStringToSendQueueAndStartSend(data);
-//	
-//	return (*this);
-//}
-
-//defOUartQueues& PSerialPortRTX5::operator<<(const char *data){
-//	
-//	string str(data);
-//	
-//	putStringToSendQueueAndStartSend(str);
-//	return (*this);
-//}
-
-//defOUartQueues& PSerialPortRTX5::operator<<(map<char, int> &values){
-//	
-//	string str;
-//	
-//	for(auto it=values.begin(); it!=values.end(); it++){
-//		str+=(*it).first;
-//		str+=to_string((*it).second);
-//		str+=" ";
-//	}
-//	
-//	
-//	putStringToSendQueueAndStartSend(str);
-//	return (*this);
-//}
-
-
 int PSerialPortRTX5::sendSignFromSendQueue(){
 		char sign;	
 		osStatus_t status;
@@ -207,7 +176,7 @@ int PSerialPortRTX5::sendSignFromSendQueue(){
 		if(status==osOK){
 			port->DR=sign;
 		}else{
-			if(mode==ReadOnly || mode==ReadWrite){
+			if(openMode==ReadOnly || openMode==ReadWrite){
 				port->CR1&=~USART_CR1_TXEIE;	
 				port->CR1|=USART_CR1_RE;			
 			}

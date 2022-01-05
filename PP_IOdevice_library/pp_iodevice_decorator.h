@@ -26,36 +26,37 @@
 @endverbatim
  */
 
-
-#ifndef _UART_QUEUE_H
-	#define _UART_QUEUE_H
+#ifndef _UART_QUEUE_DECORATOR_H
+	#define _UART_QUEUE_DECORATOR_H
 
   #include "stm32xx.h"
 
+	#include "pp_iodevice.h"
 	#include <string>
-	#include <map>
 	
 	using namespace std;
 
-	class defOUartQueues{
+class PIOdeviceDecorator: public PIOdevice{
+		
+		private:
+			PIOdevice* IOdevice;	
 		
 		public:
-			defOUartQueues(){};
-			virtual ~defOUartQueues(){};
-			virtual void portListen()=0;
-			virtual void putStringToSendQueueAndStartSend(string &data) =0;
-			virtual defOUartQueues& operator<<(string &data)=0;	
-			virtual defOUartQueues& operator<<(const char *data)=0;
-			virtual defOUartQueues& operator<<(map<char, int> &values)=0;
-			virtual int sendSignFromSendQueue() =0;
-			virtual void receiveSignAndWriteToReceiveQueue() =0;
-			virtual void getStringFromReceiveQueue()=0;
-		
-		
-			virtual bool isReceiveString() =0;
-			virtual string getReceiveString() =0;
-			virtual void clearReceiveString() =0;
+			PIOdeviceDecorator(PIOdevice* device){IOdevice=device;}
+			virtual ~PIOdeviceDecorator(){};
+			virtual bool open(int mode)override {return IOdevice->open(mode);};
+			virtual bool isOpen()override {return IOdevice->isOpen();};
+			virtual int mode() override {return IOdevice->mode();};
+			virtual bool close()override {return IOdevice->close();};
+			virtual void portListen() override {IOdevice->portListen();};
+			virtual bool write(string &data) override {return IOdevice->write(data);};
+			virtual bool write(const char *data) override {return IOdevice->write(data);};
+			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
+			
+			virtual bool canReadLine() override {return IOdevice->canReadLine();};
+			virtual string readLine() override {return IOdevice->readLine();};
 	};
 
+	
 
 #endif

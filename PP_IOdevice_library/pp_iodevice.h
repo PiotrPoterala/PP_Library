@@ -16,9 +16,11 @@
 				PIOdevice(){};	
 				virtual ~PIOdevice(){};
 					
+				virtual int size(){return 0;};
 				virtual bool isOpen()=0;
 				virtual int pos(){return 0;};
 				virtual bool atEnd(){return false;};
+				virtual int mode()=0;
 			
 				virtual bool open(int mode=ReadWrite)=0;
 				virtual bool close()=0;

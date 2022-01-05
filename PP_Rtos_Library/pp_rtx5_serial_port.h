@@ -45,7 +45,7 @@ class PSerialPortRTX5 : public PIOdevice{
 			osMessageQueueId_t sendQueue;
 		
 			bool openFlag=false;
-			int mode;
+			int openMode;
 		
 			bool getStringFlag=false;
 			string receiveString;
@@ -57,15 +57,12 @@ class PSerialPortRTX5 : public PIOdevice{
 			virtual ~PSerialPortRTX5();
 			virtual bool open(int mode)override ;
 			virtual bool isOpen()override ;
+			virtual int mode() override {return openMode;};
 			virtual bool close()override ;
 			virtual void portListen() override ;
 			virtual bool write(string &data) override;
 			virtual bool write(const char *data) override ;
-//			virtual defOUartQueues& operator<<(string &data) override;	
-//			virtual defOUartQueues& operator<<(const char *data) override;
-//		
-//			virtual defOUartQueues& operator<<(map<char, int> &values)override;
-		
+
 			int sendSignFromSendQueue();
 			void receiveSignAndWriteToReceiveQueue();
 		

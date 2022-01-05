@@ -26,37 +26,26 @@
 @endverbatim
  */
 
-#ifndef _UART_QUEUE_DECORATOR_H
-	#define _UART_QUEUE_DECORATOR_H
+#ifndef _PP_TEXT_STREAM_H
+	#define _PP_TEXT_STREAM_H
 
   #include "stm32xx.h"
 
 	#include "pp_iodevice.h"
 	#include <string>
-	
+	#include <map>
 	using namespace std;
 
-class PIOdeviceDecorator: public PIOdevice{
+class PTextStream{
 		
 		private:
 			PIOdevice* IOdevice;	
 		
 		public:
-			PIOdeviceDecorator(PIOdevice* device){IOdevice=device;}
-			virtual ~PIOdeviceDecorator(){};
-			virtual bool open(int mode)override {return IOdevice->open(mode);};
-			virtual bool isOpen()override {return IOdevice->isOpen();};
-			virtual bool close()override {return IOdevice->close();};
-			virtual void portListen() override {IOdevice->portListen();};
-			virtual bool write(string &data) override {return IOdevice->write(data);};
-			virtual bool write(const char *data) override {return IOdevice->write(data);};
-//			virtual defOUartQueues& operator<<(string &data) override{ return uartQueues->operator<<(data);};
-//			virtual defOUartQueues& operator<<(const char *data) override{return uartQueues->operator<<(data);};
-//			virtual defOUartQueues& operator<<(map<char, int> &values)override {return uartQueues->operator<<(values);};
-			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
-			
-			virtual bool canReadLine() override {return IOdevice->canReadLine();};
-			virtual string readLine() override {return IOdevice->readLine();};
+			PTextStream(PIOdevice* device){IOdevice=device;}
+			PTextStream& operator<<(string &data);
+			PTextStream& operator<<(const char *data);
+			PTextStream& operator<<(map<char, int> &values);
 	};
 
 	
