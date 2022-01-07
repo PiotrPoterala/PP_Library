@@ -21,18 +21,79 @@
 #include "pp_rtx5_serial_port.h"
 
 
-PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx):port(UARTx){
+PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx, BaudRate bRate, DataBits dBits, StopBits sBits, Parity par):name(UARTx){
 
 	sendQueue=osMessageQueueNew(128, sizeof(char), NULL);
 	receiveQueue=osMessageQueueNew(128, sizeof(char), NULL);
 
+	setBaudRate(bRate);														
+	setStopBits(sBits);																	
+	setDataBits(dBits);		
+	setParity(par);																		
 }
 
+void PSerialPortRTX5::setBaudRate(BaudRate bRate){
+
+		baudRateMode=bRate;
+
+	  double divider = ((double)90000000 / (16*baudRateMode));		//PLCK1/(16*BAUD) for oversampling=16    
+		name->CR1&=~USART_CR1_OVER8; //oversampling=16 
+		name->BRR |= (uint16_t)divider << 4;
+		name->BRR |= (uint16_t)((divider-(uint16_t)divider)*16);
+	
+};
+void PSerialPortRTX5::setStopBits(StopBits sBits){
+
+	stopBitsMode=sBits;
+
+	if(sBits==Stop1){
+			name->CR2=(name->CR2 & ~USART_CR2_STOP);	
+	}else if(sBits==Stop0_5){
+		name->CR2=(name->CR2 & ~USART_CR2_STOP) | USART_CR2_STOP_0 ;	
+	}else if(sBits==Stop2){
+		name->CR2=(name->CR2 & ~USART_CR2_STOP) | USART_CR2_STOP_1 ;	
+	}else if(sBits==Stop1_5){
+		name->CR2=(name->CR2 & ~USART_CR2_STOP) | USART_CR2_STOP_0 | USART_CR2_STOP_1 ;	
+	}
+	
+};
+
+void PSerialPortRTX5::setDataBits(DataBits dBits){
+
+		dataBitsMode=dBits;
+
+		if(dBits==Data8){
+			name->CR1&=~USART_CR1_M;
+		}else if(dBits==Data8){
+			name->CR1|=USART_CR1_M;
+		}
+};
+
+
+void PSerialPortRTX5::setParity(Parity par){
+		parityMode=par;
+	
+		if(par==NoParity){
+			name->CR1&=~USART_CR1_PCE;
+		}else if(par==EvenParity){
+			name->CR1|=USART_CR1_PCE;
+			name->CR1&=~USART_CR1_PS;
+		}else if(par==OddParity){
+			name->CR1|=USART_CR1_PCE;
+			name->CR1|=USART_CR1_PS;
+		}
+		
+};
 
 PSerialPortRTX5::PSerialPortRTX5(const PSerialPortRTX5 &serialPort){
 
-	port=serialPort.port;
-		
+	name=serialPort.name;
+	baudRateMode=serialPort.baudRateMode;
+	stopBitsMode=serialPort.stopBitsMode;
+	dataBitsMode=serialPort.dataBitsMode;
+	parityMode=serialPort.parityMode;	
+	
+	
 	getStringFlag=serialPort.getStringFlag;
 	receiveString=serialPort.receiveString;
 	
@@ -44,7 +105,11 @@ PSerialPortRTX5::PSerialPortRTX5(const PSerialPortRTX5 &serialPort){
 
 PSerialPortRTX5& PSerialPortRTX5::operator=(const PSerialPortRTX5 &serialPort){
 	
-	port=serialPort.port;
+	name=serialPort.name;
+	baudRateMode=serialPort.baudRateMode;
+	stopBitsMode=serialPort.stopBitsMode;
+	dataBitsMode=serialPort.dataBitsMode;
+	parityMode=serialPort.parityMode;	
 		
 	getStringFlag=serialPort.getStringFlag;
 	receiveString=serialPort.receiveString;
@@ -68,16 +133,16 @@ bool PSerialPortRTX5::open(int mode){
 	openMode=mode;
 	
 	if(mode==ReadOnly || mode==ReadWrite){
-		port->CR1&=~USART_CR1_TXEIE;
-		port->CR1|=USART_CR1_RE;
+		name->CR1&=~USART_CR1_TXEIE;
+		name->CR1|=USART_CR1_RE;
 	}else if(mode==PIOdevice::WriteOnly){	
-		port->CR1&=~USART_CR1_RE;	
-		port->CR1|=USART_CR1_TXEIE;
+		name->CR1&=~USART_CR1_RE;	
+		name->CR1|=USART_CR1_TXEIE;
 	}
 	
-	port->CR1|=USART_CR1_TE;
-	port->CR1|=USART_CR1_RXNEIE;
-	port->CR1|=USART_CR1_UE;	
+	name->CR1|=USART_CR1_TE;
+	name->CR1|=USART_CR1_RXNEIE;
+	name->CR1|=USART_CR1_UE;	
 	openFlag=true;
 	return true;
 }
@@ -88,7 +153,7 @@ bool PSerialPortRTX5::isOpen(){
 
 bool PSerialPortRTX5::close(){
 	
-	port->CR1&=~USART_CR1_UE;
+	name->CR1&=~USART_CR1_UE;
 	openFlag=false;
 	return true;
 }
@@ -120,9 +185,9 @@ string PSerialPortRTX5::readLine(){
 
 void PSerialPortRTX5::portListen(){
 	
-	if(port->SR & USART_SR_RXNE){  
+	if(name->SR & USART_SR_RXNE){  
 		receiveSignAndWriteToReceiveQueue();
-  }else if(port->SR & USART_SR_TXE){  
+  }else if(name->SR & USART_SR_TXE){  
 		sendSignFromSendQueue();
   }
 }
@@ -134,8 +199,8 @@ bool PSerialPortRTX5::write(string &data){
 	if(openMode==WriteOnly || openMode==ReadWrite){
 		for(auto it: data){
 			if(osMessageQueuePut(sendQueue, &it, 0, osWaitForever)==osOK){
-				port->CR1&=~USART_CR1_RE;	
-				port->CR1|=USART_CR1_TXEIE;
+				name->CR1&=~USART_CR1_RE;	
+				name->CR1|=USART_CR1_TXEIE;
 			}else{
 				answer=false;
 				break;
@@ -152,10 +217,10 @@ bool PSerialPortRTX5::write(const char *data){
 	bool answer=true;
 	
 	if(openMode==WriteOnly || openMode==ReadWrite){
-		while(*(data++)){
-			if(osMessageQueuePut(sendQueue, data, 0, osWaitForever)==osOK){
-				port->CR1&=~USART_CR1_RE;	
-				port->CR1|=USART_CR1_TXEIE;
+		while(*data){
+			if(osMessageQueuePut(sendQueue, (data++), 0, osWaitForever)==osOK){
+				name->CR1&=~USART_CR1_RE;	
+				name->CR1|=USART_CR1_TXEIE;
 			}else{
 				answer=false;
 				break;
@@ -174,11 +239,11 @@ int PSerialPortRTX5::sendSignFromSendQueue(){
 
 		status=osMessageQueueGet(sendQueue, &sign, NULL, 0);
 		if(status==osOK){
-			port->DR=sign;
+			name->DR=sign;
 		}else{
 			if(openMode==ReadOnly || openMode==ReadWrite){
-				port->CR1&=~USART_CR1_TXEIE;	
-				port->CR1|=USART_CR1_RE;			
+				name->CR1&=~USART_CR1_TXEIE;	
+				name->CR1|=USART_CR1_RE;			
 			}
 		}
 
@@ -188,7 +253,7 @@ int PSerialPortRTX5::sendSignFromSendQueue(){
 void PSerialPortRTX5::receiveSignAndWriteToReceiveQueue(){
 	char receiveChar;
 	
-	receiveChar=(uint8_t)(port->DR); 
+	receiveChar=(uint8_t)(name->DR); 
 	osMessageQueuePut (receiveQueue, &receiveChar, 0, 0); 
 	
 }

@@ -49,6 +49,7 @@ bool PFile::open(int mode){
 		
 			if(fresult==FR_OK){
 				openFlag=true;
+				openMode=mode;
 				position=0;
 				return true;
 			}
@@ -80,10 +81,10 @@ bool PFile::seek(int pos){
 	
 }
 
-bool PFile::write(string *data){
+bool PFile::write(string &data){
 		int fresult;
 
-		fresult=f_puts(data->c_str(), &file);
+		fresult=f_puts(data.c_str(), &file);
 
 		if(fresult==FR_OK) return true;
 		return false;
@@ -100,7 +101,7 @@ bool PFile::write(const char *data){
 
 }
 
-bool PFile::writeAtTheEnd(string *data){
+bool PFile::writeAtTheEnd(string &data){
 		bool result=false;
 	
 		if(seek(file.obj.objsize)){

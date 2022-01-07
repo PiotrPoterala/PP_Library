@@ -43,9 +43,11 @@ class PTextStream{
 		
 		public:
 			PTextStream(PIOdevice* device){IOdevice=device;}
+			PTextStream& operator<<(int data);
 			PTextStream& operator<<(string &data);
 			PTextStream& operator<<(const char *data);
 			PTextStream& operator<<(map<char, int> &values);
+			
 	};
 
 	

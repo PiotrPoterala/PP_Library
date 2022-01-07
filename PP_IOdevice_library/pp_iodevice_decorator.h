@@ -44,19 +44,28 @@ class PIOdeviceDecorator: public PIOdevice{
 		public:
 			PIOdeviceDecorator(PIOdevice* device){IOdevice=device;}
 			virtual ~PIOdeviceDecorator(){};
-			virtual bool open(int mode)override {return IOdevice->open(mode);};
+				
 			virtual bool isOpen()override {return IOdevice->isOpen();};
 			virtual int mode() override {return IOdevice->mode();};
+			
+			virtual bool open(int mode)override {return IOdevice->open(mode);};
 			virtual bool close()override {return IOdevice->close();};
-			virtual void portListen() override {IOdevice->portListen();};
 			virtual bool write(string &data) override {return IOdevice->write(data);};
 			virtual bool write(const char *data) override {return IOdevice->write(data);};
-			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
-			
 			virtual bool canReadLine() override {return IOdevice->canReadLine();};
 			virtual string readLine() override {return IOdevice->readLine();};
+			
+			//file
+			virtual bool seek(int pos) override {return IOdevice->seek(pos);};
+			virtual int size() override {return IOdevice->size();};
+			virtual int pos() override {return IOdevice->pos();};
+			virtual bool atEnd() override {return IOdevice->atEnd();};
+			
+			//uart
+			virtual void portListen() override {IOdevice->portListen();};
+			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
+			
 	};
-
-	
+				
 
 #endif

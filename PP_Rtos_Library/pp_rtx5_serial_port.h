@@ -39,8 +39,19 @@
 
 class PSerialPortRTX5 : public PIOdevice{
 		
+		public:
+			enum	BaudRate {Baud1200=1200, Baud2400=2400, Baud4800=4800, Baud9600=9600, Baud19200=19200};
+			enum	DataBits {Data8, Data9};
+			enum	StopBits {Stop1, Stop0_5, Stop2, Stop1_5};
+			enum	Parity {NoParity, EvenParity, OddParity};	
+	
 		private:
-			USART_TypeDef* port;
+			USART_TypeDef* name;
+			BaudRate baudRateMode;
+			StopBits stopBitsMode;
+			DataBits dataBitsMode;
+			Parity parityMode;
+		
 			osMessageQueueId_t receiveQueue;
 			osMessageQueueId_t sendQueue;
 		
@@ -51,10 +62,21 @@ class PSerialPortRTX5 : public PIOdevice{
 			string receiveString;
 		
 		public:
-			PSerialPortRTX5(USART_TypeDef* UARTx);
+			PSerialPortRTX5(USART_TypeDef* UARTx, BaudRate bRate=Baud9600, DataBits dBits=Data8, StopBits sBits=Stop1, Parity par=NoParity);
 			PSerialPortRTX5(const PSerialPortRTX5 &serialPort);
 			PSerialPortRTX5& operator=(const PSerialPortRTX5 &serialPort);
 			virtual ~PSerialPortRTX5();
+		
+			BaudRate baudRate(){return baudRateMode;};
+			StopBits stopBits(){return stopBitsMode;};
+			DataBits dataBits(){return dataBitsMode;};
+			Parity parity(){return parityMode;};
+		
+			void setBaudRate(BaudRate bRate);
+			void setStopBits(StopBits sBits);
+			void setDataBits(DataBits dBits);
+			void setParity(Parity par);
+		
 			virtual bool open(int mode)override ;
 			virtual bool isOpen()override ;
 			virtual int mode() override {return openMode;};
@@ -70,7 +92,6 @@ class PSerialPortRTX5 : public PIOdevice{
 		
 			virtual bool canReadLine() override ;
 			virtual string readLine() override ;
-	//		virtual void clearReceiveString() override ;
 
 	};
 

@@ -16,7 +16,7 @@
 				char volume;
 				FATFS g_sFatFs;
 			
-		}
+		};
 
 		class PFile : public PIOdevice{
 			private:
@@ -24,26 +24,27 @@
 				PVolume *volume;
 				FIL file;
 			
+				bool openFlag=false;
+				int openMode;
+				int position;
 			public:
 				
 				PFile(PVolume *volume, const char* path);	
 			
-				virtual int size();
-				virtual bool isOpen();
-				virtual int pos();
-				virtual bool atEnd();
-				virtual int mode() override {return mode;};
+				virtual int size() override ;
+				virtual bool isOpen() override ;
+				virtual int pos() override ;
+				virtual bool atEnd() override ;
+				virtual int mode() override {return openMode;};
 			
-				virtual bool open(int mode);
-				virtual bool close();
-				virtual bool seek(int pos);
-				virtual bool write(string *data);
-				virtual bool write(const char *data);
-				bool writeAtTheEnd(string *data);
+				virtual bool open(int mode) override ;
+				virtual bool close() override ;
+				virtual bool seek(int pos) override ;
+				virtual bool write(string &data) override ;
+				virtual bool write(const char *data) override ;
+				bool writeAtTheEnd(string &data);
 				bool writeAtTheEnd(const char *data);
-				virtual string readLine();
-			
-	//			PFile& operator<<(const char *data);
+				virtual string readLine() override;
 			
 				bool clear();
 

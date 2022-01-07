@@ -1,7 +1,18 @@
 #include "pp_text_stream.h"
 
 
-
+PTextStream& PTextStream::operator<<(int data){
+	
+	if(IOdevice->mode()==PIOdevice::WriteOnly || IOdevice->mode()==PIOdevice::ReadWrite){
+		string str;
+		IOdevice->seek(IOdevice->size());
+		
+		str=to_string(data);
+		IOdevice->write(str);
+	}
+	return (*this);
+	
+}
 
 PTextStream& PTextStream::operator<<(string &data){
 	
