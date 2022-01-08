@@ -56,7 +56,7 @@ class PSerialPortRTX5 : public PIOdevice{
 			osMessageQueueId_t sendQueue;
 		
 			bool openFlag=false;
-			int openMode;
+			OpenMode openMode;
 		
 			bool getStringFlag=false;
 			string receiveString;
@@ -77,9 +77,9 @@ class PSerialPortRTX5 : public PIOdevice{
 			void setDataBits(DataBits dBits);
 			void setParity(Parity par);
 		
-			virtual bool open(int mode)override ;
+			virtual bool open(OpenMode mode)override ;
 			virtual bool isOpen()override ;
-			virtual int mode() override {return openMode;};
+			virtual OpenMode mode() override {return openMode;};
 			virtual bool close()override ;
 			virtual void portListen() override ;
 			virtual bool write(string &data) override;

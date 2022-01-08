@@ -35,16 +35,31 @@ bool PFile::atEnd(){
 	
 }
 
-bool PFile::open(int mode){
-		int fresult;
-		string filePath;
+string PFile::fullPath(){
+	string filePath;
+	
+	filePath+=volume->volume;
+	filePath+=":";
+	filePath+=path;
+	return filePath;
+}
 
+bool PFile::open(OpenMode mode){
+		int fresult;
+		int fmode;
+
+		if(mode==ReadOnly){
+			fmode=FA_READ;
+		}else if(mode==WriteOnly){
+			fmode=FA_WRITE | FA_OPEN_ALWAYS;
+		}else if(mode==ReadWrite){	
+			fmode=FA_WRITE | FA_READ;
+		}
+	
+	
 			fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
 			if(fresult==FR_OK){
-				filePath+=volume->volume;
-				filePath+=":";
-				filePath+=path;
-				fresult=f_open(&file, filePath.c_str(), mode);
+				fresult=f_open(&file, fullPath().c_str(), fmode);
 			}
 		
 			if(fresult==FR_OK){
@@ -166,12 +181,35 @@ string PFile::readLine(){
 		return result;
 }
 
-bool PFile::clear(){
-		bool result=false;
+bool PFile::exists(){
 	
-		if(open(FA_CREATE_ALWAYS)){
-			result=close();
+		int fresult;
+
+		fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
+		if(fresult==FR_OK){
+			fresult=f_open(&file, fullPath().c_str(), FA_OPEN_EXISTING);
 		}
-		
-		return result;
+	
+		if(fresult==FR_OK){
+			close();
+			return true;
+		}
+		return false;
+	
+}
+
+bool PFile::clear(){
+		int fresult;
+
+		fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
+		if(fresult==FR_OK){
+			fresult=f_open(&file, fullPath().c_str(), FA_CREATE_ALWAYS);
+		}
+	
+		if(fresult==FR_OK){
+			close();
+			return true;
+		}
+		return false;
+	
 }

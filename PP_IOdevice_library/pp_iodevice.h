@@ -10,21 +10,21 @@
 		class PIOdevice{		
 			
 			public:
-				enum{ReadOnly=1, WriteOnly, ReadWrite};
+				enum OpenMode{ReadOnly=1, WriteOnly, ReadWrite};
 			
 			
 				PIOdevice(){};	
 				virtual ~PIOdevice(){};
 					
 				virtual bool isOpen()=0;
-				virtual int mode()=0;
+				virtual OpenMode mode()=0;
 			
-				virtual bool open(int mode=ReadWrite)=0;
+				virtual bool open(OpenMode mode=ReadWrite)=0;
 				virtual bool close()=0;
 				virtual bool write(string &data)=0;
 				virtual bool write(const char *data)=0;
 				virtual string readLine()=0;
-				virtual bool canReadLine()=0;
+				virtual bool canReadLine(){return true;};
 			
 				//file
 				virtual bool seek(int pos){return true;};

@@ -128,7 +128,7 @@ PSerialPortRTX5::~PSerialPortRTX5(){
 	
 }
 
-bool PSerialPortRTX5::open(int mode){
+bool PSerialPortRTX5::open(OpenMode mode){
 	
 	openMode=mode;
 	

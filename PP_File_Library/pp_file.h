@@ -13,6 +13,7 @@
 		class PVolume{
 			
 			public:
+				PVolume(char vol):volume(vol){};
 				char volume;
 				FATFS g_sFatFs;
 			
@@ -25,7 +26,7 @@
 				FIL file;
 			
 				bool openFlag=false;
-				int openMode;
+				OpenMode openMode;
 				int position;
 			public:
 				
@@ -35,9 +36,9 @@
 				virtual bool isOpen() override ;
 				virtual int pos() override ;
 				virtual bool atEnd() override ;
-				virtual int mode() override {return openMode;};
+				virtual OpenMode mode() override {return openMode;};
 			
-				virtual bool open(int mode) override ;
+				virtual bool open(OpenMode mode) override ;
 				virtual bool close() override ;
 				virtual bool seek(int pos) override ;
 				virtual bool write(string &data) override ;
@@ -46,6 +47,8 @@
 				bool writeAtTheEnd(const char *data);
 				virtual string readLine() override;
 			
+				string fullPath();
+				bool exists();
 				bool clear();
 
 		};
