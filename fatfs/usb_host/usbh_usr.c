@@ -1,5 +1,9 @@
 #include "usbh_usr.h"
-//#include "tm_stm32f4_usb_msc_host.h"
+
+
+USB_OTG_CORE_HANDLE     USB_OTG_Core;
+USBH_HOST               USB_Host;
+USBmscHostState usbhResult;
 
 USBH_Usr_cb_TypeDef USR_Callbacks = {
 	USBH_USR_Init,
@@ -22,33 +26,32 @@ USBH_Usr_cb_TypeDef USR_Callbacks = {
 	USBH_USR_UnrecoveredError
 };
 
-extern TM_USB_MSCHOST_Result_t 	TM_USB_MSCHOST_INT_Result;
 uint8_t Application = USH_USR_FS_INIT;
 
 void USBH_USR_Init(void) {
 	/* USB Library has been initialized, device is not connected yet */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Disconnected;
+	usbhResult = USB_MSCHOST_Disconnected;
 	/* We have to initialize first */
 	Application = USH_USR_FS_INIT;
 }
 
 void USBH_USR_DeviceAttached(void) {
 	/* Device has been initialized, device is not connected yet */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Disconnected;
+	usbhResult = USB_MSCHOST_Disconnected;
 	/* We have to initialize first */
 	Application = USH_USR_FS_INIT;
 }
 
 void USBH_USR_UnrecoveredError (void) {
 	/*  */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Disconnected;	
+	usbhResult = USB_MSCHOST_Disconnected;	
 	/* We have to initialize first */
 	Application = USH_USR_FS_INIT;
 }
 
 void USBH_USR_DeviceDisconnected (void) {
 	/* Device disconnected */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Disconnected;
+	usbhResult = USB_MSCHOST_Disconnected;
 	
 	/* We have to initialize first */
 	Application = USH_USR_FS_INIT;
@@ -97,7 +100,7 @@ void USBH_USR_EnumerationDone(void) {
 
 void USBH_USR_DeviceNotSupported(void) {
 	/* Device is not supported */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_DeviceNotSupported;
+	usbhResult = USB_MSCHOST_DeviceNotSupported;
 }
 
 USBH_USR_Status USBH_USR_UserInput(void) {
@@ -106,7 +109,7 @@ USBH_USR_Status USBH_USR_UserInput(void) {
 
 void USBH_USR_OverCurrentDetected (void) {
 	/* Error */
-	TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Error;
+	usbhResult = USB_MSCHOST_Error;
 }
 
 int USBH_USR_MSC_Application(void) {
@@ -115,10 +118,10 @@ int USBH_USR_MSC_Application(void) {
 		Application = USH_USR_FS_LOOP;
 		
 		/* Device is connected */
-		TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_Connected;
+		usbhResult = USB_MSCHOST_Connected;
 		if (USBH_MSC_Param.MSWriteProtect == DISK_WRITE_PROTECTED) {
 			/* Device is write protected */
-			TM_USB_MSCHOST_INT_Result = TM_USB_MSCHOST_Result_WriteProtected;
+			usbhResult = USB_MSCHOST_WriteProtected;
 		}
 	}
 	

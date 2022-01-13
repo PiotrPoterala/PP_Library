@@ -73,6 +73,10 @@ void disk_timerproc (void);
 #define ATA_GET_MODEL		21	/* Get model name */
 #define ATA_GET_SN			22	/* Get serial number */
 
+
+#define DEV_SD			0	/* Example: Map MMC/SD card to physical drive 0 */
+#define DEV_USB			1	/* Example: Map USB MSD to physical drive 1 */
+
 #ifdef __cplusplus
 }
 #endif

@@ -11,9 +11,6 @@
 #include "fatfs_sd.h"
 #include "fatfs_usb.h"
 
-#define DEV_SD			0	/* Example: Map MMC/SD card to physical drive 0 */
-#define DEV_USB			1	/* Example: Map USB MSD to physical drive 1 */
-
 /*-----------------------------------------------------------------------*/
 /* Get Drive Status                                                      */
 /*-----------------------------------------------------------------------*/

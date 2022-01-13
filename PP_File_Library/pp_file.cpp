@@ -39,14 +39,13 @@ string PFile::fullPath(){
 	string filePath;
 	
 	filePath+=volume->volume;
-	filePath+=":";
 	filePath+=path;
 	return filePath;
 }
 
 bool PFile::open(OpenMode mode){
 		int fresult;
-		int fmode;
+		int fmode=FA_OPEN_ALWAYS;
 
 		if(mode==ReadOnly){
 			fmode=FA_READ;
@@ -57,7 +56,7 @@ bool PFile::open(OpenMode mode){
 		}
 	
 	
-			fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
+			fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
 			if(fresult==FR_OK){
 				fresult=f_open(&file, fullPath().c_str(), fmode);
 			}
@@ -76,7 +75,7 @@ bool PFile::close(){
 		int fresult;
 
 			fresult=f_close(&file);
-			if(fresult==FR_OK)fresult=f_mount(0, &volume->volume, 1);
+			if(fresult==FR_OK)fresult=f_mount(0, volume->volume.c_str(), 1);
 
 
 			if(fresult==FR_OK){
@@ -183,9 +182,10 @@ string PFile::readLine(){
 
 bool PFile::exists(){
 	
-		int fresult;
-
-		fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
+		int fresult=FR_OK;
+//	if(TM_USB_MSCHOST_Device()!=TM_USB_MSCHOST_Result_Connected) return false;
+		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+	
 		if(fresult==FR_OK){
 			fresult=f_open(&file, fullPath().c_str(), FA_OPEN_EXISTING);
 		}
@@ -201,7 +201,8 @@ bool PFile::exists(){
 bool PFile::clear(){
 		int fresult;
 
-		fresult=f_mount(&volume->g_sFatFs, &volume->volume, 1);
+	
+		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
 		if(fresult==FR_OK){
 			fresult=f_open(&file, fullPath().c_str(), FA_CREATE_ALWAYS);
 		}

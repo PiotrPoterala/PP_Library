@@ -13,8 +13,12 @@
 		class PVolume{
 			
 			public:
-				PVolume(char vol):volume(vol){};
-				char volume;
+				PVolume(const char* vol):volume(vol){};
+				PVolume(int vol){
+					volume=to_string(vol);
+					volume+=":";
+				};
+				string volume;
 				FATFS g_sFatFs;
 			
 		};

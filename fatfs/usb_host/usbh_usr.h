@@ -14,9 +14,6 @@
 #include <stdio.h>
 #include "usbh_msc_core.h"
 
-#include "tm_stm32f4_usb_msc_host.h"
-
-
 
 /* This value can be equal to (512 * x) according to RAM size availability with x=[1, 128]
    In this project x is fixed to 64 => 512 * 64 = 32768bytes = 32 Kbytes */   
@@ -31,6 +28,16 @@
 extern  USBH_Usr_cb_TypeDef USR_Callbacks;
 /* Exported functions ------------------------------------------------------- */ 
 
+typedef enum {
+				 	USB_MSCHOST_Error,                /*!< An error occurred */
+					USB_MSCHOST_Connected,            /*!< Device is connected and ready to use with FATFS */
+					USB_MSCHOST_Disconnected,         /*!< Device is not connected */
+					USB_MSCHOST_DeviceNotSupported,   /*!< Device is not supported */
+					USB_MSCHOST_WriteProtected,       /*!< Device is write protected */
+					USB_MSCHOST_LibraryNotInitialized /*!< Library is not initialized yet */
+			 }USBmscHostState;
+
+			 
 void USBH_USR_Init(void);
 void USBH_USR_DeviceAttached(void);
 void USBH_USR_ResetDevice(void);
