@@ -31,10 +31,11 @@
 				virtual int size(){return 0;};
 				virtual int pos(){return 0;};
 				virtual bool atEnd(){return false;};
+				virtual bool exists(){return true;};
 				
 				//uart
 				virtual void portListen(){};
-				virtual void receiveQueueListen(){};
+				virtual bool waitForReadyRead(int usec){return true;};
 
 		};
 #endif

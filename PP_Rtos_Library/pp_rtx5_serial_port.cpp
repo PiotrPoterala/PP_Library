@@ -19,7 +19,7 @@
 
 
 #include "pp_rtx5_serial_port.h"
-
+#include "RTX_Config.h"
 
 PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx, BaudRate bRate, DataBits dBits, StopBits sBits, Parity par):name(UARTx){
 
@@ -167,21 +167,22 @@ bool PSerialPortRTX5::canReadLine(){
 }
 
 string PSerialPortRTX5::readLine(){
+	string returnStr;
 	
-	string returnStr=receiveString;
-	receiveString.clear();
-	getStringFlag=false;
+	if(canReadLine()){
+		returnStr=receiveString;
+		clear();
+	}
 	return returnStr;
-	
 	
 }
 
-//void PSerialPortRTX5::clearReceiveString(){
-//	
-//	receiveString.clear();
-//	getStringFlag=false;
-//	
-//}
+void PSerialPortRTX5::clear(){
+	
+	receiveString.clear();
+	getStringFlag=false;
+	
+}
 
 void PSerialPortRTX5::portListen(){
 	
@@ -258,12 +259,18 @@ void PSerialPortRTX5::receiveSignAndWriteToReceiveQueue(){
 	
 }
 
-
-void PSerialPortRTX5::receiveQueueListen(){
-	char receiveChar;
+bool PSerialPortRTX5::waitForReadyRead(int usec){
+		char receiveChar;
+		int tick;
+	
+		if(usec==osWaitForever){
+			tick=osWaitForever;
+		}else{
+			tick=(OS_TICK_FREQ/1000000)*usec;
+		}
 	
 		if(getStringFlag==false){
-			if(osMessageQueueGet(receiveQueue, &receiveChar, NULL, osWaitForever) == osOK){
+			if(osMessageQueueGet(receiveQueue, &receiveChar, NULL, tick) == osOK){
 
 				receiveString+=receiveChar; 
 
@@ -275,9 +282,11 @@ void PSerialPortRTX5::receiveQueueListen(){
 						receiveString.clear();
 					
 				}
-
+				return true;
 			}  
 		}
+		
+		return false;
 	
 }
 

@@ -85,10 +85,11 @@ class PSerialPortRTX5 : public PIOdevice{
 			virtual bool write(string &data) override;
 			virtual bool write(const char *data) override ;
 
+			void clear();
 			int sendSignFromSendQueue();
 			void receiveSignAndWriteToReceiveQueue();
 		
-			virtual void receiveQueueListen() override;
+			virtual bool waitForReadyRead(int usec) override;
 		
 			virtual bool canReadLine() override ;
 			virtual string readLine() override ;

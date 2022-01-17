@@ -50,7 +50,7 @@ bool PFile::open(OpenMode mode){
 		if(mode==ReadOnly){
 			fmode=FA_READ;
 		}else if(mode==WriteOnly){
-			fmode=FA_WRITE | FA_OPEN_ALWAYS;
+			fmode=FA_WRITE | FA_CREATE_ALWAYS;
 		}else if(mode==ReadWrite){	
 			fmode=FA_WRITE | FA_READ;
 		}

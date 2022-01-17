@@ -50,9 +50,9 @@
 				bool writeAtTheEnd(string &data);
 				bool writeAtTheEnd(const char *data);
 				virtual string readLine() override;
+				virtual bool exists() override;
 			
 				string fullPath();
-				bool exists();
 				bool clear();
 
 		};

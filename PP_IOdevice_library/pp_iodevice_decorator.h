@@ -60,10 +60,11 @@ class PIOdeviceDecorator: public PIOdevice{
 			virtual int size() override {return IOdevice->size();};
 			virtual int pos() override {return IOdevice->pos();};
 			virtual bool atEnd() override {return IOdevice->atEnd();};
+			virtual bool exists()override {return IOdevice->exists();};
 			
 			//uart
 			virtual void portListen() override {IOdevice->portListen();};
-			virtual void receiveQueueListen() override {IOdevice->receiveQueueListen();};
+			virtual bool waitForReadyRead(int usec) override { return IOdevice->waitForReadyRead(usec);};
 			
 	};
 				
