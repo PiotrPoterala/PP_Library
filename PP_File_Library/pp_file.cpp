@@ -168,7 +168,7 @@ string PFile::readLine(){
 					if(isEndSign)bufor[i]='\0'; 
 					if(bufor[i]=='\n'){
 						isEndSign=true;
-						position+=i;
+						position+=(i+1);
 					}
 				}
 
