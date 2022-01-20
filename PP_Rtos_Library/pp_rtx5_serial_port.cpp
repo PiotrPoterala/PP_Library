@@ -19,7 +19,6 @@
 
 
 #include "pp_rtx5_serial_port.h"
-#include "RTX_Config.h"
 
 PSerialPortRTX5::PSerialPortRTX5(USART_TypeDef* UARTx, BaudRate bRate, DataBits dBits, StopBits sBits, Parity par):name(UARTx){
 

@@ -1,4 +1,3 @@
-
 /**
  * @author  Piotr Poterała
  * @email   poterala.piotr@gmail.com
@@ -27,14 +26,15 @@
 @endverbatim
  */
 
-#ifndef _RTX5_UART_QUEUE_H
-	#define _RTX5_UART_QUEUE_H
+#ifndef _RTX5_SERIAL_PORT_H
+	#define _RTX5_SERIAL_PORT_H
 
   #include "stm32xx.h"
 	#include "pp_iodevice.h"
 	
 	
 	#include "cmsis_os2.h"
+	#include "RTX_Config.h"
 	
 
 class PSerialPortRTX5 : public PIOdevice{
