@@ -96,21 +96,26 @@ bool PFile::seek(int pos){
 }
 
 bool PFile::write(string &data){
-		int fresult;
+		int writeChars=0;
 
-		fresult=f_puts(data.c_str(), &file);
-
-		if(fresult==FR_OK) return true;
+		writeChars=f_puts(data.c_str(), &file);
+		if(writeChars>0){
+			position+=writeChars;
+			return true;
+		}
 		return false;
 
 }
 
 bool PFile::write(const char *data){
-		int fresult;
+		int writeChars=0;
 
-		fresult=f_puts(data, &file);
+		writeChars=f_puts(data, &file);
 
-		if(fresult==FR_OK) return true;
+		if(writeChars>0){
+			position+=writeChars;
+			return true;
+		}
 		return false;
 
 }

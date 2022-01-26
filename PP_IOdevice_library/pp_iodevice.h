@@ -46,13 +46,13 @@
 			
 				virtual bool open(OpenMode mode=ReadWrite)=0;
 				virtual bool close()=0;
-				virtual bool write(string &data)=0;
-				virtual bool write(const char *data)=0;
+				virtual bool write(string &data){return false;};
+				virtual bool write(const char *data){return false;};
+				virtual bool write(int data){return false;};
 				virtual string readLine()=0;
-				virtual bool canReadLine(){return true;};
 			
 				//file
-				virtual bool seek(int pos){return true;};
+				virtual bool seek(int pos){return false;};
 				virtual int size(){return 0;};
 				virtual int pos(){return 0;};
 				virtual bool atEnd(){return false;};
@@ -61,7 +61,7 @@
 				//uart
 				virtual void portListen(){};
 				virtual bool waitForReadyRead(int usec){return true;};
-				
+				virtual bool canReadLine(){return true;};
 
 
 		};
