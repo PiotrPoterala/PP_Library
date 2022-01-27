@@ -152,6 +152,52 @@ bool PFile::writeAtTheEnd(const char *data){
 //}
 
 
+string PFile::read(int maxSize){
+		constexpr int buforSize=64;
+	
+		unsigned int readBytes=buforSize;
+		unsigned int bytesToGet=maxSize;
+		unsigned int sizeToRead=0;
+		char bufor[buforSize];
+		string result;
+
+
+		if(position<file.obj.objsize){
+
+			while(bytesToGet>0){
+				f_lseek(&file, position);
+				if(bytesToGet<buforSize){
+					sizeToRead=bytesToGet;		
+				}else{
+					sizeToRead=buforSize;	 	
+				}
+				f_read(&file, bufor, sizeToRead, &readBytes);	//pobranie n bajtów (wartość wskazywana przez ) z danego fileu i zapisanie ich do bufora  
+				bytesToGet-=readBytes;
+				position+=readBytes;
+				result+=bufor;		
+				if(sizeToRead!=readBytes)break;
+			}
+		}
+
+		
+		return result;
+
+
+};
+
+int PFile::read(char *data, int maxSize){
+		unsigned int readBytes=0;
+	
+		if(position<file.obj.objsize){
+			f_lseek(&file, position);
+			f_read(&file, data, maxSize, &readBytes);	//pobranie n bajtów (wartość wskazywana przez ) z danego fileu i zapisanie ich do bufora  		
+			position+=readBytes;			
+		}
+
+		return readBytes;
+
+};
+
 string PFile::readLine(){
 		constexpr int buforSize=64;
 	

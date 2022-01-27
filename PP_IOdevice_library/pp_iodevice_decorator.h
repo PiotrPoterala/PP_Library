@@ -53,6 +53,11 @@ class PIOdeviceDecorator: public PIOdevice{
 			virtual bool write(string &data) override {return IOdevice->write(data);};
 			virtual bool write(const char *data) override {return IOdevice->write(data);};
 			virtual bool canReadLine() override {return IOdevice->canReadLine();};
+			
+			virtual string read(int maxSize)override {return IOdevice->read(maxSize);};
+			virtual int read(char *data, int maxSize)override {return IOdevice->read(data, maxSize);};
+			virtual int read()override {return IOdevice->read();};
+			
 			virtual string readLine() override {return IOdevice->readLine();};
 			
 			//file

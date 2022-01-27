@@ -49,6 +49,11 @@
 				virtual bool write(string &data){return false;};
 				virtual bool write(const char *data){return false;};
 				virtual bool write(int data){return false;};
+				
+				virtual string read(int maxSize){return "";};
+				virtual int read(char *data, int maxSize){return -1;};
+				virtual int read(){return -1;};
+				
 				virtual string readLine()=0;
 			
 				//file

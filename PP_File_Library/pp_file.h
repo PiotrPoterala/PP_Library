@@ -49,6 +49,8 @@
 				virtual bool write(const char *data) override ;
 				bool writeAtTheEnd(string &data);
 				bool writeAtTheEnd(const char *data);
+				virtual string read(int maxSize) override ;
+				virtual int read(char *data, int maxSize) override ;
 				virtual string readLine() override;
 				virtual bool exists() override;
 			

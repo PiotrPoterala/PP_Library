@@ -89,6 +89,11 @@ bool PSTM32Flash::seek(int pos){
 	
 }
 
+int PSTM32Flash::read(){
+	return *(focusAdress++);
+}
+
+
 bool PSTM32Flash::write(int data){
 	#define FLASH_CR_PSIZEx32		0x200
 //The Flash memory programming sequence is as follows:
