@@ -27,8 +27,8 @@
  */
 
 
-#ifndef PP_PARAM_LIST_H
-#define PP_PARAM_LIST_H
+#ifndef PP_DIR_H
+#define PP_DIR_H
 
 #include "stm32xx.h"
 #include <string>
@@ -38,47 +38,28 @@
 
 using namespace std;
 
-class PDisk
+class PDir
 {
-
 private:
-		PVolume volume;
-    vector<PFile*> fileList;
-
+		string dirPath;
 
 public:
-    PDisk(char volume);
+	PDir(const string &path):dirPath(path);
 
-		defOParamList* clone() const;
+		enum	Filters {NoFilter, Dirs, Files, AllObjects};
 
-		defOParamGeneral* getParam(char acronim);
-    map<char, defOParamGeneral*>* getParams(void);
-
-    int getParamValue(char acronim);
-		int getParamUpperLimit(char acronim);
-		int getParamUnit(char acronim);
-		int getParamPrecision(char acronim);
-
-		pair<char, defOParamGeneral*> getParamPair(char acronim);
-		map<char, int> getParamsValues();
-		string getStringWithParams();
-
-		int checkRange(char acronim, int val);
-
-		void insert(pair<char, defOParamGeneral*>);
-    void copyListOfParams(map<char, defOParamGeneral*> &copyParams);
-
-    void clearParams(void);
-		bool setParamValue(char acronim, int val);
-    void setParamsByValue(int value);
-    void setParamsByDefaultValue();
-    void setParamsValue(map<char, defOParamGeneral*> &copyParams);
-
-    bool comparingParamsValue(map<char, defOParamGeneral*> &paramsToComp);
-		bool comparingParamsValue(map<char, int> &paramToComp);
-
-    void setParamsBasedString(PString *data);
-    void checksParamsValue();
+		virtual string	absoluteFilePath(const string &fileName) const=0;
+		virtual string	absolutePath() const=0;
+		virtual bool	cd(const string &dirName)=0;
+		virtual bool	cdUp()=0;
+		virtual unsigned int	count() const=0;
+		virtual string	dirName() const=0;
+	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
+		virtual list<string>	entryList(Filters filters = NoFilter) const=0;
+		virtual bool	exists(const string &name) const=0;
+		virtual bool	exists() const=0;
+			
+		void	setPath(const string &path){dirPath=path;};
 };
 
 #endif 
