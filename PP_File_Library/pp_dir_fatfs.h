@@ -32,29 +32,33 @@
 
 #include "pp_dir.h"
 
+#include "ff.h"
+
 using namespace std;
 
 class PDirFATFS : public PDir
 {
 
+	private:
+		DIR Dir;
+		PVolume *volume;
+	
+	public:
+			PDirFATFS(PVolume *vol, const string &path):volume(vol), dirPath(path);
 
-public:
-	PDir(const string &path):dirPath(path);
-
-		enum	Filters {NoFilter, Dirs, Files, AllObjects};
-
-		virtual string	absoluteFilePath(const string &fileName) const=0;
-		virtual string	absolutePath() const=0;
-		virtual bool	cd(const string &dirName)=0;
-		virtual bool	cdUp()=0;
-		virtual unsigned int	count() const=0;
-		virtual string	dirName() const=0;
-	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-		virtual list<string>	entryList(Filters filters = NoFilter) const=0;
-		virtual bool	exists(const string &name) const=0;
-		virtual bool	exists() const=0;
-			
-		void	setPath(const string &path){dirPath=path;};
+			virtual string	absoluteFilePath(const string &fileName) const override;
+			virtual string	absolutePath() const override;
+			virtual bool	cd(const string &dirName) override;
+			virtual bool	cdUp() override;
+			virtual unsigned int	count() const override;
+			virtual string	dirName() const override;
+		//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
+			virtual vector<string>	entryList(Filters filters = NoFilter) const override;
+			virtual bool	exists(const string &name) const override;
+			virtual bool	exists() override;
+	
+			bool exist(string &path);
+				
 };
 
 #endif 

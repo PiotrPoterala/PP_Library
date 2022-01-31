@@ -30,23 +30,21 @@
 #ifndef PP_DIR_H
 #define PP_DIR_H
 
-#include "stm32xx.h"
 #include <string>
 #include <vector>
-#include "pp_file.h"
-#include "pstring.h"
 
 using namespace std;
 
 class PDir
 {
-private:
+protected:
 		string dirPath;
 
 public:
-	PDir(const string &path):dirPath(path);
-
-		enum	Filters {NoFilter, Dirs, Files, AllObjects};
+		PDir(const string &path):dirPath(path){};
+		virtual ~PDir(){};
+			
+		enum	Filters {NoFilter, Dirs, Files};
 
 		virtual string	absoluteFilePath(const string &fileName) const=0;
 		virtual string	absolutePath() const=0;
@@ -55,9 +53,9 @@ public:
 		virtual unsigned int	count() const=0;
 		virtual string	dirName() const=0;
 	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-		virtual list<string>	entryList(Filters filters = NoFilter) const=0;
+		virtual vector<string>	entryList(Filters filters = NoFilter) const=0;
 		virtual bool	exists(const string &name) const=0;
-		virtual bool	exists() const=0;
+		virtual bool	exists() =0;
 			
 		void	setPath(const string &path){dirPath=path;};
 };

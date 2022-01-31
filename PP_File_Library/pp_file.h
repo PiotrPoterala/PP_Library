@@ -1,8 +1,8 @@
 #ifndef _PP_FILE_H
 	#define _PP_FILE_H
 
-		#include "stm32xx.h"
 		#include "pp_iodevice.h"
+		#include "pp_volume.h"
 		
 		#include <string>
 
@@ -10,18 +10,6 @@
 
 		using namespace std;
 
-		class PVolume{
-			
-			public:
-				PVolume(const char* vol):volume(vol){};
-				PVolume(int vol){
-					volume=to_string(vol);
-					volume+=":";
-				};
-				string volume;
-				FATFS g_sFatFs;
-			
-		};
 
 		class PFile : public PIOdevice{
 			private:
