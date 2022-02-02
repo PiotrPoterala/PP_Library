@@ -1,31 +1,44 @@
 #include "pp_dir_fatfs.h"
 
-
-
-//virtual string	absoluteFilePath(const string &fileName) const override;
-string	PDirFATFS::absolutePath() const{
+bool PDirFATFS::cd(const string &dirName){
 	
-	return dirPath;
+		if(dirName.compare("..")==0){
+			return cdUp();
+		}else{
+			string newDirPath=dirPath+"/"+dirName;
+		
+			if(exist(newDirPath)){
+				dirPath=newDirPath;
+				return true;
+			}
+		}
+	
+		return false;
 }
 
-bool	PDirFATFS::cd(const string &dirName){
+bool PDirFATFS::cdUp(){
+		int find=dirPath.find_last_of("/");
+		string newDirPath=dirPath.substr(0, find);
 	
+		if(exist(newDirPath)){
+			dirPath=newDirPath;
+			return true;
+		}
 	
+		return false;
 	
 }
 
 
-
-//virtual bool	cdUp() override;
-unsigned int	PDirFATFS::count() const{
+unsigned int	PDirFATFS::count(){
 		int fresult=FR_OK;
 		FILINFO fno;
 		unsigned int cnt=0;
 	
-		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult= f_opendir(&Dir, dirPath);                       /* Open the directory */
+			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
 			if (fresult == FR_OK) {
 					for (;;) {
 							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
@@ -40,21 +53,16 @@ unsigned int	PDirFATFS::count() const{
 }
 
 
-
-
-string PDirFATFS::dirName() const{
-	
-}
 ////	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-vector<string> PDirFATFS::entryList(Filters filters) const{
+vector<string> PDirFATFS::entryList(Filters filters) {
 		int fresult=FR_OK;
 		FILINFO fno;
 		vector<string> pathList;
 	
-		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult= f_opendir(&Dir, dirPath);                       /* Open the directory */
+			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
 			if (fresult == FR_OK) {
 					for (;;) {
 							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
@@ -73,9 +81,10 @@ vector<string> PDirFATFS::entryList(Filters filters) const{
 	return pathList;
 }
 
-bool PDirFATFS::exists(const string &name) const{
+bool PDirFATFS::exists(const string &name){
+		string path=dirPath+"/"+name;
 	
-		return exist(dirPath+"/"+name);
+		return exist(path);
 }
 
 
@@ -90,7 +99,7 @@ bool PDirFATFS::exists(){
 bool PDirFATFS::exist(string &path){
 	
 		int fresult=FR_OK;
-		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
 			fresult=f_opendir(&Dir, path.c_str());

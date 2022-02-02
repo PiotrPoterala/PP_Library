@@ -2,7 +2,6 @@
 	#define _PP_FILE_H
 
 		#include "pp_iodevice.h"
-		#include "pp_volume.h"
 		
 		#include <string>
 
@@ -13,16 +12,18 @@
 
 		class PFile : public PIOdevice{
 			private:
-				string path;
-				PVolume *volume;
 				FIL file;
+				FATFS g_sFatFs;
+			
+				string volume;
+				string path;
 			
 				bool openFlag=false;
 				OpenMode openMode;
 				int position;
 			public:
-				
-				PFile(PVolume *volume, const char* path);	
+				PFile(const string &path);
+				PFile(const char* path);	
 			
 				virtual int size() override ;
 				virtual bool isOpen() override ;

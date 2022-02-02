@@ -38,23 +38,26 @@ using namespace std;
 class PDir
 {
 protected:
+		string volume;
 		string dirPath;
 
 public:
-		PDir(const string &path):dirPath(path){};
+		PDir(const string &path);
+		PDir(const char* path);	
 		virtual ~PDir(){};
 			
 		enum	Filters {NoFilter, Dirs, Files};
 
-		virtual string	absoluteFilePath(const string &fileName) const=0;
-		virtual string	absolutePath() const=0;
+		string	absoluteFilePath(const string &fileName) const;
+		string	absolutePath() const;
+		string	dirName() const;
+		
 		virtual bool	cd(const string &dirName)=0;
 		virtual bool	cdUp()=0;
-		virtual unsigned int	count() const=0;
-		virtual string	dirName() const=0;
+		virtual unsigned int	count()=0;
 	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-		virtual vector<string>	entryList(Filters filters = NoFilter) const=0;
-		virtual bool	exists(const string &name) const=0;
+		virtual vector<string>	entryList(Filters filters = NoFilter)=0;
+		virtual bool	exists(const string &name)=0;
 		virtual bool	exists() =0;
 			
 		void	setPath(const string &path){dirPath=path;};

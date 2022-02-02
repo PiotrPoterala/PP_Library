@@ -1,12 +1,22 @@
 #include "pp_file.h"
 
 
-PFile::PFile(PVolume *volume, const char* path){
+PFile::PFile(const string &path){
+			
+	int find=path.find("/");
+	volume=path.substr(0, find+1);
+	this->path=path.substr(find+1);
+		
+}
 
-		this->volume=volume;
-		this->path=path;
-
-}	
+PFile::PFile(const char* path){
+	string newPath=path;	
+	
+	int find=newPath.find("/");
+	volume=newPath.substr(0, find+1);
+	this->path=newPath.substr(find+1);
+		
+}
 
 
 
@@ -38,7 +48,7 @@ bool PFile::atEnd(){
 string PFile::fullPath(){
 	string filePath;
 	
-	filePath+=volume->volume;
+	filePath+=volume;
 	filePath+=path;
 	return filePath;
 }
@@ -54,9 +64,8 @@ bool PFile::open(OpenMode mode){
 		}else if(mode==ReadWrite){	
 			fmode=FA_WRITE | FA_READ;
 		}
-	
-	
-			fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+
+			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 			if(fresult==FR_OK){
 				fresult=f_open(&file, fullPath().c_str(), fmode);
 			}
@@ -75,7 +84,7 @@ bool PFile::close(){
 		int fresult;
 
 			fresult=f_close(&file);
-			if(fresult==FR_OK)fresult=f_mount(0, volume->volume.c_str(), 1);
+			if(fresult==FR_OK)fresult=f_mount(0, volume.c_str(), 1);
 
 
 			if(fresult==FR_OK){
@@ -235,7 +244,7 @@ bool PFile::exists(){
 	
 		int fresult=FR_OK;
 //	if(TM_USB_MSCHOST_Device()!=TM_USB_MSCHOST_Result_Connected) return false;
-		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
 			fresult=f_open(&file, fullPath().c_str(), FA_OPEN_EXISTING);
@@ -253,7 +262,7 @@ bool PFile::clear(){
 		int fresult;
 
 	
-		fresult=f_mount(&volume->g_sFatFs, volume->volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 		if(fresult==FR_OK){
 			fresult=f_open(&file, fullPath().c_str(), FA_CREATE_ALWAYS);
 		}

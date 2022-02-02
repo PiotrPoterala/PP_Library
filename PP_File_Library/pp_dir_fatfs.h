@@ -40,21 +40,18 @@ class PDirFATFS : public PDir
 {
 
 	private:
+		FATFS g_sFatFs;
 		DIR Dir;
-		PVolume *volume;
 	
 	public:
-			PDirFATFS(PVolume *vol, const string &path):volume(vol), dirPath(path);
+			PDirFATFS(const string &path):PDir(path){};
 
-			virtual string	absoluteFilePath(const string &fileName) const override;
-			virtual string	absolutePath() const override;
 			virtual bool	cd(const string &dirName) override;
 			virtual bool	cdUp() override;
-			virtual unsigned int	count() const override;
-			virtual string	dirName() const override;
+			virtual unsigned int	count() override;
 		//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-			virtual vector<string>	entryList(Filters filters = NoFilter) const override;
-			virtual bool	exists(const string &name) const override;
+			virtual vector<string>	entryList(Filters filters = NoFilter) override;
+			virtual bool	exists(const string &name) override;
 			virtual bool	exists() override;
 	
 			bool exist(string &path);

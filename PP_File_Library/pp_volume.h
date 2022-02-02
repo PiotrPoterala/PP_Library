@@ -13,7 +13,7 @@
 				PVolume(const char* vol):volume(vol){};
 				PVolume(int vol){
 					volume=to_string(vol);
-					volume+=":";
+					volume+=":/";
 				};
 				string volume;
 				FATFS g_sFatFs;
