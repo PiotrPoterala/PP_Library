@@ -32,34 +32,37 @@
 
 #include <string>
 #include "pp_file.h"
+#include "pp_dir.h"
 
 using namespace std;
 
 class PFileInfo
 {
-private:
-		PFile *fil;
+protected:
+		string volume;
+		string filePath;
 
+		void setPath(const string &path);
 
 public:
-		PFileInfo(PFile &file):fil(file){};
-
-			
-		enum	Filters {NoFilter, Dirs, Files};
-
-		string	absoluteFilePath(const string &fileName) const;
+		PFileInfo(PFile &file);
+		PFileInfo(PDir &dir);
+		PFileInfo(const string &path);
+		PFileInfo(const char* path);	
+				
+		string	absoluteFilePath() const;
 		string	absolutePath() const;
-		string	dirName() const;
+		string	fileName() const;
 		
-		virtual bool	cd(const string &dirName)=0;
-		virtual bool	cdUp()=0;
-		virtual unsigned int	count()=0;
-	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-		virtual vector<string>	entryList(Filters filters = NoFilter)=0;
-		virtual bool	exists(const string &name)=0;
+		virtual void refresh()=0;
 		virtual bool	exists() =0;
-			
-		void	setPath(const string &path){dirPath=path;};
+		virtual bool isFile() =0;
+		virtual bool isDir() =0;
+		virtual bool isHidden() =0;
+		virtual bool isWritable() =0; 
+//		PDateTime lastModified();
+		virtual int size() =0;
 };
 
 #endif 
+

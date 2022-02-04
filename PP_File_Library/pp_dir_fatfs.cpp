@@ -7,7 +7,7 @@ bool PDirFATFS::cd(const string &dirName){
 		}else{
 			string newDirPath=dirPath+"/"+dirName;
 		
-			if(exist(newDirPath)){
+			if(exists(newDirPath)){
 				dirPath=newDirPath;
 				return true;
 			}
@@ -20,7 +20,7 @@ bool PDirFATFS::cdUp(){
 		int find=dirPath.find_last_of("/");
 		string newDirPath=dirPath.substr(0, find);
 	
-		if(exist(newDirPath)){
+		if(exists(newDirPath)){
 			dirPath=newDirPath;
 			return true;
 		}

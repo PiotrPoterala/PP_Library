@@ -45,7 +45,7 @@ bool PFile::atEnd(){
 	
 }
 
-string PFile::fullPath(){
+string PFile::absolutePath(){
 	string filePath;
 	
 	filePath+=volume;
@@ -67,7 +67,7 @@ bool PFile::open(OpenMode mode){
 
 			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 			if(fresult==FR_OK){
-				fresult=f_open(&file, fullPath().c_str(), fmode);
+				fresult=f_open(&file, absolutePath().c_str(), fmode);
 			}
 		
 			if(fresult==FR_OK){
@@ -266,7 +266,7 @@ bool PFile::clear(){
 	
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 		if(fresult==FR_OK){
-			fresult=f_open(&file, fullPath().c_str(), FA_CREATE_ALWAYS);
+			fresult=f_open(&file, absolutePath().c_str(), FA_CREATE_ALWAYS);
 		}
 	
 		if(fresult==FR_OK){

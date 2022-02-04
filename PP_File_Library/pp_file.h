@@ -43,7 +43,8 @@
 				virtual string readLine() override;
 				virtual bool exists() override;
 			
-				string fullPath();
+				string absolutePath();
+
 				bool clear();
 
 		};

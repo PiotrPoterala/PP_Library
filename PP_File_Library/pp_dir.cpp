@@ -2,18 +2,12 @@
 
 PDir::PDir(const string &path){
 			
-	int find=path.find("/");
-	volume=path.substr(0, find+1);
-	dirPath=path.substr(find+1);
-		
+		setPath(path);
 }
 
 PDir::PDir(const char* path){
-	string newPath=path;	
 	
-	int find=newPath.find("/");
-	volume=newPath.substr(0, find+1);
-	dirPath=newPath.substr(find+1);
+	setPath(path);
 		
 }
 
@@ -37,3 +31,13 @@ string	PDir::dirName() const{
 		return dirPath.substr(dirPath.find_last_of("/")+1);
 	
 }
+
+void PDir::setPath(const string &path){
+
+
+	int find=path.find("/");
+	volume=path.substr(0, find+1);
+	dirPath=path.substr(find+1);
+
+
+};

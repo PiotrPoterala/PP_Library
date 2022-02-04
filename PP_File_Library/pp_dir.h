@@ -60,7 +60,7 @@ public:
 		virtual bool	exists(const string &name)=0;
 		virtual bool	exists() =0;
 			
-		void	setPath(const string &path){dirPath=path;};
+		void	setPath(const string &path);
 };
 
 #endif 

@@ -45,6 +45,7 @@ class PDirFATFS : public PDir
 	
 	public:
 			PDirFATFS(const string &path):PDir(path){};
+			PDirFATFS(const char* path):PDir(path){};	
 
 			virtual bool	cd(const string &dirName) override;
 			virtual bool	cdUp() override;
