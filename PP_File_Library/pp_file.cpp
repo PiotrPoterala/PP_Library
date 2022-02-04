@@ -241,20 +241,22 @@ string PFile::readLine(){
 }
 
 bool PFile::exists(){
-	
+		FILINFO fno;
 		int fresult=FR_OK;
-//	if(TM_USB_MSCHOST_Device()!=TM_USB_MSCHOST_Result_Connected) return false;
+		bool objectExist=false;
+	
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult=f_open(&file, fullPath().c_str(), FA_OPEN_EXISTING);
-		}
+			fresult=f_stat(path.c_str(), &fno);
 	
-		if(fresult==FR_OK){
-			close();
-			return true;
+			if(fresult==FR_OK && !(fno.fattrib & AM_DIR)){
+					objectExist=true;
+			}
+			f_mount(0, volume.c_str(), 1);
 		}
-		return false;
+		
+		return objectExist;
 	
 }
 

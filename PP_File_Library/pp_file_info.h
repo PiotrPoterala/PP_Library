@@ -27,43 +27,39 @@
  */
 
 
-#ifndef PP_DIR_FATFS_H
-#define PP_DIR_FATFS_H
+#ifndef PP_FILE_INFO_H
+#define PP_FILE_INFO_H
 
-#include "pp_dir.h"
-
-#include "ff.h"
+#include <string>
+#include "pp_file.h"
 
 using namespace std;
 
-class PDirFATFS : public PDir
+class PFileInfo
 {
+private:
+		PFile *fil;
 
-	private:
-		FATFS g_sFatFs;
-		DIR Dir;
-	
-	public:
-			PDirFATFS(const string &path):PDir(path){};
 
-			virtual bool	cd(const string &dirName) override;
-			virtual bool	cdUp() override;
-			virtual unsigned int	count() override;
-		//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-			virtual vector<string>	entryList(Filters filters = NoFilter) override;
-				
-			/**
-			@param [in] name of file.
-			@return true if the file called name exists; otherwise returns false.
-			*/
-			virtual bool	exists(const string &name) override;
-			/**
-			@return true if the directory exists; otherwise returns false. (If a file with the same name is found this function will return false).
-			*/
-			virtual bool	exists() override;
-	
-			bool exist(string &path, Filters filters);
-				
+public:
+		PFileInfo(PFile &file):fil(file){};
+
+			
+		enum	Filters {NoFilter, Dirs, Files};
+
+		string	absoluteFilePath(const string &fileName) const;
+		string	absolutePath() const;
+		string	dirName() const;
+		
+		virtual bool	cd(const string &dirName)=0;
+		virtual bool	cdUp()=0;
+		virtual unsigned int	count()=0;
+	//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
+		virtual vector<string>	entryList(Filters filters = NoFilter)=0;
+		virtual bool	exists(const string &name)=0;
+		virtual bool	exists() =0;
+			
+		void	setPath(const string &path){dirPath=path;};
 };
 
 #endif 

@@ -84,31 +84,37 @@ vector<string> PDirFATFS::entryList(Filters filters) {
 bool PDirFATFS::exists(const string &name){
 		string path=dirPath+"/"+name;
 	
-		return exist(path);
+		return exist(path, PDir::Files);
 }
 
 
 
 bool PDirFATFS::exists(){
 	
-		return exist(dirPath);
-	
-	
+		return exist(dirPath, PDir::Dirs);
+
 }
 
-bool PDirFATFS::exist(string &path){
-	
+bool PDirFATFS::exist(string &path, Filters filters){
+		FILINFO fno;
 		int fresult=FR_OK;
+		bool objectExist=false;
+	
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult=f_opendir(&Dir, path.c_str());
-		}
+			fresult=f_stat(path.c_str(), &fno);
 	
-		if(fresult==FR_OK){
-			f_closedir(&Dir);
-			return true;
+			if(fresult==FR_OK){
+				if (filters==PDir::NoFilter || 
+						((filters==PDir::Dirs) && (fno.fattrib & AM_DIR)) || 		/* It is a directory */
+						((filters==PDir::Files) && !(fno.fattrib & AM_DIR)) ){
+					objectExist=true;
+				}
+			}
+			f_mount(0, volume.c_str(), 1);
 		}
-		return false;
+		
+		return objectExist;
 	
 }
