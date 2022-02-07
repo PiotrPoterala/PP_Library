@@ -32,7 +32,6 @@
 
 #include <string>
 #include "pp_file.h"
-#include "pp_dir.h"
 
 using namespace std;
 
@@ -46,7 +45,6 @@ protected:
 
 public:
 		PFileInfo(PFile &file);
-		PFileInfo(PDir &dir);
 		PFileInfo(const string &path);
 		PFileInfo(const char* path);	
 				
@@ -54,13 +52,18 @@ public:
 		string	absolutePath() const;
 		string	fileName() const;
 		
+		virtual void setFile(PFile &file);
+		virtual void setFile(const string &path);
+		virtual void setFile(const char* path);	
+
+
 		virtual void refresh()=0;
 		virtual bool	exists() =0;
 		virtual bool isFile() =0;
 		virtual bool isDir() =0;
 		virtual bool isHidden() =0;
 		virtual bool isWritable() =0; 
-//		PDateTime lastModified();
+		virtual PDateTime lastModified()=0;
 		virtual int size() =0;
 };
 

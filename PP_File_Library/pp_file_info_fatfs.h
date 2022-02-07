@@ -42,17 +42,34 @@ private:
 	FATFS g_sFatFs;
 	bool exist=false;
 	int fattrib;
-	int size;
+	int fsize;
 	
 public:
 		PFileInfoFATFS(PFile &file):PFileInfo(file){refresh();};
-		PFileInfoFATFS(PDir &dir):PFileInfo(dir){refresh();};
 		PFileInfoFATFS(const string &path):PFileInfo(path){refresh();};
 		PFileInfoFATFS(const char* path):PFileInfo(path){refresh();};	
 				
-		virtual void refresh(){
+		virtual void setFile(PFile &file) override{
+			PFileInfo::setFile(file);
+			refresh();
+		}
+				
+		virtual void setFile(const string &path) override{
+			PFileInfo::setFile(path);
+			refresh();
+		}
+		
+		virtual void setFile(const char* path) override{
+			PFileInfo::setFile(path);
+			refresh();
+		}
+		
+		
+		virtual void refresh() override{
 			FILINFO fno;
 			int fresult=FR_OK;
+			
+			exist=false;
 		
 			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 		
@@ -61,7 +78,7 @@ public:
 		
 				if(fresult==FR_OK){
 					fattrib=fno.fattrib;
-					size=fno.size;
+					fsize=fno.fsize;
 					exist=true;
 				}
 				f_mount(0, volume.c_str(), 1);
@@ -69,13 +86,13 @@ public:
 			
 		};
 		
-		virtual bool	exists(){return exist;);
-		virtual bool isFile(){if(!(fattrib & AM_DIR))return true; else return false;};
-		virtual bool isDir(){if(fattrib & AM_DIR)return true; else return false;};
-		virtual bool isHidden(){if(fattrib & AM_HID)return true; else return false;};
-		virtual bool isWritable(){if(!(fattrib & AM_RDO))return true; else return false;};
-//		PDateTime lastModified();
-		virtual int size(){return size;};
+		virtual bool	exists() override{return exist;};
+		virtual bool isFile() override{if(!(fattrib & AM_DIR))return true; else return false;};
+		virtual bool isDir() override{if(fattrib & AM_DIR)return true; else return false;};
+		virtual bool isHidden() override{if(fattrib & AM_HID)return true; else return false;};
+		virtual bool isWritable() override{if(!(fattrib & AM_RDO))return true; else return false;};
+		virtual PDateTime lastModified() override;
+		virtual int size() override{return fsize;};
 };
 
 #endif 

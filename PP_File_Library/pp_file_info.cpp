@@ -6,10 +6,6 @@ PFileInfo::PFileInfo(PFile &file){
 	setPath(file.absolutePath());
 }
 
-PFileInfo::PFileInfo(PDir &dir){
-	
-	setPath(dir.absolutePath());
-}
 
 PFileInfo::PFileInfo(const string &path){
 	
@@ -20,6 +16,20 @@ PFileInfo::PFileInfo(const char* path){
 	
 	setPath(path);
 }
+
+void PFileInfo::setFile(PFile &file){
+	setPath(file.absolutePath());
+}
+
+void PFileInfo::setFile(const string &path){
+	setPath(path);
+}
+
+void PFileInfo::setFile(const char* path){
+	setPath(path);
+}	
+
+
 
 void PFileInfo::setPath(const string &path){
 

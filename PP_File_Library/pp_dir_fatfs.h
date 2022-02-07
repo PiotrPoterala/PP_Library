@@ -33,6 +33,7 @@
 #include "pp_dir.h"
 
 #include "ff.h"
+#include "pp_file_info_fatfs.h"
 
 using namespace std;
 
@@ -50,8 +51,8 @@ class PDirFATFS : public PDir
 			virtual bool	cd(const string &dirName) override;
 			virtual bool	cdUp() override;
 			virtual unsigned int	count() override;
-		//	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-			virtual vector<string>	entryList(Filters filters = NoFilter) override;
+				virtual vector<PFileInfo*>	entryInfoList(PDir::Filters filters = NoFilter) override;
+				virtual vector<string> entryList(PDir::Filters filters = NoFilter) override;
 				
 			/**
 			@param [in] name of file.

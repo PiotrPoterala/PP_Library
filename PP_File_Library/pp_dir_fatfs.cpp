@@ -53,8 +53,39 @@ unsigned int	PDirFATFS::count(){
 }
 
 
-////	QFileInfoList	entryInfoList(QDir::Filters filters = NoFilter) const
-vector<string> PDirFATFS::entryList(Filters filters) {
+vector<PFileInfo*>	PDirFATFS::entryInfoList(PDir::Filters filters){
+		int fresult=FR_OK;
+		FILINFO fno;
+		vector<PFileInfo*> fileInfoList;
+	
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+	
+		if(fresult==FR_OK){
+			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
+			if (fresult == FR_OK) {
+					for (;;) {
+							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
+							if (fresult != FR_OK || fno.fname[0] == 0) break;  /* Break on error or end of dir */
+							if (filters==PDir::NoFilter || 
+									((filters==PDir::Dirs) && (fno.fattrib & AM_DIR)) || 		/* It is a directory */
+							((filters==PDir::Files) && !(fno.fattrib & AM_DIR)) ) {     							
+									fileInfoList.push_back(new PFileInfoFATFS(dirPath+"/"+fno.fname));
+								
+							}
+					}
+					f_closedir(&Dir);
+			}
+		}
+	
+	return fileInfoList;
+	
+	
+}
+
+
+
+
+vector<string> PDirFATFS::entryList(PDir::Filters filters) {
 		int fresult=FR_OK;
 		FILINFO fno;
 		vector<string> pathList;
