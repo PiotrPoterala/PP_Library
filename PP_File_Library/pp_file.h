@@ -11,9 +11,7 @@
 
 
 		class PFile : public PIOdevice{
-			private:
-				FIL file;
-				FATFS g_sFatFs;
+			protected:
 			
 				string volume;
 				string path;
@@ -25,27 +23,16 @@
 				PFile(const string &path);
 				PFile(const char* path);	
 			
-				virtual int size() override ;
 				virtual bool isOpen() override ;
 				virtual int pos() override ;
-				virtual bool atEnd() override ;
-				virtual OpenMode mode() override {return openMode;};
-			
-				virtual bool open(OpenMode mode) override ;
-				virtual bool close() override ;
-				virtual bool seek(int pos) override ;
-				virtual bool write(string &data) override ;
-				virtual bool write(const char *data) override ;
-				bool writeAtTheEnd(string &data);
-				bool writeAtTheEnd(const char *data);
-				virtual string read(int maxSize) override ;
-				virtual int read(char *data, int maxSize) override ;
-				virtual string readLine() override;
-				virtual bool exists() override;
-			
 				string absolutePath();
-
-				bool clear();
+				virtual OpenMode mode() override {return openMode;};
+				
+				virtual bool open(OpenMode mode)override {return false;};
+				virtual bool close()override {return false;};
+				
+				virtual bool writeAtTheEnd(string &data)=0;
+				virtual bool writeAtTheEnd(const char *data)=0;
 
 		};
 #endif

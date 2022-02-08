@@ -63,7 +63,8 @@ public:
 		virtual bool isDir() =0;
 		virtual bool isHidden() =0;
 		virtual bool isWritable() =0; 
-		virtual PDateTime lastModified()=0;
+		virtual string lastModifiedTime() =0;
+		virtual string lastModifiedDate() =0;
 		virtual int size() =0;
 };
 

@@ -9,18 +9,20 @@
 
 		class PTime{
 			private:
-				int sec; 
-				int min; 
-				int hr;
+				int sec=0; 
+				int min=0; 
+				int hr=0;
 			
-				int time2sec();
 			public:
 				PTime(int h, int m, int s);
-				void	addSecs(int s) const;
+				void reset();
+				void	addSec(int s=1);
 				int	hour() const;
 				int	minute() const;
 				int	second() const;
-				bool	setHMS(int h, int m, int s);
+				bool setHMS(int s);
+				bool setHMS(int h, int m, int s);
+				int toSec() const;
 				string	toString() const;
 				bool	operator!=(const PTime &t) const;
 				bool	operator<(const PTime &t) const;
@@ -28,6 +30,7 @@
 				bool	operator==(const PTime &t) const;
 				bool	operator>(const PTime &t) const;
 				bool	operator>=(const PTime &t) const;
+				void	operator+(const PTime &t);
 
 		};
 #endif

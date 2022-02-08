@@ -40,9 +40,8 @@ class PFileInfoFATFS : public PFileInfo
 {
 private:
 	FATFS g_sFatFs;
+	FILINFO fno;
 	bool exist=false;
-	int fattrib;
-	int fsize;
 	
 public:
 		PFileInfoFATFS(PFile &file):PFileInfo(file){refresh();};
@@ -66,7 +65,6 @@ public:
 		
 		
 		virtual void refresh() override{
-			FILINFO fno;
 			int fresult=FR_OK;
 			
 			exist=false;
@@ -77,8 +75,6 @@ public:
 				fresult=f_stat(filePath.c_str(), &fno);
 		
 				if(fresult==FR_OK){
-					fattrib=fno.fattrib;
-					fsize=fno.fsize;
 					exist=true;
 				}
 				f_mount(0, volume.c_str(), 1);
@@ -87,12 +83,27 @@ public:
 		};
 		
 		virtual bool	exists() override{return exist;};
-		virtual bool isFile() override{if(!(fattrib & AM_DIR))return true; else return false;};
-		virtual bool isDir() override{if(fattrib & AM_DIR)return true; else return false;};
-		virtual bool isHidden() override{if(fattrib & AM_HID)return true; else return false;};
-		virtual bool isWritable() override{if(!(fattrib & AM_RDO))return true; else return false;};
-		virtual PDateTime lastModified() override;
-		virtual int size() override{return fsize;};
+		virtual bool isFile() override{if(!(fno.fattrib & AM_DIR))return true; else return false;};
+		virtual bool isDir() override{if(fno.fattrib & AM_DIR)return true; else return false;};
+		virtual bool isHidden() override{if(fno.fattrib & AM_HID)return true; else return false;};
+		virtual bool isWritable() override{if(!(fno.fattrib & AM_RDO))return true; else return false;};
+		
+		virtual string lastModifiedTime() override{
+			char buffer [20];
+			string time;
+			sprintf(buffer, "%02u:%02u:%02u", (fno.ftime>>11) & 0x1F, (fno.ftime>>5) & 0x3F, fno.ftime & 0x1F);
+			time=buffer;
+			return time;
+		}
+			
+		virtual string lastModifiedDate() override{
+			char buffer [20];
+			string date;
+			sprintf(buffer, "%u-%02u-%02u", ((fno.fdate>>9) & 0x7F)+1980, (fno.fdate>>5) & 0x0F, fno.fdate & 0x1F);
+			date=buffer;
+			return date;
+		}
+		virtual int size() override{return fno.fsize;};
 };
 
 #endif 
