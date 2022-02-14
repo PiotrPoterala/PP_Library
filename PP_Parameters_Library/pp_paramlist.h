@@ -74,6 +74,7 @@ public:
     void setParamsByValue(int value);
     void setParamsByDefaultValue();
     void setParamsValue(map<char, defOParamGeneral*> &copyParams);
+		void setParamsValue(map<char, double> &copyParams);
 
     bool comparingParamsValue(map<char, defOParamGeneral*> &paramsToComp);
 		bool comparingParamsValue(map<char, int> &paramToComp);

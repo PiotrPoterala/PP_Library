@@ -195,10 +195,27 @@ void defOParamList::setParamsByDefaultValue(){
 void defOParamList::setParamsValue(map<char, defOParamGeneral*> &copyParams){
 
 	auto it=param.begin();
-	auto it_copy=copyParams.begin();
 	
-	for(; it!=param.end() && it_copy!=copyParams.end(); ++it, ++it_copy){
-		(*it).second->setValue((*it_copy).second->getValue());
+	for(auto it=param.begin(); it!=param.end();  ++it){
+		auto it_copy=copyParams.find((*it).first);
+		if(it_copy!=copyParams.end()){
+			(*it).second->setValue((*it_copy).second->getValue());
+		}
+		
+	}
+
+}
+
+void defOParamList::setParamsValue(map<char, double> &copyParams){
+
+	auto it=param.begin();
+	
+	for(auto it=param.begin(); it!=param.end();  ++it){
+		auto it_copy=copyParams.find((*it).first);
+		if(it_copy!=copyParams.end()){
+			(*it).second->setValue((*it_copy).second*pow(10.0, (*it).second->getUnit()));
+		}
+		
 	}
 
 }

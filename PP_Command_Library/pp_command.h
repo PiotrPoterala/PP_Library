@@ -1,16 +1,28 @@
-#ifndef _COMMAND_H
-	#define _COMMAND_H
+#ifndef _PP_COMMAND_H
+	#define _PP_COMMAND_H
 	
+	#include <string>
+	#include <map>
 
-	class defOCommand{
+	class PCommand{
 		
 		protected:
-			defOCommand();
+			PCommand(){};
 		
 		public:
-			virtual void execute()=0;
+			virtual void execute(map<char, double> &values)=0;
 
 	};
 
+	class PAskCommand{
+		
+		protected:
+			PAskCommand(){};
+		
+		public:
+			virtual string execute()=0;
 
+	};
+	
+	
 #endif
