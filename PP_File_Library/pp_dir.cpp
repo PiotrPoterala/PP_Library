@@ -27,8 +27,9 @@ string PDir::absolutePath() const{
 
 
 string	PDir::dirName() const{
+		string path=absolutePath();
 	
-		return dirPath.substr(dirPath.find_last_of("/")+1);
+		return path.substr(path.find_last_of("/")+1);
 	
 }
 

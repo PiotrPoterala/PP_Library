@@ -15,10 +15,10 @@ class PSetParamCommand : public PCommand{
 		public:
 			PSetParamCommand(defOParamList *par):param(par){};
 	
-			virtual void execute(map<char, double> &values) override{
-				
-				param->setParamsValue(values);		
-				
+			virtual bool execute(string &data) override{
+					PString str(data);
+					param->setParamsBasedString(str);	
+					return true;
 			};
 
 	};

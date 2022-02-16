@@ -17,7 +17,12 @@ class PDriveForValueCommand : public PCommand{
 		public:
 			PDriveForValueCommand(defOParamList *par, defOTaskQueues<int>* commQueues):param(par),taskCommunicationQueues(commQueues){};
 	
-			virtual void execute(map<char, double> &values) override{
+			virtual bool execute(string &data) override{
+				PString str(data);
+				map<char, double> values;
+				values=str.findValuesAfterAcronims();
+				
+				if(!values.empty()){
 					vector<int> valuesToSend;
 				
 					valuesToSend.push_back(qMARK_ATC);
@@ -31,7 +36,9 @@ class PDriveForValueCommand : public PCommand{
 					
 					
 					taskCommunicationQueues->xQueueSendConteinerToBackWithSemaphore(valuesToSend);
-				
+					return true;
+				}
+				return false;
 			};
 
 	};
@@ -46,7 +53,12 @@ class PDriveToBaseCoordCommand : public PCommand{
 		public:
 			PDriveToBaseCoordCommand(defOParamList *par, defOTaskQueues<int>* commQueues):param(par),taskCommunicationQueues(commQueues){};
 	
-			virtual void execute(map<char, double> &values) override{
+			virtual bool execute(string &data) override{
+				PString str(data);
+				map<char, double> values;
+				values=str.findValuesAfterAcronims();
+				
+				if(!values.empty()){
 					vector<int> valuesToSend;
 				
 					valuesToSend.push_back(qMARK_ATC);
@@ -58,9 +70,10 @@ class PDriveToBaseCoordCommand : public PCommand{
 						valuesToSend.push_back((*it).second*pow(10.0, param->getParamUnit((*it).first)));
 					}
 					
-					
+					return true;
 					taskCommunicationQueues->xQueueSendConteinerToBackWithSemaphore(valuesToSend);
-				
+				}
+				return false;
 			};
 
 	};

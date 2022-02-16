@@ -79,7 +79,7 @@ public:
     bool comparingParamsValue(map<char, defOParamGeneral*> &paramsToComp);
 		bool comparingParamsValue(map<char, int> &paramToComp);
 
-    void setParamsBasedString(PString *data);
+    void setParamsBasedString(PString &data);
     void checksParamsValue();
 };
 

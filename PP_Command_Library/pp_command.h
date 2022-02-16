@@ -10,7 +10,7 @@
 			PCommand(){};
 		
 		public:
-			virtual void execute(map<char, double> &values)=0;
+			virtual bool execute(string &data)=0;
 
 	};
 

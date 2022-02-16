@@ -15,10 +15,11 @@ class PHostCommand{
 		public:
 			PHostCommand(){};
 		
-			enum{BASEC, PHYC, TRVV, TRVCO};
+			enum{BASEC, PHYC, TRVV, TRVCO, DIRCD};
 		
-			void executeCommand(map<char, double> &values){
-				if(command!=nullptr)command->execute(values);
+			bool executeCommand(string &data){
+				if(command!=nullptr) return command->execute(data);
+				return false;
 			};
 			
 			void addCommand(int type, PCommand* comm){
@@ -51,7 +52,7 @@ class PHostCommand{
 		public:
 			PHostAskCommand(){};
 		
-			enum{BASEC,PHYC};
+			enum{BASEC,PHYC, DIREL};
 		
 			string executeCommand(){
 				string ans;

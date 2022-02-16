@@ -262,11 +262,11 @@ bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
 }
 
 
-void defOParamList::setParamsBasedString(PString *data){
+void defOParamList::setParamsBasedString(PString &data){
    int val=0;
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		    val=(*it).second->checkRange(data->findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
+		    val=(*it).second->checkRange(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
         val-=val%(*it).second->getPrecision();
         (*it).second->setValue(val);
 	}

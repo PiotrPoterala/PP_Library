@@ -5,10 +5,11 @@ bool PDirFATFS::cd(const string &dirName){
 		if(dirName.compare("..")==0){
 			return cdUp();
 		}else{
-			string newDirPath=dirPath+"/"+dirName;
-		
-			if(exists(newDirPath)){
-				dirPath=newDirPath;
+			
+			if(exists(dirName)){
+				
+				dirPath+="/";
+				dirPath+=dirName;
 				return true;
 			}
 		}
@@ -17,11 +18,14 @@ bool PDirFATFS::cd(const string &dirName){
 }
 
 bool PDirFATFS::cdUp(){
-		int find=dirPath.find_last_of("/");
-		string newDirPath=dirPath.substr(0, find);
+		string path=absolutePath();
+		string newDirName;
 	
-		if(exists(newDirPath)){
-			dirPath=newDirPath;
+		path.substr(0, path.find_last_of("/"));
+		newDirName=path.substr(path.find_last_of("/")+1);
+	
+		if(exists(newDirName)){
+			setPath(path);
 			return true;
 		}
 	
@@ -38,7 +42,7 @@ unsigned int	PDirFATFS::count(){
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
+			fresult= f_opendir(&Dir, absolutePath().c_str());                       /* Open the directory */
 			if (fresult == FR_OK) {
 					for (;;) {
 							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
@@ -61,7 +65,7 @@ vector<PFileInfo*>	PDirFATFS::entryInfoList(PDir::Filters filters){
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 	
 		if(fresult==FR_OK){
-			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
+			fresult= f_opendir(&Dir, absolutePath().c_str());                       /* Open the directory */
 			if (fresult == FR_OK) {
 					for (;;) {
 							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
@@ -69,7 +73,7 @@ vector<PFileInfo*>	PDirFATFS::entryInfoList(PDir::Filters filters){
 							if (filters==PDir::NoFilter || 
 									((filters==PDir::Dirs) && (fno.fattrib & AM_DIR)) || 		/* It is a directory */
 							((filters==PDir::Files) && !(fno.fattrib & AM_DIR)) ) {     							
-									fileInfoList.push_back(new PFileInfoFATFS(dirPath+"/"+fno.fname));
+									fileInfoList.push_back(new PFileInfoFATFS(volume+dirPath+"/"+fno.fname));
 								
 							}
 					}
@@ -91,17 +95,16 @@ vector<string> PDirFATFS::entryList(PDir::Filters filters) {
 		vector<string> pathList;
 	
 		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
-	
 		if(fresult==FR_OK){
-			fresult= f_opendir(&Dir, dirPath.c_str());                       /* Open the directory */
+			fresult= f_opendir(&Dir, absolutePath().c_str());                       /* Open the directory */
 			if (fresult == FR_OK) {
 					for (;;) {
 							fresult = f_readdir(&Dir, &fno);                   /* Read a directory item */
-							if (fresult != FR_OK || fno.fname[0] == 0) break;  /* Break on error or end of dir */
+							if (fresult != FR_OK || fno.fname[0] == 0  || fno.fsize>0x0FFFFFFF) break;  /* Break on error or end of dir */
 							if (filters==PDir::NoFilter || 
 									((filters==PDir::Dirs) && (fno.fattrib & AM_DIR)) || 		/* It is a directory */
 							((filters==PDir::Files) && !(fno.fattrib & AM_DIR)) ) {                   
-									pathList.push_back(dirPath+"/"+fno.fname);
+									pathList.push_back(fno.fname);
 								
 							}
 					}
@@ -113,7 +116,7 @@ vector<string> PDirFATFS::entryList(PDir::Filters filters) {
 }
 
 bool PDirFATFS::exists(const string &name){
-		string path=dirPath+"/"+name;
+		string path=absolutePath()+"/"+name;
 	
 		return exist(path, PDir::Files);
 }
@@ -121,8 +124,9 @@ bool PDirFATFS::exists(const string &name){
 
 
 bool PDirFATFS::exists(){
+		string path=absolutePath();
 	
-		return exist(dirPath, PDir::Dirs);
+		return exist(path, PDir::Dirs);
 
 }
 
