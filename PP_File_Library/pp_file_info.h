@@ -47,6 +47,7 @@ public:
 		PFileInfo(PFile &file);
 		PFileInfo(const string &path);
 		PFileInfo(const char* path);	
+		virtual ~PFileInfo(){};
 				
 		string	absoluteFilePath() const;
 		string	absolutePath() const;

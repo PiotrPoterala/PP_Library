@@ -51,8 +51,8 @@ class PDirFATFS : public PDir
 			virtual bool	cd(const string &dirName) override;
 			virtual bool	cdUp() override;
 			virtual unsigned int	count() override;
-				virtual vector<PFileInfo*>	entryInfoList(PDir::Filters filters = NoFilter) override;
-				virtual vector<string> entryList(PDir::Filters filters = NoFilter) override;
+			virtual vector<unique_ptr<PFileInfo>>	entryInfoList(PDir::Filters filters = NoFilter) override;
+			virtual vector<string> entryList(PDir::Filters filters = NoFilter) override;
 				
 			/**
 			@param [in] name of file.

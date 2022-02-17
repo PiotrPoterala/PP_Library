@@ -72,7 +72,7 @@ public:
 			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
 		
 			if(fresult==FR_OK){
-				fresult=f_stat(filePath.c_str(), &fno);
+				fresult=f_stat(absoluteFilePath().c_str(), &fno);
 		
 				if(fresult==FR_OK){
 					exist=true;

@@ -3,6 +3,7 @@
 	
 	#include "pp_command.h"
 	#include "pp_dir.h"
+	#include "pp_file_info.h"
 	
 
 class PDirCdCommand : public PCommand{
@@ -35,6 +36,32 @@ class PGetDirEntryListCommand : public PAskCommand{
 					vector<string> entryList=dir->entryList();	
 					for(auto it=entryList.begin(); it!=entryList.end(); it++){
 						data+=(*it);
+						data+=",";
+					}
+				
+					return data;
+				
+			};
+
+	};
+
+	class PGetDirEntryInfoListCommand : public PAskCommand{
+		
+		private:
+			PDir *dir;
+	
+		public:
+			PGetDirEntryInfoListCommand(PDir *directory):dir(directory){};
+	
+			virtual string execute() override{
+					string data;
+					vector<unique_ptr<PFileInfo>> entrInfoList=dir->entryInfoList();	
+					for(auto it=entrInfoList.begin(); it!=entrInfoList.end(); it++){
+						data+=(*it)->fileName();
+						data+=" ";
+						data+=to_string((*it)->size());
+						data+=" ";
+						data+=(*it)->lastModifiedDate();
 						data+=",";
 					}
 				

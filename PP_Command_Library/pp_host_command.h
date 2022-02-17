@@ -52,7 +52,7 @@ class PHostCommand{
 		public:
 			PHostAskCommand(){};
 		
-			enum{BASEC,PHYC, DIREL};
+			enum{BASEC, PHYC, DIREL, DIREIL};
 		
 			string executeCommand(){
 				string ans;

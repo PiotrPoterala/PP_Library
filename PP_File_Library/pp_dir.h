@@ -56,7 +56,7 @@ public:
 		virtual bool	cd(const string &dirName)=0;
 		virtual bool	cdUp()=0;
 		virtual unsigned int	count()=0;
-		virtual vector<PFileInfo*>	entryInfoList(Filters filters = NoFilter)=0;
+		virtual vector<unique_ptr<PFileInfo>>	entryInfoList(Filters filters = NoFilter)=0;
 		virtual vector<string> entryList(Filters filters = NoFilter)=0;
 		virtual bool	exists(const string &name)=0;
 		virtual bool	exists() =0;

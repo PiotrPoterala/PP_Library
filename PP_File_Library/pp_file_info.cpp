@@ -47,12 +47,14 @@ string PFileInfo::absoluteFilePath() const{
 }
 
 string PFileInfo::absolutePath() const{
+	string path=absoluteFilePath() ;
 	
-	return (volume+filePath.substr(0, filePath.find_last_of("/")));
+	return (path.substr(0, path.find_last_of("/")));
 	
 }
 
 string PFileInfo::fileName() const{
+	string path=absoluteFilePath() ;
 	
-	return filePath.substr(filePath.find_last_of("/")+1);
+	return path.substr(path.find_last_of("/")+1);
 }
