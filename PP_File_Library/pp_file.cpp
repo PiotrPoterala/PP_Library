@@ -35,7 +35,6 @@ int PFile::pos(){
 string PFile::absolutePath(){
 	string filePath;
 	
-	filePath+=volume;
-	filePath+=path;
+	filePath=volume+path;
 	return filePath;
 }
