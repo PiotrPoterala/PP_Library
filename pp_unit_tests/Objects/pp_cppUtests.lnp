@@ -1,0 +1,10 @@
+--cpu Cortex-M3
+"..\..\cppUtest\Objects\cpputest.lib"
+".\objects\test.o"
+".\objects\alltests.o"
+".\objects\startup_stm32f10x_xl.o"
+".\objects\system_stm32f10x.o"
+--strict --scatter ".\Objects\pp_cppUtests.sct"
+--vfemode=off --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\pp_cppUtests.map" -o .\Objects\pp_cppUtests.axf

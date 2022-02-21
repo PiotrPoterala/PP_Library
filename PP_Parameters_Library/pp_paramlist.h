@@ -38,22 +38,28 @@
 
 using namespace std;
 
+using PParamMap = map<char, defOParamGeneral*>;
+
 class defOParamList
 {
 
 private:
-    map<char, defOParamGeneral*> param;
+    PParamMap param;
 
+		void copyListOfParams(const PParamMap &copyParams);
 
 public:
     defOParamList();
 		defOParamList(const defOParamList& other);
-    defOParamList(map<char, defOParamGeneral*> &copyParams);
+    defOParamList(const PParamMap &copyParams);
+		defOParamList& operator=(const defOParamList& other);
+		~defOParamList();
 
+		void clear(void);
 		defOParamList* clone() const;
 
 		defOParamGeneral* getParam(char acronim);
-    map<char, defOParamGeneral*>* getParams(void);
+    PParamMap* getParams(void);
 
     int getParamValue(char acronim);
 		int getParamUpperLimit(char acronim);
@@ -67,16 +73,15 @@ public:
 		int checkRange(char acronim, int val);
 
 		void insert(pair<char, defOParamGeneral*>);
-    void copyListOfParams(map<char, defOParamGeneral*> &copyParams);
 
-    void clearParams(void);
+    void setParamsByZero(void);
 		bool setParamValue(char acronim, int val);
     void setParamsByValue(int value);
     void setParamsByDefaultValue();
-    void setParamsValue(map<char, defOParamGeneral*> &copyParams);
+    void setParamsValue(PParamMap &copyParams);
 		void setParamsValue(map<char, double> &copyParams);
 
-    bool comparingParamsValue(map<char, defOParamGeneral*> &paramsToComp);
+    bool comparingParamsValue(PParamMap &paramsToComp);
 		bool comparingParamsValue(map<char, int> &paramToComp);
 
     void setParamsBasedString(PString &data);

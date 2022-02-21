@@ -30,23 +30,49 @@ defOParamList::defOParamList(const defOParamList &other){
 	
 }
 
-defOParamList::defOParamList(map<char, defOParamGeneral*> &copyParams){
+defOParamList::defOParamList(const PParamMap &copyParams){
 
     copyListOfParams(copyParams);
 
 }
 
-
-map<char, defOParamGeneral*>* defOParamList::getParams(void){
-
-    return &param;
-
+defOParamList& defOParamList::operator=(const defOParamList& other){
+		
+	copyListOfParams(other.param);
+	return (*this);
 }
+
+defOParamList::~defOParamList(){
+	
+	clear();
+	
+}
+
+void defOParamList::clear(){
+	
+		 if(param.empty()==false){
+			for (auto it=param.begin(); it != param.end(); ++it){
+				delete (*it).second;
+			}
+       param.clear();
+    }	
+}
+
+
+
 
 defOParamList* defOParamList::clone() const{
 	
 	return new defOParamList(*this);
 }
+
+PParamMap* defOParamList::getParams(void){
+
+    return &param;
+
+}
+
+
 
 
 void defOParamList::insert(pair<char, defOParamGeneral*> data){
@@ -144,20 +170,14 @@ int defOParamList::checkRange(char acronim, int val){
 }
 
 
-void defOParamList::copyListOfParams(map<char, defOParamGeneral*> &copyParams){
+void defOParamList::copyListOfParams(const PParamMap &copyParams){
 
 //	map<char,defOParam*>::iterator it
 //	for_each(param.begin(), param.end(), it){
 //		x+=1;
 //	}
 	
-    if(param.empty()==false){
-			for (auto it=param.begin(); it != param.end(); ++it){
-				delete (*it).second;
-			}
-       param.clear();
-    }
-		
+    clear();
 		param.insert(copyParams.begin(), copyParams.end());
 		
 //		for (map<char,defOParam*>::iterator it=copyParams.begin(); it != copyParams.end(); ++it){
@@ -166,7 +186,7 @@ void defOParamList::copyListOfParams(map<char, defOParamGeneral*> &copyParams){
 		
 }
 
-void defOParamList::clearParams(void){
+void defOParamList::setParamsByZero(void){
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
 		(*it).second->setValue(0);
@@ -192,7 +212,7 @@ void defOParamList::setParamsByDefaultValue(){
 }
 
 
-void defOParamList::setParamsValue(map<char, defOParamGeneral*> &copyParams){
+void defOParamList::setParamsValue(PParamMap &copyParams){
 
 	auto it=param.begin();
 	
@@ -222,7 +242,7 @@ void defOParamList::setParamsValue(map<char, double> &copyParams){
 
 
 
-bool defOParamList::comparingParamsValue(map<char, defOParamGeneral*> &paramToComp){
+bool defOParamList::comparingParamsValue(PParamMap &paramToComp){
     bool same=true;
 
 
