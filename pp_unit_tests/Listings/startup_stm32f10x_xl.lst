@@ -565,13 +565,13 @@ ARM Macro Assembler    Page 9
               00000400 
               00002000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\objects\startup_stm32f10x_xl.d -o.\objects\startup_stm32f10x_xl.
-o -I.\RTE\Device\STM32F103VG -I.\RTE\_Target_1 -IC:\Users\poter\AppData\Local\A
-rm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\poter\AppData\Local\Arm\
-Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__UVISION_VERSION SE
-TA 529" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_XL SETA 1" --list=.\l
-istings\startup_stm32f10x_xl.lst RTE\Device\STM32F103VG\startup_stm32f10x_xl.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --depend=.\ob
+jects\startup_stm32f10x_xl.d -o.\objects\startup_stm32f10x_xl.o -I.\RTE\Device\
+STM32F103VG -I.\RTE\_Target_1 -IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSI
+S\5.6.0\CMSIS\Core\Include -IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F
+1xx_DFP\2.3.0\Device\Include --predefine="__UVISION_VERSION SETA 529" --predefi
+ne="_RTE_ SETA 1" --predefine="STM32F10X_XL SETA 1" --list=.\listings\startup_s
+tm32f10x_xl.lst RTE\Device\STM32F103VG\startup_stm32f10x_xl.s
 
 
 

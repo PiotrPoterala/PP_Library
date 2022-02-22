@@ -64,7 +64,6 @@ string PString::findDataAfterAcronim(char acronim){
 
 double PString::findValueAfterAcronim(char acronim, double defValue){
         string line=findDataAfterAcronim(acronim);
-				double val=0;
         if(line.empty())return defValue;
 				
 				return atof( line.c_str());

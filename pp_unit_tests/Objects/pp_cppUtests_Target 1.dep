@@ -1,53 +1,263 @@
 Dependencies for Project 'pp_cppUtests', Target 'Target 1': (DO NOT MODIFY !)
-CompilerVersion: 5060750::V5.06 update 6 (build 750)::ARMCC
-F (..\..\cppUtest\Objects\cpputest.lib)(0x6212C0B2)()
-F (.\test.cpp)(0x6212BB0B)(--cpp -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\..\cppUtest\include --diag_suppress 1300 --diag_suppress 1293  --exceptions-I.\RTE\Device\STM32F103VG-I.\RTE\_Target_1-IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10X_XL -DCPPUTEST_STD_CPP_LIB_DISABLED-o .\objects\test.o --omf_browse .\objects\test.crf --depend .\objects\test.d)
-I (..\..\cppUtest\include\CppUTest/TestHarness.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/CppUTestConfig.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/CppUTestGeneratedConfig.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/StandardCLibrary.h)(0x6211426B)
-I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B2678)
-I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B267A)
-I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9B267A)
-I (C:\Keil_v5\ARM\ARMCC\include\limits.h)(0x5D9B2672)
-I (..\..\cppUtest\include\CppUTest/Utest.h)(0x6212A874)
-I (..\..\cppUtest\include\CppUTest/SimpleString.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/UtestMacros.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestResult.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestFailure.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestPlugin.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/MemoryLeakWarningPlugin.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/MemoryLeakDetectorNewMacros.h)(0x6211426B)
-F (.\AllTests.cpp)(0x6212BB85)(--cpp -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\..\cppUtest\include --diag_suppress 1300 --diag_suppress 1293  --exceptions-I.\RTE\Device\STM32F103VG-I.\RTE\_Target_1-IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10X_XL -DCPPUTEST_STD_CPP_LIB_DISABLED-o .\objects\alltests.o --omf_browse .\objects\alltests.crf --depend .\objects\alltests.d)
-I (..\..\cppUtest\include\CppUTest/CommandLineTestRunner.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestHarness.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/CppUTestConfig.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/CppUTestGeneratedConfig.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/StandardCLibrary.h)(0x6211426B)
-I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5D9B2678)
-I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5D9B267A)
-I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5D9B267A)
-I (C:\Keil_v5\ARM\ARMCC\include\limits.h)(0x5D9B2672)
-I (..\..\cppUtest\include\CppUTest/Utest.h)(0x6212A874)
-I (..\..\cppUtest\include\CppUTest/SimpleString.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/UtestMacros.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestResult.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestFailure.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestPlugin.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/MemoryLeakWarningPlugin.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/MemoryLeakDetectorNewMacros.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestOutput.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/CommandLineArguments.h)(0x6211426B)
-I (..\..\cppUtest\include\CppUTest/TestFilter.h)(0x6211426B)
-F (RTE\Device\STM32F103VG\RTE_Device.h)(0x59283406)()
-F (RTE\Device\STM32F103VG\startup_stm32f10x_xl.s)(0x6212C28F)(--cpu Cortex-M3 -g --apcs=interwork -I.\RTE\Device\STM32F103VG-I.\RTE\_Target_1-IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include--pd "__UVISION_VERSION SETA 529" --pd "_RTE_ SETA 1" --pd "STM32F10X_XL SETA 1"--list .\listings\startup_stm32f10x_xl.lst --xref -o .\objects\startup_stm32f10x_xl.o --depend .\objects\startup_stm32f10x_xl.d)
-F (RTE\Device\STM32F103VG\system_stm32f10x.c)(0x6212C310)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\..\cppUtest\include --diag_suppress 1300 --diag_suppress 1293  --exceptions-I.\RTE\Device\STM32F103VG-I.\RTE\_Target_1-IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10X_XL -DCPPUTEST_STD_CPP_LIB_DISABLED-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
+CompilerVersion: 6130001::V6.13.1::.\ARMCLANG
+F (..\PP_String_Library\pstring.cpp)(0x62152302)(-xc++ -std=c++11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../../cppUtest/include -I ../PP_String_Library -I ../../PP_library-I./RTE/Device/STM32F103VG-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10x-o ./objects/pstring.o -MD)
+I (..\PP_String_Library\pstring.h)(0x61AE95C9)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__string)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\algorithm)(0x5D5E3E18)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\initializer_list)(0x5CEF6D48)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstddef)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\version)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\type_traits)(0x5D79D1F8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstring)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\utility)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tuple)(0x5D108E6C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdint)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x5D0C6404)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__debug)(0x5C90ACB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iosfwd)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wchar.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wchar.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\memory)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\typeinfo)(0x5CEF6D36)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\exception)(0x5D0D8106)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\math.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits)(0x5D1AC85E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__undef_macros)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\new)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iterator)(0x5CFFB960)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__functional_base)(0x5D031D04)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\tuple)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdexcept)(0x5C8125E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cassert)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\functional)(0x5D3162E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bit)(0x5D376EB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdio)(0x5D773568)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwchar)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tree)(0x5D2DE014)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__node_handle)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\optional)(0x5D1A42DC)
+I (..\..\PP_library\stm32xx.h)(0x621522BD)
 I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x58258CCC)
-I (.\RTE\_Target_1\RTE_Components.h)(0x6212BF6B)
+I (RTE\_Target_1\RTE_Components.h)(0x62151B34)
 I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm3.h)(0x5D25E516)
-I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5D9B2678)
 I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D25E516)
 I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D25E516)
-I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8F09D8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A72BE)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FA234)
+I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\system_stm32f10x.h)(0x58258CCC)
+F (..\stm32xx.h)(0x621522BD)()
+F (..\..\cppUtest\Objects\cpputest.lib)(0x62157313)()
+F (.\AllTests.cpp)(0x621572BE)(-xc++ -std=c++11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../../cppUtest/include -I ../PP_String_Library -I ../../PP_library-I./RTE/Device/STM32F103VG-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10x-o ./objects/alltests.o -MD)
+I (..\..\cppUtest\include\CppUTest\CommandLineTestRunner.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\CppUTestConfig.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\CppUTestGeneratedConfig.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\StandardCLibrary.h)(0x6211426B)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\math.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\type_traits)(0x5D79D1F8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstddef)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\version)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits)(0x5D1AC85E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__undef_macros)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__string)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\algorithm)(0x5D5E3E18)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\initializer_list)(0x5CEF6D48)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstring)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\utility)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tuple)(0x5D108E6C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdint)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x5D0C6404)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__debug)(0x5C90ACB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iosfwd)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wchar.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wchar.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\memory)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\typeinfo)(0x5CEF6D36)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\exception)(0x5D0D8106)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\new)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iterator)(0x5CFFB960)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__functional_base)(0x5D031D04)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\tuple)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdexcept)(0x5C8125E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cassert)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\functional)(0x5D3162E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bit)(0x5D376EB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdio)(0x5D773568)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwchar)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x5DB3A1FE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
+I (..\..\cppUtest\include\CppUTest\Utest.h)(0x6212A874)
+I (..\..\cppUtest\include\CppUTest\SimpleString.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\UtestMacros.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestResult.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestFailure.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestOutput.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\CommandLineArguments.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestFilter.h)(0x6211426B)
+F (.\pstring_test.cpp)(0x6215775A)(-xc++ -std=c++11 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../../cppUtest/include -I ../PP_String_Library -I ../../PP_library-I./RTE/Device/STM32F103VG-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10x-o ./objects/pstring_test.o -MD)
+I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\CppUTestConfig.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\CppUTestGeneratedConfig.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\StandardCLibrary.h)(0x6211426B)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stddef.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\math.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\type_traits)(0x5D79D1F8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstddef)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\version)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits)(0x5D1AC85E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__undef_macros)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__string)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\algorithm)(0x5D5E3E18)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\initializer_list)(0x5CEF6D48)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstring)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\utility)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tuple)(0x5D108E6C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdint)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x5D0C6404)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__debug)(0x5C90ACB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iosfwd)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wchar.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wchar.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\memory)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\typeinfo)(0x5CEF6D36)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\exception)(0x5D0D8106)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\new)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iterator)(0x5CFFB960)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__functional_base)(0x5D031D04)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\tuple)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdexcept)(0x5C8125E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cassert)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\functional)(0x5D3162E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bit)(0x5D376EB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdio)(0x5D773568)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwchar)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x5DB3A1FE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
+I (..\..\cppUtest\include\CppUTest\Utest.h)(0x6212A874)
+I (..\..\cppUtest\include\CppUTest\SimpleString.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\UtestMacros.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestResult.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestFailure.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
+I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
+I (..\PP_String_Library\pstring.h)(0x61AE95C9)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tree)(0x5D2DE014)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__node_handle)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\optional)(0x5D1A42DC)
+I (..\..\PP_library\stm32xx.h)(0x621522BD)
+I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x58258CCC)
+I (RTE\_Target_1\RTE_Components.h)(0x62151B34)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm3.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8F09D8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A72BE)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FA234)
+I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\system_stm32f10x.h)(0x58258CCC)
+F (C:\Users\poter\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.6.2\Source\retarget_io.c)(0x584E7E1E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../../cppUtest/include -I ../PP_String_Library -I ../../PP_library-I./RTE/Device/STM32F103VG-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10x-o ./objects/retarget_io.o -MD)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\rt_sys.h)(0x5DB3A200)
+I (RTE\_Target_1\RTE_Components.h)(0x62151B34)
+F (RTE\Device\STM32F103VG\RTE_Device.h)(0x59283406)()
+F (RTE\Device\STM32F103VG\startup_stm32f10x_xl.s)(0x6212C28F)(--cpu Cortex-M3 -g-I.\RTE\Device\STM32F103VG-I.\RTE\_Target_1-IC:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include--pd "__UVISION_VERSION SETA 529"--pd "_RTE_ SETA 1"--pd "STM32F10X_XL SETA 1"--list .\listings\startup_stm32f10x_xl.lst--xref -o .\objects\startup_stm32f10x_xl.o--depend .\objects\startup_stm32f10x_xl.d)
+F (RTE\Device\STM32F103VG\system_stm32f10x.c)(0x6212C38D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m3 -c-funsigned-char -fshort-enums -fshort-wchar-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../../cppUtest/include -I ../PP_String_Library -I ../../PP_library-I./RTE/Device/STM32F103VG-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F1xx_DFP/2.3.0/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F10X_XL -DSTM32F10x-o ./objects/system_stm32f10x.o -MD)
+I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\stm32f10x.h)(0x58258CCC)
+I (RTE\_Target_1\RTE_Components.h)(0x62151B34)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm3.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D25E516)
+I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D25E516)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8F09D8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A72BE)
 I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FA234)
 I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include\system_stm32f10x.h)(0x58258CCC)

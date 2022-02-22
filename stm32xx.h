@@ -31,8 +31,11 @@
 
 	#if defined(STM32L4R5xx)
 		#include "stm32l4xx.h"
+	#elif defined(STM32F10x)
+		#include "stm32f10x.h"
 	#else
 		#include "stm32f4xx.h"
 	#endif
 	
 #endif
+
