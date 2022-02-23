@@ -1,6 +1,7 @@
 #include "CppUTest/TestHarness.h"
 
 #include "pstring.h"
+#include "stdio.h"
 
 TEST_GROUP(PStringTestGroup)
 {
@@ -11,7 +12,6 @@ TEST_GROUP(PStringTestGroup)
 
 TEST(PStringTestGroup, findDataAfterAcronimTest)
 {
- // FAIL("Fail me!");
 	PString str("X10.123 Y20.458");
 	
 	STRCMP_EQUAL("10.123", str.findDataAfterAcronim('X').c_str());
@@ -28,44 +28,80 @@ TEST(PStringTestGroup, findValueAfterAcronimTest)
 	DOUBLES_EQUAL(456, str.findValueAfterAcronim('V', 456), 0.001);
 }
 
+TEST(PStringTestGroup, findValuesAfterAcronimTest)
+{
+	PString str("X10.123 Y20.458");
+	map<char, double> val=str.findValuesAfterAcronims();
+	LONGS_EQUAL(2, val.size());
+	
+	auto it=val.begin();
+	
+	BYTES_EQUAL('X', (*it).first);
+	DOUBLES_EQUAL(10.123, (*it).second, 0.001);
+	
+	it++;
+	BYTES_EQUAL('Y', (*it).first);
+	DOUBLES_EQUAL(20.458, (*it).second, 0.001);
+	
+}
+
+TEST(PStringTestGroup, split)
+{
+	PString str("login, pass1, pass2");
+	vector<string> vec=str.split(',');
+	
+	LONGS_EQUAL(3, vec.size());
+	STRCMP_EQUAL("login", vec.at(0).c_str());
+	STRCMP_EQUAL(" pass1", vec.at(1).c_str());
+	STRCMP_EQUAL(" pass2", vec.at(2).c_str());
+	
+	str="login";
+	vec=str.split(',');
+	LONGS_EQUAL(1, vec.size());
+	STRCMP_EQUAL("login", vec.at(0).c_str());
+	
+	str="login,,pass2";
+	vec=str.split(',');
+	LONGS_EQUAL(2, vec.size());
+	STRCMP_EQUAL("login", vec.at(0).c_str());
+	STRCMP_EQUAL("pass2", vec.at(1).c_str());
+	
+	vec=str.split(',',PString::KeepEmptyParts);
+	LONGS_EQUAL(3, vec.size());
+	STRCMP_EQUAL("login", vec.at(0).c_str());
+	STRCMP_EQUAL("", vec.at(1).c_str());
+	STRCMP_EQUAL("pass2", vec.at(2).c_str());
+}
 
 
-//    @Test
-//    void splitWithClamps() {
-//        Pstring str=new Pstring(" \"pio\", \"stasiek\"");
 
-//        assertEquals(2, str.splitWithClamps(',', '"').size());
-//        assertEquals("pio", str.splitWithClamps(',', '"').get(0));
-//        assertEquals("stasiek", str.splitWithClamps(',', '"').get(1));
+TEST(PStringTestGroup, splitWithClamps)
+{
+        PString str(" \"pio\", \"stasiek\"");
 
-//        assertEquals(1, str.splitWithClamps('.', '"').size());
-//        assertEquals("pio", str.splitWithClamps(',', '"').get(0));
+				vector<string> vec=str.splitWithClamps(',', '"');
+				LONGS_EQUAL(2, vec.size());
+				STRCMP_EQUAL("pio", vec.at(0).c_str());
+				STRCMP_EQUAL("stasiek", vec.at(1).c_str());
+	
+				vec=str.splitWithClamps('.', '"');
+				LONGS_EQUAL(1, vec.size());
+				STRCMP_EQUAL("pio", vec.at(0).c_str());
 
-//        assertEquals(0, str.splitWithClamps(',', '\'').size());
+				str=",'stasiek'";
+        vec=str.splitWithClamps(',', '\'');
+				LONGS_EQUAL(1, vec.size());
+				STRCMP_EQUAL("stasiek", vec.at(0).c_str());
 
-//        str.str=",'stasiek'";
-//        assertEquals(1, str.splitWithClamps(',', '\'').size());
-//        assertEquals("stasiek", str.splitWithClamps(',', '\'').get(0));
+        str="ANET \"pio\", \"stasiek\"";
+				vec=str.splitWithClamps(',', '"');
+				LONGS_EQUAL(2, vec.size());
+				STRCMP_EQUAL("pio", vec.at(0).c_str());
+				STRCMP_EQUAL("stasiek", vec.at(1).c_str());
 
-//        str.str=" \"stasiek\"";
-//        assertEquals(1, str.splitWithClamps(',', '"').size());
-//        assertEquals("stasiek", str.splitWithClamps(',', '"').get(0));
-
-//        str.str="ANET \"pio\", \"stasiek\"";
-//        assertEquals(2, str.splitWithClamps(',', '"').size());
-//        assertEquals("pio", str.splitWithClamps(',', '"').get(0));
-//        assertEquals("stasiek", str.splitWithClamps(',', '"').get(1));
-
-//        str.str="\"\", \"\"";
-//        assertEquals(2, str.splitWithClamps(',', '"').size());
-//        assertEquals("", str.splitWithClamps(',', '"').get(0));
-//        assertEquals("", str.splitWithClamps(',', '"').get(1));
-//    }
-
-//    @Test
-//    void convertStreamToString() {
-//        String initialString = "text\ntext2\ntext3\n";
-//        InputStream is = new ByteArrayInputStream(initialString.getBytes());
-
-//        assertEquals("text\ntext2\ntext3\n", Pstring.convertStreamToString(is));
-//    }
+        str="\"\", \"\"";
+				vec=str.splitWithClamps(',', '"');
+				LONGS_EQUAL(2, vec.size());
+				STRCMP_EQUAL("", vec.at(0).c_str());
+				STRCMP_EQUAL("", vec.at(1).c_str());
+}

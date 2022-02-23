@@ -2,6 +2,9 @@
 
 int main(int ac, char** av)
 {
+	
+//	SystemCoreClock=180000000; 
+	
   const char * av_override[] = { "exe", "-v" }; //turn on verbose mode
 
   return CommandLineTestRunner::RunAllTests(2, av_override);

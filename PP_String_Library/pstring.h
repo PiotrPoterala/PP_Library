@@ -49,13 +49,15 @@ public:
     PString(const char* str);
     PString(string &str);
 
+		enum SplitBehavior{SkipEmptyParts, KeepEmptyParts};
+
 //		double toDouble(bool *ok=NULL);
 //		uint32_t toInt(bool *ok=NULL);
  //   double findValueAfterAcronim(char acronim, int defValue, int precision);
 		string findDataAfterAcronim(char acronim);
 		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();
-    vector<string> split(char sep);
+    vector<string> split(char sep, SplitBehavior behavior = SkipEmptyParts);
 		vector<string> splitWithClamps(char sep, char clamps);
 		
 //		static uint32_t charToInt(char sign);

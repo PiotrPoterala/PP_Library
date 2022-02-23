@@ -26,7 +26,7 @@
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
-      <CLKADS>12000000</CLKADS>
+      <CLKADS>8000000</CLKADS>
       <OPTTT>
         <gFlags>1</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-U -O206 -S8 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO65555 -TC180000000 -TT10000000 -TP21 -TDS802F -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_1024.FLM -FS08000000 -FL0100000 -FP0($$Device:STM32F103VG$Flash\STM32F10x_1024.FLM)</Name>
+          <Name>-U -O206 -S8 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO65555 -TC180000000 -TT10000000 -TP21 -TDS802F -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7  -FN1 -FC1000 -FD20000000 -FF0STM32F4xx_2048 -FL0200000 -FS08000000 -FP0($$Device:STM32F429ZITx$CMSIS\Flash\STM32F4xx_2048.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -236,7 +236,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\cppUtest\Objects\cpputest.lib</PathWithFileName>
+      <PathWithFileName>.\cpputest.lib</PathWithFileName>
       <FilenameWithoutPath>cpputest.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -285,7 +285,7 @@
 
   <Group>
     <GroupName>::Compiler</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
@@ -293,7 +293,7 @@
 
   <Group>
     <GroupName>::Device</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>

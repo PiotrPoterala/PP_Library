@@ -984,7 +984,7 @@ static void SetSysClockTo56(void)
   * @param  None
   * @retval None
   */
-static void SetSysClockTo72(void)
+		static void SetSysClockTo72(void)
 {
   __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
   

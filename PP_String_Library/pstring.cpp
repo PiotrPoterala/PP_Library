@@ -86,7 +86,7 @@ map<char, double> PString::findValuesAfterAcronims(){
         return valuesMap;
 }
 
-vector<string> PString::split(char sep){
+vector<string> PString::split(char sep, SplitBehavior behavior){
     int j=0;
 		vector<string> stringList;
 		string data;
@@ -95,7 +95,7 @@ vector<string> PString::split(char sep){
 
         if(at(i)==sep){
           j++;
-					stringList.push_back(data);
+					if(behavior==KeepEmptyParts || (!data.empty()))stringList.push_back(data);
           data.clear();
         }else {
             data+=at(i);
@@ -103,6 +103,8 @@ vector<string> PString::split(char sep){
       
     }
     
+		if(!data.empty())stringList.push_back(data);
+		
     return stringList;
 }
 
@@ -121,7 +123,6 @@ vector<string> PString::splitWithClamps(char sep, char clamps){
                     if(num_char==1)getData=true;
                     else if(num_char==2){
                         getData=false;
-                        num_char=0;
                         stringList.push_back(data);
                         data.clear();
                     }
