@@ -72,7 +72,15 @@ PParamMap* defOParamList::getParams(void){
 
 }
 
-
+bool defOParamList::exists(char acronim){
+	
+	auto it=param.find(acronim);
+	
+	if(it!=param.end())return true;
+	
+  return false;
+	
+}
 
 
 void defOParamList::insert(pair<char, defOParamGeneral*> data){
@@ -158,16 +166,16 @@ int defOParamList::getParamPrecision(char acronim){
     return 0;
 }
 
-int defOParamList::checkRange(char acronim, int val){
-	
-	  defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        return par->checkRange(val);
-    }
-    return 0;
-	
-}
+//int defOParamList::checkRange(char acronim, int val){
+//	
+//	  defOParamGeneral* par;
+//    par=getParam(acronim);
+//    if(par!=nullptr){
+//        return par->checkRange(val);
+//    }
+//    return 0;
+//	
+//}
 
 
 void defOParamList::copyListOfParams(const PParamMap &copyParams){
@@ -283,36 +291,36 @@ bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
 
 
 void defOParamList::setParamsBasedString(PString &data){
-   int val=0;
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		    val=(*it).second->checkRange(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
-        val-=val%(*it).second->getPrecision();
-        (*it).second->setValue(val);
+		    (*it).second->setValue(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
 	}
 	
 	
 }
 
-void defOParamList::checksParamsValue(){
-	 int val=0;
+//void defOParamList::checksParamsValue(){
+//	 int val=0;
 
-	for(auto it=param.begin(); it!=param.end(); ++it){
-		    val=(*it).second->checkRange((*it).second->getValue());
-        val-=val%(*it).second->getPrecision();
-        (*it).second->setValue(val);
-	}
-	
-}
+//	for(auto it=param.begin(); it!=param.end(); ++it){
+//		    val=(*it).second->checkRange((*it).second->getValue());
+//        val-=val%(*it).second->getPrecision();
+//        (*it).second->setValue(val);
+//	}
+//	
+//}
 
 string defOParamList::getStringWithParams(){
 	
 	string answer;
+	auto it_last_elem=param.end();
 	
-		for (auto i=param.begin(); i!=param.end(); ++i) {
+	it_last_elem--;
+	
+		for (auto i=param.begin(); i!=param.end(); i++) {
 				answer+=(*i).first;  
 				answer+=to_string(static_cast<double>((*i).second->getValue())/pow(10.0, (*i).second->getUnit())); 
-				answer+=" ";
+				if(i!=it_last_elem)answer+=" ";
 		}
 	
 	return answer;

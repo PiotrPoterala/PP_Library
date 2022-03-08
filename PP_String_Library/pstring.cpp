@@ -18,7 +18,7 @@
  */
 
 #include "pstring.h"
-
+#include <iostream>
 
 PString::PString():string ()
 {
@@ -62,6 +62,32 @@ string PString::findDataAfterAcronim(char acronim){
         return line;
 }
 
+PString PString::mid(int position, int n){
+	
+	return substr(position, n);
+}
+
+int PString::toInt(int base){
+	int result=0;
+	
+	if(base==16){
+    for (int i=0; i<size(); i++) {
+        if (at(i)>=48 && at(i)<=57){
+            result += (at(i)-48)*pow(16, size()-i-1);
+        }else if(at(i)>=65 && at(i)<=70) {
+            result += (at(i)-55)*pow(16,size()-i-1);
+        }else if(at(i)>=97 && at(i)<=102) {
+            result += (at(i)-87)*pow(16,size()-i-1);
+        }
+    }
+	}else if(base==10){
+		
+		result=atoi(c_str());
+	}
+	
+	return result;
+}
+
 double PString::findValueAfterAcronim(char acronim, double defValue){
         string line=findDataAfterAcronim(acronim);
         if(line.empty())return defValue;
@@ -86,10 +112,10 @@ map<char, double> PString::findValuesAfterAcronims(){
         return valuesMap;
 }
 
-vector<string> PString::split(char sep, SplitBehavior behavior){
+vector<PString> PString::split(char sep, SplitBehavior behavior){
     int j=0;
-		vector<string> stringList;
-		string data;
+		vector<PString> stringList;
+		PString data;
   
     for(int i=0; i<size(); i++){
 

@@ -22,120 +22,117 @@
 defOParam::defOParam(string pname, int pvalue, int pdefaultValue, int pprecision, int punit, int plowerLimit, int pupperLimit)
 {
     name=pname;
-    value=pvalue;
-    defaultValue=pdefaultValue;
     lowerLimit=plowerLimit;
     upperLimit=pupperLimit;
     precision=pprecision;
     unit=punit;
 	
-		checkCorrectnes();
+		setValue(pvalue);
+		setDefaultValue(pdefaultValue);
 }
 
 defOParam::defOParam(const defOParam &param){
 
     name=param.name;
-    value=param.value;
-    defaultValue=param.defaultValue;
     lowerLimit=param.lowerLimit;
     upperLimit=param.upperLimit;
     precision=param.precision;
     unit=param.unit;
 	
-		checkCorrectnes();
-
+		setValue(param.value);
+		setDefaultValue(param.defaultValue);
 
 }
 
 defOParam& defOParam::operator=(const defOParam &param){
 
     name=param.name;
-    value=param.value;
+    setValue(param.value);
     defaultValue=param.defaultValue;
     lowerLimit=param.lowerLimit;
     upperLimit=param.upperLimit;
     precision=param.precision;
     unit=param.unit;
-	
-		checkCorrectnes();
 
+		setValue(param.value);
+		setDefaultValue(param.defaultValue);
+	
 		return (*this);
 
 }
 
 
-string defOParam::getName(void){
+string defOParam::getName(void) const{
 
     return name;
 
 }
 
-int defOParam::getValue(void){
+int defOParam::getValue(void) const{
 
     return value;
 }
 
 
 
-int defOParam::getLowerLimit(void){
+int defOParam::getLowerLimit(void) const{
 
     return lowerLimit;
 }
 
-int defOParam::getUpperLimit(void){
+int defOParam::getUpperLimit(void) const{
 
     return upperLimit;
 }
 
-int defOParam::getPrecision(void){
+int defOParam::getPrecision(void) const{
 
     return precision;
 }
 
-int defOParam::getUnit(void){
+int defOParam::getUnit(void) const{
 
     return unit;
 }
 
-
-void defOParam::setValue(int newValue){
-
-    value=newValue;
-}
-
-int defOParam::getDefaultValue(void){
+int defOParam::getDefaultValue(void) const{
 
     return defaultValue;
 }
 
 
-void defOParam::resetValue(void){
+void defOParam::setValue(int newValue){
+
+    value=correctData(newValue);
+}
+
+void defOParam::setDefaultValue(int newDefaultValue){
+
+    defaultValue=correctData(newDefaultValue);
+}
+
+
+void defOParam::restoreDefaultValue(void){
 
     value=defaultValue;
 }
 
 
-void defOParam::checkRange(){
 
-    if(value>=upperLimit)value=upperLimit;
-    else if(value<=lowerLimit)value=lowerLimit;
+int defOParam::trimDataToRange(int data) const{
 
-}
+    if(data>=upperLimit)data=upperLimit;
+    else if(data<=lowerLimit)data=lowerLimit;
 
-int defOParam::checkRange(int val){
-
-    if(val>=upperLimit)val=upperLimit;
-    else if(val<=lowerLimit)val=lowerLimit;
-
-    return val;
+    return data;
 }
 
 
-void defOParam::checkCorrectnes(){
-
-    checkRange();
-		value-=value%precision;
-	
+int defOParam::correctData(int data) const{
+		int trimVal;
+    trimVal=trimDataToRange(data);
+		trimVal-=trimVal%precision;
+		return trimVal;
 }
 
 

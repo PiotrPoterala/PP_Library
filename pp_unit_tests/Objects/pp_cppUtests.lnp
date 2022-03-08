@@ -1,8 +1,11 @@
 --cpu=Cortex-M4.fp.sp
 ".\objects\pstring.o"
+".\objects\pp_paramlist.o"
+".\objects\pp_param.o"
 ".\cpputest.lib"
 ".\objects\alltests.o"
 ".\objects\pstring_test.o"
+".\objects\pp_paramlist_test.o"
 ".\objects\retarget_io.o"
 ".\objects\startup_stm32f429xx.o"
 ".\objects\system_stm32f4xx.o"

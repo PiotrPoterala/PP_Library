@@ -48,26 +48,26 @@ private:
     int precision;
     int unit;
 
+
+    int trimDataToRange(int data) const noexcept;
+
 public:
     defOParam(const defOParam &param);
     defOParam(string pname, int pvalue=0, int pdefaultValue=0, int pprecision=1, int punit=0, int plowerLimit=0, int pupperLimit=0);
 		defOParam &operator=(const defOParam &param);
 		virtual ~defOParam(){};
-    virtual string getName(void) noexcept override;
-    virtual int getValue(void) noexcept override;
-    virtual int getLowerLimit(void) noexcept override;
-    virtual int getUpperLimit(void) noexcept override;
-    virtual int getPrecision(void) noexcept override;
-    virtual int getUnit(void) noexcept override;
-    virtual int getDefaultValue(void) noexcept override;
-
-    virtual int checkRange(int val) noexcept override;
+    virtual string getName(void) const noexcept override;
+    virtual int getValue(void) const noexcept override;
+    virtual int getLowerLimit(void) const noexcept override;
+    virtual int getUpperLimit(void) const noexcept override;
+    virtual int getPrecision(void) const noexcept override;
+    virtual int getUnit(void) const noexcept override;
+    virtual int getDefaultValue(void) const noexcept override;
 
     virtual void setValue(int newValue) noexcept override;
-    virtual void resetValue(void) noexcept override;
-
-		virtual void checkCorrectnes() noexcept override;
-		virtual void checkRange() noexcept override;
+		virtual void setDefaultValue(int newDefaultValue) noexcept override;
+    virtual void restoreDefaultValue(void) noexcept override;
+		virtual int correctData(int data) const noexcept override;
 
 		virtual bool decrementValue() noexcept override;
 		virtual bool decrementValue(int val) noexcept override;

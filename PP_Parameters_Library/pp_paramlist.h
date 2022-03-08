@@ -57,6 +57,7 @@ public:
 
 		void clear(void);
 		defOParamList* clone() const;
+		bool exists(char acronim);
 
 		defOParamGeneral* getParam(char acronim);
     PParamMap* getParams(void);
@@ -69,8 +70,6 @@ public:
 		pair<char, defOParamGeneral*> getParamPair(char acronim);
 		map<char, int> getParamsValues();
 		string getStringWithParams();
-
-		int checkRange(char acronim, int val);
 
 		void insert(pair<char, defOParamGeneral*>);
 
@@ -85,7 +84,6 @@ public:
 		bool comparingParamsValue(map<char, int> &paramToComp);
 
     void setParamsBasedString(PString &data);
-    void checksParamsValue();
 };
 
 #endif 

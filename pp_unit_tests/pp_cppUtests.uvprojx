@@ -336,9 +336,9 @@
             <v6Rtti>1</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F429xx, HSE_VALUE=8000000</Define>
+              <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,6 +392,16 @@
               <FileType>5</FileType>
               <FilePath>..\stm32xx.h</FilePath>
             </File>
+            <File>
+              <FileName>pp_paramlist.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Parameters_Library\pp_paramlist.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_param.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Parameters_Library\pp_param.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -416,6 +426,11 @@
               <FileName>pstring_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pstring_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_paramlist_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_paramlist_test.cpp</FilePath>
             </File>
           </Files>
         </Group>

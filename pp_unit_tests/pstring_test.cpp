@@ -19,6 +19,22 @@ TEST(PStringTestGroup, findDataAfterAcronimTest)
 }
 
 
+TEST(PStringTestGroup, midTest)
+{
+	PString str("X10.123 Y20.458");
+	
+	STRCMP_EQUAL(".123 Y", str.mid(3,6).c_str());
+}
+
+TEST(PStringTestGroup, toIntTest)
+{
+	PString str("234");
+	LONGS_EQUAL(234, str.toInt());
+	
+	str="CD";
+	LONGS_EQUAL(205, str.toInt(16));
+	
+}
 
 TEST(PStringTestGroup, findValueAfterAcronimTest)
 {
@@ -48,7 +64,7 @@ TEST(PStringTestGroup, findValuesAfterAcronimTest)
 TEST(PStringTestGroup, split)
 {
 	PString str("login, pass1, pass2");
-	vector<string> vec=str.split(',');
+	vector<PString> vec=str.split(',');
 	
 	LONGS_EQUAL(3, vec.size());
 	STRCMP_EQUAL("login", vec.at(0).c_str());
