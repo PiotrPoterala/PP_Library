@@ -51,9 +51,6 @@ defOParamList::~defOParamList(){
 void defOParamList::clear(){
 	
 		 if(param.empty()==false){
-			for (auto it=param.begin(); it != param.end(); ++it){
-				delete (*it).second;
-			}
        param.clear();
     }	
 }
@@ -66,9 +63,9 @@ defOParamList* defOParamList::clone() const{
 	return new defOParamList(*this);
 }
 
-PParamMap* defOParamList::getParams(void){
+PParamMap defOParamList::getParams(void){
 
-    return &param;
+    return param;
 
 }
 
@@ -83,36 +80,34 @@ bool defOParamList::exists(char acronim){
 }
 
 
-void defOParamList::insert(pair<char, defOParamGeneral*> data){
+void defOParamList::insert(PParamPair data){
 	
 	param.insert(data);
 	
 }
 
-defOParamGeneral* defOParamList::getParam(char acronim){
-
+PParamData defOParamList::getParam(char acronim){
+	PParamData value;
 
 	auto it=param.find(acronim);
 	
-	if(it!=param.end())return it->second;
+	if(it!=param.end())value.push_back(it->second);
 	
-  return nullptr;
+  return value;
 }
 
-pair<char, defOParamGeneral*> defOParamList::getParamPair(char acronim){
-
+PParamPair defOParamList::getParamPair(char acronim){
+	PParamPair value;
 	auto it=param.find(acronim);
+	if(it!=param.end())value=PParamPair(it->first, it->second);
 	
-	if(it!=param.end())return pair<char, defOParamGeneral*>(it->first, it->second);
-	
-  return pair<char, defOParamGeneral*>('\0', nullptr);
+  return value;
 }
 
 int defOParamList::getParamValue(char acronim){
-    defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        return par->getValue();
+    auto par=getParam(acronim);
+    if(!par.empty()){
+        return par.front()->getValue();
     }
     return 0;
 }
@@ -128,40 +123,47 @@ map<char, int> defOParamList::getParamsValues(){
 	return values;
 }
 
+map<char, double> defOParamList::getParamsRealValues(){
+	map<char, double> values;
+	
+	for(auto it=param.begin(); it != param.end(); ++it){
+		values.insert(pair<char,double>((*it).first, static_cast<double>((*it).second->getValue())/pow(10,(*it).second->getUnit())));
+		
+	}
+	
+	return values;
+}
+
 bool defOParamList::setParamValue(char acronim, int val){
-    defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        par->setValue(val);
+    auto par=getParam(acronim);
+    if(!par.empty()){
+        par.front()->setValue(val);
         return true;
     }
     return false;
 }
 
 int defOParamList::getParamUnit(char acronim){
-    defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        return par->getUnit();
+    auto par=getParam(acronim);
+    if(!par.empty()){
+        return par.front()->getUnit();
     }
     return 0;
 }
 
 
 int defOParamList::getParamUpperLimit(char acronim){
-    defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        return par->getUpperLimit();
+    auto par=getParam(acronim);
+    if(!par.empty()){
+        return par.front()->getUpperLimit();
     }
     return 0;
 }
 
 int defOParamList::getParamPrecision(char acronim){
-    defOParamGeneral* par;
-    par=getParam(acronim);
-    if(par!=nullptr){
-        return par->getPrecision();
+    auto par=getParam(acronim);
+    if(!par.empty()){
+        return par.front()->getPrecision();
     }
     return 0;
 }
@@ -194,7 +196,7 @@ void defOParamList::copyListOfParams(const PParamMap &copyParams){
 		
 }
 
-void defOParamList::setParamsByZero(void){
+void defOParamList::setParamsValueByZero(void){
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
 		(*it).second->setValue(0);
@@ -202,19 +204,19 @@ void defOParamList::setParamsByZero(void){
 	
 }
 
-void defOParamList::setParamsByValue(int value){
-
+void defOParamList::setParamsValueByDefaultValue(){
 	
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		(*it).second->setValue(value);
+		(*it).second->setValue((*it).second->getDefaultValue());
 	}
 	
 }
 
-void defOParamList::setParamsByDefaultValue(){
+void defOParamList::setParamsValue(int value){
+
 	
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		(*it).second->setValue((*it).second->getDefaultValue());
+		(*it).second->setValue(value);
 	}
 	
 }
@@ -246,6 +248,24 @@ void defOParamList::setParamsValue(map<char, double> &copyParams){
 		
 	}
 
+}
+
+
+void defOParamList::setParamsDefaultValue(int value){
+	
+	for(auto it=param.begin(); it!=param.end(); ++it){
+		(*it).second->setDefaultValue(value);
+	}
+	
+}
+	
+void defOParamList::setParamsRealLowerLimit(double value){
+	
+		for(auto it=param.begin(); it!=param.end(); ++it){
+		(*it).second->setLowerLimit(value*pow(10, (*it).second->getUnit()));
+	}
+	
+	
 }
 
 

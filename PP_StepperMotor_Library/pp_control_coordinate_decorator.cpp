@@ -19,7 +19,7 @@
 
 #include "pp_control_coordinate_decorator.h"
 
-defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParamGeneral*> pCoord, defOParamGeneral* bCoord, int corrUM):
+defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM):
 																															defOStepperMotorDriverDecorator(stepMotorDriver), baseCoord(bCoord){
 																						
 		defOStepperMotorDriverDecorator::setAcronim(pCoord.first);																							

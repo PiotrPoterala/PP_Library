@@ -10,17 +10,16 @@ class PSetFileFATFSCommand : public PCommand{
 		
 		private:
 			PDir *dir;
-			PIOdevice *dev;
+			PIOdeviceShrPtr dev;
 	
 		public:
-			PSetFileFATFSCommand(PDir *directory, PIOdevice *device ):dir(directory), dev(device){};
+			PSetFileFATFSCommand(PDir *directory, PIOdeviceShrPtr device ):dir(directory), dev(device){};
 	
 			virtual bool execute(string &data) override{
 					PFileInfoFATFS fInfo(dir->absoluteFilePath(data));
 				
 					if(fInfo.exists()){
-						if(dev!=nullptr) delete dev;
-						dev=new PFileFATFS(dir->absoluteFilePath(data));
+						dev=make_shared<PFileFATFS>(dir->absoluteFilePath(data));
 						return true;
 					}						
 					return false;

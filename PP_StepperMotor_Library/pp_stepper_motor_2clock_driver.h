@@ -33,11 +33,12 @@
 
 using namespace std;
 
+constexpr int FULL_STEP=0;
+constexpr int HALF_STEP=1;
+constexpr int MICRO_STEP=2;
+
+
 class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
-	
-	#define FULL_STEP		0
-	#define HALF_STEP		1
-	#define MICRO_STEP	2
 	
 	private:
 
@@ -57,7 +58,7 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
 															0x1DC,0x1A0,0x164,0x128,0xEC,0xB0,0x74,0x38};
 	
 	public:
-		defOStepperMotor2clockDriver(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC, int tOfStep=FULL_STEP);	
+		defOStepperMotor2clockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC, int tOfStep=FULL_STEP);	
 	
 		void setTypeOfStep(int tOfStep);
 	

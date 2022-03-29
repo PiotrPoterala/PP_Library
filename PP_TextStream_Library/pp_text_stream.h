@@ -39,10 +39,10 @@
 class PTextStream{
 		
 		private:
-			PIOdevice* IOdevice;	
+			PIOdeviceShrPtr IOdevice;	
 		
 		public:
-			PTextStream(PIOdevice* device){IOdevice=device;}
+			PTextStream(PIOdeviceShrPtr device){IOdevice=device;}
 			PTextStream& operator<<(int data);
 			PTextStream& operator<<(string &data);
 			PTextStream& operator<<(const char *data);

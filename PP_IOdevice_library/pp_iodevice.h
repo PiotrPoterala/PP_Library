@@ -54,7 +54,7 @@
 				virtual int read(char *data, int maxSize){return -1;};
 				virtual int read(){return -1;};
 				
-				virtual string readLine()=0;
+				virtual string readLine(){return "";};
 			
 				//file
 				virtual bool seek(int pos){return false;};
@@ -70,4 +70,7 @@
 
 
 		};
+		
+using PIOdeviceShrPtr = shared_ptr<PIOdevice>;
+		
 #endif

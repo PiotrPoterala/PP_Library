@@ -33,12 +33,15 @@
 #include "stm32xx.h"
 #include <string>
 #include <map>
+#include <vector>
 #include "pp_param_general.h"
 #include "pstring.h"
 
 using namespace std;
 
-using PParamMap = map<char, defOParamGeneral*>;
+using PParamMap = map<char, defOParamGeneralShdPtr>;
+using PParamPair = pair<char, defOParamGeneralShdPtr>;
+using PParamData = vector<defOParamGeneralShdPtr>;
 
 class defOParamList
 {
@@ -59,31 +62,37 @@ public:
 		defOParamList* clone() const;
 		bool exists(char acronim);
 
-		defOParamGeneral* getParam(char acronim);
-    PParamMap* getParams(void);
+		PParamData getParam(char acronim) noexcept;
+    PParamMap getParams(void) noexcept;
 
-    int getParamValue(char acronim);
-		int getParamUpperLimit(char acronim);
-		int getParamUnit(char acronim);
-		int getParamPrecision(char acronim);
+    int getParamValue(char acronim) noexcept;
+		int getParamUpperLimit(char acronim) noexcept;
+		int getParamUnit(char acronim) noexcept;
+		int getParamPrecision(char acronim) noexcept;
 
-		pair<char, defOParamGeneral*> getParamPair(char acronim);
+		PParamPair getParamPair(char acronim) noexcept;
 		map<char, int> getParamsValues();
+		map<char, double> getParamsRealValues();
 		string getStringWithParams();
 
-		void insert(pair<char, defOParamGeneral*>);
+		void insert(PParamPair pair);
 
-    void setParamsByZero(void);
 		bool setParamValue(char acronim, int val);
-    void setParamsByValue(int value);
-    void setParamsByDefaultValue();
+		
+		void setParamsValueByZero(void);
+		void setParamsValueByDefaultValue();
+    void setParamsValue(int value);
     void setParamsValue(PParamMap &copyParams);
 		void setParamsValue(map<char, double> &copyParams);
+
+		void setParamsDefaultValue(int value);
+		void setParamsRealLowerLimit(double value);
 
     bool comparingParamsValue(PParamMap &paramsToComp);
 		bool comparingParamsValue(map<char, int> &paramToComp);
 
     void setParamsBasedString(PString &data);
 };
+
 
 #endif 

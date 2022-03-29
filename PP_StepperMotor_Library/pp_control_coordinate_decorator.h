@@ -29,6 +29,7 @@
 	#define _PP_CONTROL_COORDINATE_DECORATOR_H
 
 #include "pp_stepper_motor_driver_decorator.h"
+#include "pp_paramlist.h"
 #include <vector>
 
 using namespace std;
@@ -43,11 +44,11 @@ private:
 		int correctionUM;
 		int typeOfCorrection;
 
-		defOParamGeneral* phyCoord;
-		defOParamGeneral* baseCoord;
+		defOParamGeneralShdPtr phyCoord;
+		defOParamGeneralShdPtr baseCoord;
 	
 	public:
-		defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, pair<char,defOParamGeneral*> pCoord, defOParamGeneral* bCoord, int corrUM=0);	
+		defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM=0);	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;

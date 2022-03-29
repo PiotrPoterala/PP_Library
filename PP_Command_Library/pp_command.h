@@ -24,5 +24,6 @@
 
 	};
 	
+	using PComandShrPtr = shared_ptr<PCommand>;
 	
 #endif

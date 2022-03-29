@@ -35,4 +35,7 @@
 				virtual bool writeAtTheEnd(const char *data)=0;
 
 		};
+		
+using PFileShrPtr=shared_ptr<PFile>;		
+		
 #endif

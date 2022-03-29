@@ -38,7 +38,7 @@ class defOStepperMotorDirClockDriver : public defOStepperMotorDriverPar{
 		int maskStep;
 	
 	public:
-		defOStepperMotorDirClockDriver(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC):defOStepperMotorDriverPar(paccelerationMMperSEC2, pvelocityUMperSEC){};	
+		defOStepperMotorDirClockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC):defOStepperMotorDriverPar(paccelerationMMperSEC2, pvelocityUMperSEC){};	
 	
 		virtual void rotateForward()override{maskStep=0;};
 		virtual void rotateBackwards()override{maskStep=1;};

@@ -1,24 +1,28 @@
 #include "pp_stm32_flash.h"
 
-PSTM32Flash::PSTM32Flash(void){
-
-}
 
 PSTM32Flash::PSTM32Flash(const PSTM32Flash &other){
 	
-	pages.insert(pages.begin(), other.pages.begin(), other.pages.end());
+	pages=other.pages;
+//	pages.insert(pages.begin(), other.pages.begin(), other.pages.end());
 	
 }
 
-PSTM32Flash::PSTM32Flash(vector<STM32FlashPage> &page){
+PSTM32Flash::PSTM32Flash(FlashAreaDescList &page){
 
-    pages.insert(pages.begin(), page.begin(), page.end());
+		pages=page;
+//    pages.insert(pages.begin(), page.begin(), page.end());
 
+}
+
+PSTM32Flash::PSTM32Flash(initializer_list<STM32FlashPage> page){
+	
+		pages=page;
 }
 
 PSTM32Flash& PSTM32Flash::operator=(const PSTM32Flash &other){
-	
-	pages.insert(pages.begin(), other.pages.begin(), other.pages.end());
+	pages=other.pages;
+	//pages.insert(pages.begin(), other.pages.begin(), other.pages.end());
 	return (*this);
 	
 }
@@ -83,7 +87,7 @@ bool PSTM32Flash::seek(int pos){
 	position=pos;
 	focusAdress=reinterpret_cast<unsigned int*>((*p).firstAdress);
 
-	for(int i=0; i<pos; i++)focusAdress++;
+	focusAdress+=pos;
 	
 	return true;
 	
@@ -95,7 +99,7 @@ int PSTM32Flash::read(){
 
 
 bool PSTM32Flash::write(int data){
-	#define FLASH_CR_PSIZEx32		0x200
+	constexpr int FLASH_CR_PSIZEx32=0x200;
 //The Flash memory programming sequence is as follows:
 //1. Check that no main Flash memory operation is ongoing by checking the BSY bit in the
 //FLASH_SR register.

@@ -8,8 +8,8 @@
 class PHostCommand{
 		
 		private:
-			PCommand* command;
-			map<int, PCommand*> commandList;
+			PComandShrPtr command;
+			map<int, PComandShrPtr> commandList;
 		
 		
 		public:
@@ -22,8 +22,8 @@ class PHostCommand{
 				return false;
 			};
 			
-			void addCommand(int type, PCommand* comm){
-				commandList.insert(pair<int, PCommand*>(type, comm));
+			void addCommand(int type, PComandShrPtr comm){
+				commandList.insert(pair<int, PComandShrPtr>(type, comm));
 			};
 			
 			bool setCommand(int type){
@@ -32,9 +32,8 @@ class PHostCommand{
 				if (it != commandList.end()){
 					command=(*it).second;
 					return true;
-				}else{
-					command=nullptr;
 				}
+				
 				return false;
 				
 			}

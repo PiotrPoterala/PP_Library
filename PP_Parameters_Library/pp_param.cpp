@@ -117,6 +117,10 @@ void defOParam::restoreDefaultValue(void){
     value=defaultValue;
 }
 
+void defOParam::setLowerLimit(int newLowerLimit){
+	
+		lowerLimit=newLowerLimit;
+}
 
 
 int defOParam::trimDataToRange(int data) const{

@@ -61,11 +61,11 @@ class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 		char acronim;
 		bool enable=false;
 
-		defOParam* accelerationMMperSEC2;
-		defOParam* velocityUMperSEC;	
+		defOParamGeneralShdPtr accelerationMMperSEC2;
+		defOParamGeneralShdPtr velocityUMperSEC;	
 	
 	public:
-		defOStepperMotorDriverPar(defOParam* paccelerationMMperSEC2, defOParam* pvelocityUMperSEC):accelerationMMperSEC2(paccelerationMMperSEC2), velocityUMperSEC(pvelocityUMperSEC){};	
+		defOStepperMotorDriverPar(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC):accelerationMMperSEC2(paccelerationMMperSEC2), velocityUMperSEC(pvelocityUMperSEC){};	
 			
 		virtual void rotateForward(){};
 		virtual void rotateBackwards(){};

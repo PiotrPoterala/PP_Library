@@ -66,6 +66,8 @@ public:
 
     virtual void setValue(int newValue) noexcept override;
 		virtual void setDefaultValue(int newDefaultValue) noexcept override;
+		virtual void setLowerLimit(int newLowerLimit) noexcept override;
+			
     virtual void restoreDefaultValue(void) noexcept override;
 		virtual int correctData(int data) const noexcept override;
 
@@ -77,5 +79,6 @@ public:
 
 };
 
+using defOParamShrPtr = shared_ptr<defOParam>;
 
 #endif // AUT_WORK_PARAM_H

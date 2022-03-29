@@ -48,6 +48,8 @@ public:
 
     virtual void setValue(int newValue) noexcept=0;
 		virtual void setDefaultValue(int newDefaultValue) noexcept=0;
+		virtual void setLowerLimit(int newLowerLimit) noexcept=0;
+			
     virtual void restoreDefaultValue(void) noexcept=0;
 		virtual int correctData(int data) const noexcept=0;
 
@@ -55,16 +57,8 @@ public:
 		virtual bool decrementValue(int val) noexcept=0;
 		virtual bool incrementValue() noexcept=0;
 		virtual bool incrementValue(int val) noexcept=0;
-		
-//		static int checkRange(int val, int upperLim, int lowerLim) noexcept{
-
-//				if(val>=upperLim)val=upperLim;
-//				else if(val<=lowerLim)val=lowerLim;
-
-//				return val;
-//		}
 
 };
 
-
+using defOParamGeneralShdPtr = shared_ptr<defOParamGeneral>;
 #endif 
