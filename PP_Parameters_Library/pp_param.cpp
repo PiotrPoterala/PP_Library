@@ -61,6 +61,13 @@ defOParam& defOParam::operator=(const defOParam &param){
 
 }
 
+defOParamGeneralShdPtr defOParam::clone(){
+	
+		return make_shared<defOParam>(*this);
+	
+}
+
+
 
 string defOParam::getName(void) const{
 

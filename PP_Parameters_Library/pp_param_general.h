@@ -38,6 +38,9 @@ class defOParamGeneral
 public:
     defOParamGeneral(){};
 		virtual ~defOParamGeneral(){};
+			
+		virtual shared_ptr<defOParamGeneral> clone() =0;
+			
     virtual string getName(void) const noexcept=0;
     virtual int getValue(void) const noexcept=0;
     virtual int getLowerLimit(void) const noexcept=0;
@@ -57,8 +60,10 @@ public:
 		virtual bool decrementValue(int val) noexcept=0;
 		virtual bool incrementValue() noexcept=0;
 		virtual bool incrementValue(int val) noexcept=0;
+			
 
 };
 
 using defOParamGeneralShdPtr = shared_ptr<defOParamGeneral>;
+
 #endif 

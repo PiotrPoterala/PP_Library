@@ -47,14 +47,14 @@ class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator
 		void setStateOfPins();
 	
 	
-		vector<uPin> *inputsPins;
+		vector<uPin> inputsPins;
 		map<GPIO_TypeDef*, uPortMask*> portMask;
 	
 		uPin *enablePin;
 		int enablePolar;
 	
 	public:
-		defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins, uPin *enPin, int enPolar=B_HIGH);	
+		defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar=B_HIGH);	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;

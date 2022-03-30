@@ -51,6 +51,13 @@ class defORTX5ParamMutexDecorator : public defOParamGeneral
 			osMutexDelete(mutex);
 		};
 		
+		
+		virtual defOParamGeneralShdPtr clone() override{
+	
+			return make_shared<defORTX5ParamMutexDecorator>(paramGeneral->clone());
+	
+		}
+		
     virtual string getName(void) const override{return paramGeneral->getName();};
     virtual int getValue(void) const override{return paramGeneral->getValue();};
     virtual int getLowerLimit(void) const override{return paramGeneral->getLowerLimit();};
@@ -61,61 +68,89 @@ class defORTX5ParamMutexDecorator : public defOParamGeneral
 
 
     virtual void setValue(int newValue) override{		
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setValue(newValue);
-			osMutexRelease (mutex); 
+			if(osKernelGetState() != osKernelRunning){
+				paramGeneral->setValue(newValue);
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setValue(newValue);
+				osMutexRelease (mutex); 
+			}
 		};
 		
-		virtual void setDefaultValue(int newDefaultValue) override{		
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setDefaultValue(newDefaultValue);
-			osMutexRelease (mutex); 
+		virtual void setDefaultValue(int newDefaultValue) override{	
+			if(osKernelGetState() != osKernelRunning){
+				paramGeneral->setDefaultValue(newDefaultValue);
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setDefaultValue(newDefaultValue);
+				osMutexRelease (mutex); 
+			}
 		};
 		
 		
 		virtual void setLowerLimit(int newLowerLimit) override{
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setLowerLimit(newLowerLimit);
-			osMutexRelease (mutex); 
-			
+			if(osKernelGetState() != osKernelRunning){
+				paramGeneral->setLowerLimit(newLowerLimit);
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->setLowerLimit(newLowerLimit);
+				osMutexRelease (mutex); 
+			}
 		}
 		
 		
     virtual void restoreDefaultValue(void) override{		
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->restoreDefaultValue();
-			osMutexRelease (mutex); 
+			if(osKernelGetState() != osKernelRunning){
+				paramGeneral->restoreDefaultValue();
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->restoreDefaultValue();
+				osMutexRelease (mutex); 
+			}
 		};
+		
 		virtual int correctData(int data) const override{	
 			return paramGeneral->correctData(data);
 		}
-//		virtual void checkCorrectnes(void) override{		
-//			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->checkCorrectnes();
-//			osMutexRelease (mutex); 
-//		};
-//		virtual void checkRange(void) override{		
-//			if (osMutexAcquire(mutex, osWaitForever) == osOK) paramGeneral->checkRange();
-//			osMutexRelease (mutex); 
-//		};
 
 		virtual bool decrementValue(void) override{		
 			bool answer=false;
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->decrementValue();
-			osMutexRelease (mutex); 
+			
+			if(osKernelGetState() != osKernelRunning){
+				answer=paramGeneral->decrementValue();
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->decrementValue();
+				osMutexRelease (mutex); 
+			}
 			return answer;
 		};
+		
 		virtual bool decrementValue(int val) override{		
 			bool answer=false;
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->decrementValue(val);
-			osMutexRelease (mutex); 
+			if(osKernelGetState() != osKernelRunning){
+				answer=paramGeneral->decrementValue(val);
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->decrementValue(val);
+				osMutexRelease (mutex); 
+			}
 			return answer;
 		};
+		
 		virtual bool incrementValue(void) override{		
 			bool answer=false;
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->incrementValue();
-			osMutexRelease (mutex); 
+			if(osKernelGetState() != osKernelRunning){
+				answer=paramGeneral->incrementValue();
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->incrementValue();
+				osMutexRelease (mutex); 
+			}
 			return answer;
 		};
+		
 		virtual bool incrementValue(int val) override{	
 			bool answer=false;
-			if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->incrementValue(val);
-			osMutexRelease (mutex); 
+			if(osKernelGetState() != osKernelRunning){
+				answer=paramGeneral->incrementValue(val);
+			}else{
+				if (osMutexAcquire(mutex, osWaitForever) == osOK) answer=paramGeneral->incrementValue(val);
+				osMutexRelease (mutex); 
+			}
 			return answer;
 		};
 

@@ -182,24 +182,17 @@ int defOParamList::getParamPrecision(char acronim){
 
 void defOParamList::copyListOfParams(const PParamMap &copyParams){
 
-//	map<char,defOParam*>::iterator it
-//	for_each(param.begin(), param.end(), it){
-//		x+=1;
-//	}
-	
     clear();
-		param.insert(copyParams.begin(), copyParams.end());
-		
-//		for (map<char,defOParam*>::iterator it=copyParams.begin(); it != copyParams.end(); ++it){
-//			param.push_back(new defOParam(**it));
-//		}
+		for (auto it=copyParams.begin(); it != copyParams.end(); ++it){
+			param.insert(PParamPair((*it).first, (*it).second->clone()));
+		}
 		
 }
 
 void defOParamList::setParamsValueByZero(void){
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		(*it).second->setValue(0);
+		(*(*it).second).setValue(0);
 	}
 	
 }
