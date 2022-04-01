@@ -83,4 +83,6 @@ class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 	
 };
 
+
+using defOStepperMotorDriverShdPtr= shared_ptr<defOStepperMotorDriver>;
 #endif

@@ -38,10 +38,10 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 	
 	protected:
 
-		defOStepperMotorDriver* stepperMotorDriver;
+		defOStepperMotorDriverShdPtr stepperMotorDriver;
 	
 	public:
-		defOStepperMotorDriverDecorator(defOStepperMotorDriver* stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
+		defOStepperMotorDriverDecorator(defOStepperMotorDriverShdPtr stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
 	
 		virtual void rotateForward()override{stepperMotorDriver->rotateForward();};
 		virtual void rotateBackwards()override{stepperMotorDriver->rotateBackwards();};

@@ -94,5 +94,6 @@ public:
     void setParamsBasedString(PString &data);
 };
 
+using defOParamListShdPtr=shared_ptr<defOParamList>;
 
 #endif 

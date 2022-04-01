@@ -46,7 +46,7 @@ class defORTX5SelectCurrentDecorator : public defOStepperMotorDriverDecorator{
 		int ticksToOff;
 	
 	public:
-		defORTX5SelectCurrentDecorator(defOStepperMotorDriver* stepMotorDriver, uPin *sPin, osTimerId_t poffClockTimer, int sPolar=B_LOW, int ptimeToOff_MS=10000):
+		defORTX5SelectCurrentDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, uPin *sPin, osTimerId_t poffClockTimer, int sPolar=B_LOW, int ptimeToOff_MS=10000):
 																	defOStepperMotorDriverDecorator(stepMotorDriver), selectPin(sPin),offClockTimer(poffClockTimer), selPolar(sPolar){
 																	
 																	ticksToOff=ptimeToOff_MS*OS_TICK_FREQ/1000;

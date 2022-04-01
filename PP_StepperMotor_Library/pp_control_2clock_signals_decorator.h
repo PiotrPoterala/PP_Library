@@ -54,7 +54,7 @@ class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator
 		int enablePolar;
 	
 	public:
-		defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar=B_HIGH);	
+		defOControl2ClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar=B_HIGH);	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;

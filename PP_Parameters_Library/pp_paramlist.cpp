@@ -26,7 +26,7 @@ defOParamList::defOParamList(void){
 
 defOParamList::defOParamList(const defOParamList &other){
 	
-	param.insert(other.param.begin(), other.param.end());
+		copyListOfParams(other.param);
 	
 }
 

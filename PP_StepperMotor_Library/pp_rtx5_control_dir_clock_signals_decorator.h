@@ -50,7 +50,7 @@ class defORTX5ControlDirClockSignalsDecorator : public defOStepperMotorDriverDec
 		vector<uPin> *inputsPins;
 	
 	public:
-		defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer=nullptr);	
+		defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer=nullptr);	
 	
 		virtual void rotateForward() override;
 		virtual void rotateBackwards()override;

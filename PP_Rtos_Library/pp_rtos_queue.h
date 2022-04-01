@@ -50,5 +50,6 @@
 		
 	};
 
+	using defOTaskQueuesIntShrPtr = shared_ptr<defOTaskQueues<int>>;
 
 #endif

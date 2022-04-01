@@ -20,51 +20,51 @@
 #include "pp_motorslist.h"
 
 
-defOMotorsList::defOMotorsList(){
-	
-	
-}
+//defOMotorsList::defOMotorsList(){
+//	
+//	
+//}
 
-vector<defOStepperMotorDriver*>* defOMotorsList::getMotors(void){
-	
-	return &motors;
-	
-}
+//PMotorsVector defOMotorsList::getMotors(void){
+//	
+//	return motors;
+//	
+//}
 
-defOStepperMotorDriver* defOMotorsList::getMotor(char acronim){
-
-	vector<defOStepperMotorDriver*>::iterator it=getIterator(acronim);
-	
-	if(it!=motors.end()) return (*it);
-	
-	return nullptr;
-}
-
-vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(){
-
-	return motors.begin();
-	
-}
+//PMotorsData defOMotorsList::getMotor(char acronim){
+//	PMotorsData motor;
+//	auto it=getIterator(acronim);
+//	
+//	if(it!=motors.end()) motor.push_back(*it);
+//	
+//	return motor;
+//}
 
 
-vector<defOStepperMotorDriver*>::iterator defOMotorsList::getIterator(char acronim){
+//void defOMotorsList::insert(defOStepperMotorDriverShdPtr motor){
+//	
+//	motors.push_back(motor);
+//	
+//}
 
-	vector<defOStepperMotorDriver*>::iterator it;
-	
-	for(it=motors.begin(); it!=motors.end(); it++){
-		if((*it)->getAcronim()==acronim) break;
-		
-	}
-	
-	return it;
-}
 
-void defOMotorsList::clearCounters(){
+//PMotorsVectorItr defOMotorsList::getIterator(){
 
-	vector<defOStepperMotorDriver*>::iterator it;
+//	return motors.begin();
+//	
+//}
+
+
+//PMotorsVectorItr defOMotorsList::getIterator(char acronim){
+
+//	PMotorsVectorItr it;
+//	
+//	for(it=motors.begin(); it!=motors.end(); it++){
+//		if((*it)->getAcronim()==acronim) break;
+//		
+//	}
+//	
+//	return it;
+//}
+
 	
-	for(it=motors.begin(); it!=motors.end(); ++it){
-	//	(*it)->counter=0;
-	}
-	
-}

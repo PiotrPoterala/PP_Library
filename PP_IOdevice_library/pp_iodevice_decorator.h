@@ -39,10 +39,10 @@
 class PIOdeviceDecorator: public PIOdevice{
 		
 		private:
-			PIOdevice* IOdevice;	
+			PIOdeviceShrPtr IOdevice;	
 		
 		public:
-			PIOdeviceDecorator(PIOdevice* device){IOdevice=device;}
+			PIOdeviceDecorator(PIOdeviceShrPtr device){IOdevice=device;}
 			virtual ~PIOdeviceDecorator(){};
 				
 			virtual bool isOpen()override {return IOdevice->isOpen();};

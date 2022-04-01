@@ -19,7 +19,7 @@
 
 #include "pp_control_2clock_signals_decorator.h"
 
-defOControl2ClockSignalsDecorator::defOControl2ClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar):
+defOControl2ClockSignalsDecorator::defOControl2ClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar):
 																																		defOStepperMotorDriverDecorator(stepMotorDriver), inputsPins(iPins), enablePin(enPin), enablePolar(enPolar){
 	
 		setEnable(false);																																

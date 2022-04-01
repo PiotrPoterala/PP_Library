@@ -23,7 +23,7 @@
 
 
 
-defORTX5ControlDirClockSignalsDecorator::defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriver* stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer):
+defORTX5ControlDirClockSignalsDecorator::defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer):
 																																		defOStepperMotorDriverDecorator(stepMotorDriver), inputsPins(iPins), offClockTimer(poffClockTimer){	
 
 

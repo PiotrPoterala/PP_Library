@@ -48,7 +48,7 @@ private:
 		defOParamGeneralShdPtr baseCoord;
 	
 	public:
-		defOControlCoordinateDecorator(defOStepperMotorDriver* stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM=0);	
+		defOControlCoordinateDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM=0);	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;
