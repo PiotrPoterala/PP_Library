@@ -59,7 +59,7 @@ public:
 		~defOParamList();
 
 		void clear(void);
-		defOParamList* clone() const;
+		shared_ptr<defOParamList> clone() const;
 		bool exists(char acronim);
 
 		PParamData getParam(char acronim) noexcept;

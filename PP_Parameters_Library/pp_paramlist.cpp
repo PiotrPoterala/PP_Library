@@ -58,9 +58,9 @@ void defOParamList::clear(){
 
 
 
-defOParamList* defOParamList::clone() const{
+defOParamListShdPtr defOParamList::clone() const{
 	
-	return new defOParamList(*this);
+	return make_shared<defOParamList>(*this);
 }
 
 PParamMap defOParamList::getParams(void){

@@ -69,7 +69,7 @@ template <typename Type>
 					}else return false;
 					
 				}
-			}return false;
+			}else return false;
 			return true;
 
 	}
@@ -83,7 +83,7 @@ template <typename Type>
 					}else return false;
 					
 				}		
-			}return false;
+			}else return false;
 			return true;
 	};
 		
