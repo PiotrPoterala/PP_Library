@@ -66,6 +66,8 @@ class PDirFATFS : public PDir
 	
 			bool exist(string &path, Filters filters);
 				
+			virtual bool remove(const string &fileName) override;
+				
 };
 
 #endif 

@@ -41,6 +41,8 @@
 		
 		
 		public:
+			static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");
+		
 			defOTaskQueues(){};
 			virtual ~defOTaskQueues(){};
 			virtual void xQueueSendToBackWithSemaphore(Type data)=0;

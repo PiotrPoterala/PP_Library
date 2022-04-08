@@ -30,6 +30,7 @@
 	#define _PP_POINT_H
 
 	#include <map>
+	#include <type_traits>
 	
 	#include "pstring.h"
 	
@@ -38,6 +39,8 @@ template <typename Type>
 	class PPpoint{
 		
 		public:
+			static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");
+		
 		map<char, Type> axes;	
 		
 		PPpoint(){};
@@ -151,6 +154,8 @@ template <typename Type>
 		
 		
 		public:
+			static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");	
+		
 			Type x=0;
 			Type y=0;	
 		

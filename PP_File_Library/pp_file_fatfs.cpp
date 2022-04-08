@@ -172,7 +172,7 @@ int PFileFATFS::read(char *data, int maxSize){
 string PFileFATFS::readLine(){
 		constexpr int buforSize=64;
 	
-		int fresult, i;
+		int i;
 		unsigned int readBytes=buforSize;
 		char bufor[buforSize];
 		string result;

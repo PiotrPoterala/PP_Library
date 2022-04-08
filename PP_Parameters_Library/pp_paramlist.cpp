@@ -189,13 +189,13 @@ void defOParamList::copyListOfParams(const PParamMap &copyParams){
 		
 }
 
-void defOParamList::setParamsValueByZero(void){
+//void defOParamList::setParamsValueByZero(void){
 
-	for(auto it=param.begin(); it!=param.end(); ++it){
-		(*(*it).second).setValue(0);
-	}
-	
-}
+//	for(auto it=param.begin(); it!=param.end(); ++it){
+//		(*(*it).second).setValue(0);
+//	}
+//	
+//}
 
 void defOParamList::setParamsValueByDefaultValue(){
 	
@@ -266,38 +266,43 @@ void defOParamList::setParamsRealLowerLimit(double value){
 bool defOParamList::comparingParamsValue(PParamMap &paramToComp){
     bool same=true;
 
-
-	for(auto it=param.begin(); it!=param.end();  ++it){
-		auto it_to_comp=paramToComp.find((*it).first);
-		if(it_to_comp!=paramToComp.end()){
-			if((*it).second->getValue()!=(*it_to_comp).second->getValue()){
+		if(param.size()==paramToComp.size()){
+			for(auto it=param.begin(); it!=param.end();  ++it){
+				auto it_to_comp=paramToComp.find((*it).first);
+				if(it_to_comp!=paramToComp.end()){
+					if((*it).second->getValue()!=(*it_to_comp).second->getValue()){
+							same=false;
+							break;
+					}
+				}else{
 					same=false;
 					break;
+				}
 			}
-		}else{
-			same=false;
-			break;
-		}
-	}
-    return same;
+		}else same=false;
+		
+		return same;
 
 }
 
 bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
     bool same=true;
 	
-	for(auto it=param.begin(); it!=param.end();  ++it){
-		auto it_to_comp=paramToComp.find((*it).first);
-		if(it_to_comp!=paramToComp.end()){
-			if((*it).second->getValue()!=(*it_to_comp).second){
+		if(param.size()==paramToComp.size()){
+			for(auto it=param.begin(); it!=param.end();  ++it){
+				auto it_to_comp=paramToComp.find((*it).first);
+				if(it_to_comp!=paramToComp.end()){
+					if((*it).second->getValue()!=(*it_to_comp).second){
+							same=false;
+							break;
+					}
+				}else{
 					same=false;
 					break;
+				}
 			}
-		}else{
-			same=false;
-			break;
-		}
-	}
+		}else same=false;
+		
     return same;
 
 }
@@ -309,7 +314,17 @@ void defOParamList::setParamsBasedString(PString &data){
 		    (*it).second->setValue(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
 	}
 	
-	
+}
+
+void defOParamList::setParamsBasedString(string &data){
+	PString str(data);
+	setParamsBasedString(str);
+}
+
+
+void defOParamList::setParamsBasedString(const char *data){
+	PString str(data);
+	setParamsBasedString(str);
 }
 
 //void defOParamList::checksParamsValue(){

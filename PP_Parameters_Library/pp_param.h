@@ -53,7 +53,7 @@ private:
 
 public:
     defOParam(const defOParam &param);
-    defOParam(string pname, int pvalue=0, int pdefaultValue=0, int pprecision=1, int punit=0, int plowerLimit=0, int pupperLimit=0);
+    defOParam(string pname, int pdefaultValue, int plowerLimit, int pupperLimit, int pprecision=1, int punit=0);
 		defOParam &operator=(const defOParam &param);
 		virtual ~defOParam(){};
 			

@@ -19,7 +19,7 @@
 
 #include "pp_param.h"
 
-defOParam::defOParam(string pname, int pvalue, int pdefaultValue, int pprecision, int punit, int plowerLimit, int pupperLimit)
+defOParam::defOParam(string pname, int pdefaultValue, int plowerLimit, int pupperLimit, int pprecision, int punit)
 {
     name=pname;
     lowerLimit=plowerLimit;
@@ -27,7 +27,7 @@ defOParam::defOParam(string pname, int pvalue, int pdefaultValue, int pprecision
     precision=pprecision;
     unit=punit;
 	
-		setValue(pvalue);
+		setValue(pdefaultValue);
 		setDefaultValue(pdefaultValue);
 }
 

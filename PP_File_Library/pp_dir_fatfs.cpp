@@ -135,3 +135,22 @@ bool PDirFATFS::exist(string &path, Filters filters){
 		return objectExist;
 	
 }
+
+
+
+bool PDirFATFS::remove(const string &fileName){
+			int fresult=FR_OK;
+			bool performed=false;
+		
+			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+		
+			if(fresult==FR_OK){
+				fresult=f_unlink(absoluteFilePath(fileName).c_str());
+		
+				if(fresult==FR_OK)performed=true;
+				f_mount(0, volume.c_str(), 1);
+			}
+			
+			return performed;
+
+}

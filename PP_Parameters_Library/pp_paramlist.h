@@ -79,7 +79,6 @@ public:
 
 		bool setParamValue(char acronim, int val);
 		
-		void setParamsValueByZero(void);
 		void setParamsValueByDefaultValue();
     void setParamsValue(int value);
     void setParamsValue(PParamMap &copyParams);
@@ -92,6 +91,8 @@ public:
 		bool comparingParamsValue(map<char, int> &paramToComp);
 
     void setParamsBasedString(PString &data);
+		void setParamsBasedString(string &data);
+		void setParamsBasedString(const char *data);
 };
 
 using defOParamListShdPtr=shared_ptr<defOParamList>;

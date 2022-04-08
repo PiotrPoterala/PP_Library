@@ -38,8 +38,7 @@ using namespace std;
 
 class PFileInfoFATFS : public PFileInfo
 {
-private:
-	FATFS g_sFatFs;
+private:	FATFS g_sFatFs;
 	FILINFO fno;
 	bool exist=false;
 	
@@ -104,6 +103,7 @@ public:
 			return date;
 		}
 		virtual int size() override{return fno.fsize;};
+
 };
 
 #endif 
