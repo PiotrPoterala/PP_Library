@@ -73,11 +73,11 @@ int PString::toInt(int base){
 	if(base==16){
     for (int i=0; i<size(); i++) {
         if (at(i)>=48 && at(i)<=57){
-            result += (at(i)-48)*pow(16, size()-i-1);
+            result =result*16+(at(i)-48);
         }else if(at(i)>=65 && at(i)<=70) {
-            result += (at(i)-55)*pow(16,size()-i-1);
+            result =result*16+(at(i)-55);
         }else if(at(i)>=97 && at(i)<=102) {
-            result += (at(i)-87)*pow(16,size()-i-1);
+            result =result*16+(at(i)-87);
         }
     }
 	}else if(base==10){
@@ -113,14 +113,11 @@ map<char, double> PString::findValuesAfterAcronims(){
 }
 
 vector<PString> PString::split(char sep, SplitBehavior behavior){
-    int j=0;
 		vector<PString> stringList;
 		PString data;
   
     for(int i=0; i<size(); i++){
-
         if(at(i)==sep){
-          j++;
 					if(behavior==KeepEmptyParts || (!data.empty()))stringList.push_back(data);
           data.clear();
         }else {

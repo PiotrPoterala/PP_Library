@@ -28,7 +28,6 @@
 #ifndef PP_MOTOR_LIST_H
 #define PP_MOTOR_LIST_H
 
-#include "stm32xx.h"
 #include <map>
 #include "pp_stepper_motor_driver.h"
 

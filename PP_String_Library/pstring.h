@@ -32,7 +32,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "stm32xx.h"
 
 	#define  ZNAK_PLUS 		124
 	#define  ZNAK_MINUS 	125

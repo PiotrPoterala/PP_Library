@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -402,6 +402,16 @@
               <FileType>8</FileType>
               <FilePath>..\PP_Parameters_Library\pp_param.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_drive_algorithms.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_drive_algorithms.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_rtos_drive_algorithms_mock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pp_rtos_drive_algorithms_mock.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -431,6 +441,11 @@
               <FileName>pp_paramlist_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_paramlist_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_drive_algorithms_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
             </File>
           </Files>
         </Group>
