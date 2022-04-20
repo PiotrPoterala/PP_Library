@@ -25,5 +25,6 @@
 	};
 	
 	using PComandShrPtr = shared_ptr<PCommand>;
+	using PAskComandShrPtr = shared_ptr<PAskCommand>;
 	
 #endif

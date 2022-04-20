@@ -10,10 +10,10 @@
 class PSetParamCommand : public PCommand{
 		
 		private:
-			defOParamList *param;
+			defOParamListShdPtr param;
 	
 		public:
-			PSetParamCommand(defOParamList *par):param(par){};
+			PSetParamCommand(defOParamListShdPtr par):param(par){};
 	
 			virtual bool execute(string &data) override{
 					PString str(data);
@@ -27,10 +27,10 @@ class PSetParamCommand : public PCommand{
 class PGetParamCommand : public PAskCommand{
 		
 		private:
-			defOParamList *param;
+			defOParamListShdPtr param;
 	
 		public:
-			PGetParamCommand(defOParamList *par):param(par){};
+			PGetParamCommand(defOParamListShdPtr par):param(par){};
 	
 			virtual string execute() override{
 						

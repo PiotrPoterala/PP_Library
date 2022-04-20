@@ -32,6 +32,8 @@ class PHostCommand{
 				if (it != commandList.end()){
 					command=(*it).second;
 					return true;
+				}else{
+					command=nullptr;
 				}
 				
 				return false;
@@ -44,8 +46,8 @@ class PHostCommand{
 	class PHostAskCommand{
 		
 		private:
-			PAskCommand* command;
-			map<int, PAskCommand*> commandList;
+			PAskComandShrPtr command;
+			map<int, PAskComandShrPtr> commandList;
 		
 		
 		public:
@@ -59,8 +61,8 @@ class PHostCommand{
 				return ans;
 			};
 			
-			void addCommand(int type, PAskCommand* comm){
-				commandList.insert(pair<int, PAskCommand*>(type, comm));
+			void addCommand(int type, PAskComandShrPtr comm){
+				commandList.insert(pair<int, PAskComandShrPtr>(type, comm));
 			};
 			
 			bool setCommand(int type){
