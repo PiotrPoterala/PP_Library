@@ -64,4 +64,6 @@ public:
 		void	setPath(const string &path);
 };
 
+using PDirShrPtr=shared_ptr<PDir>;	
+
 #endif 

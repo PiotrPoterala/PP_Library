@@ -12,10 +12,10 @@ class PDriveForValueCommand : public PCommand{
 		
 		private:
 			defOParamListShdPtr param;
-			defOTaskQueues<int>* taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
+			defOTaskQueuesIntShrPtr taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
 	
 		public:
-			PDriveForValueCommand(defOParamListShdPtr par, defOTaskQueues<int>* commQueues):param(par),taskCommunicationQueues(commQueues){};
+			PDriveForValueCommand(defOParamListShdPtr par, defOTaskQueuesIntShrPtr commQueues):param(par),taskCommunicationQueues(commQueues){};
 	
 			virtual bool execute(string &data) override{
 				PString str(data);
@@ -48,10 +48,10 @@ class PDriveToBaseCoordCommand : public PCommand{
 		
 		private:
 			defOParamListShdPtr param;
-			defOTaskQueues<int>* taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
+			defOTaskQueuesIntShrPtr taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
 	
 		public:
-			PDriveToBaseCoordCommand(defOParamListShdPtr par, defOTaskQueues<int>* commQueues):param(par),taskCommunicationQueues(commQueues){};
+			PDriveToBaseCoordCommand(defOParamListShdPtr par, defOTaskQueuesIntShrPtr commQueues):param(par),taskCommunicationQueues(commQueues){};
 	
 			virtual bool execute(string &data) override{
 				PString str(data);

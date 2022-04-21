@@ -3,6 +3,10 @@
 	
 	#include <string>
 	#include <map>
+	
+	constexpr int qMARK_TAG=(1<<28);
+	constexpr int qMARK_KEY=(2<<28);
+	constexpr int qMARK_ATC=(3<<28);
 
 	class PCommand{
 		

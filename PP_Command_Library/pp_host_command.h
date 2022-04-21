@@ -80,5 +80,6 @@ class PHostCommand{
 					
 	};
 	
-
+	using PHostCommandShrPtr= shared_ptr<PHostCommand>;
+	using PHostAskCommandShrPtr= shared_ptr<PHostAskCommand>;
 #endif

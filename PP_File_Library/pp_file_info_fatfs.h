@@ -68,7 +68,7 @@ public:
 			
 			exist=false;
 		
-			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+			fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
 		
 			if(fresult==FR_OK){
 				fresult=f_stat(PFileInfo::absoluteFilePath().c_str(), &fno);
@@ -76,7 +76,7 @@ public:
 				if(fresult==FR_OK){
 					exist=true;
 				}
-				f_mount(0, volume.c_str(), 1);
+				f_unmount(volume.c_str());
 			}
 			
 		};

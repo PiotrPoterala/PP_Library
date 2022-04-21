@@ -9,11 +9,11 @@
 class PSetFileFATFSCommand : public PCommand{
 		
 		private:
-			PDir *dir;
+			PDirShrPtr dir;
 			PIOdeviceShrPtr dev;
 	
 		public:
-			PSetFileFATFSCommand(PDir *directory, PIOdeviceShrPtr device ):dir(directory), dev(device){};
+			PSetFileFATFSCommand(PDirShrPtr directory, PIOdeviceShrPtr device ):dir(directory), dev(device){};
 	
 			virtual bool execute(string &data) override{
 					PFileInfoFATFS fInfo(dir->absoluteFilePath(data));

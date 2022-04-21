@@ -9,10 +9,10 @@
 class PDirCdCommand : public PCommand{
 		
 		private:
-			PDir *dir;
+			PDirShrPtr dir;
 	
 		public:
-			PDirCdCommand(PDir *directory):dir(directory){};
+			PDirCdCommand(PDirShrPtr directory):dir(directory){};
 	
 			virtual bool execute(string &data) override{
 				
@@ -26,10 +26,10 @@ class PDirCdCommand : public PCommand{
 class PGetDirEntryListCommand : public PAskCommand{
 		
 		private:
-			PDir *dir;
+			PDirShrPtr dir;
 	
 		public:
-			PGetDirEntryListCommand(PDir *directory):dir(directory){};
+			PGetDirEntryListCommand(PDirShrPtr directory):dir(directory){};
 	
 			virtual string execute() override{
 					string data;
@@ -48,10 +48,10 @@ class PGetDirEntryListCommand : public PAskCommand{
 	class PGetDirEntryInfoListCommand : public PAskCommand{
 		
 		private:
-			PDir *dir;
+			PDirShrPtr dir;
 	
 		public:
-			PGetDirEntryInfoListCommand(PDir *directory):dir(directory){};
+			PGetDirEntryInfoListCommand(PDirShrPtr directory):dir(directory){};
 	
 			virtual string execute() override{
 					string data;

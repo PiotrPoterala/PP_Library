@@ -27,7 +27,7 @@ bool PFileFATFS::open(OpenMode mode){
 			fmode=FA_WRITE | FA_READ;
 		}
 
-			fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+			fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
 			if(fresult==FR_OK){
 				fresult=f_open(&file, absolutePath().c_str(), fmode);
 			}
@@ -46,10 +46,8 @@ bool PFileFATFS::close(){
 		int fresult;
 
 			fresult=f_close(&file);
-			if(fresult==FR_OK)fresult=f_mount(0, volume.c_str(), 1);
-
-
 			if(fresult==FR_OK){
+				f_unmount(volume.c_str());
 				openFlag=false;
 				return true;
 			}
@@ -207,7 +205,7 @@ bool PFileFATFS::exists(){
 		int fresult=FR_OK;
 		bool objectExist=false;
 	
-		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
 	
 		if(fresult==FR_OK){
 			fresult=f_stat(path.c_str(), &fno);
@@ -215,7 +213,7 @@ bool PFileFATFS::exists(){
 			if(fresult==FR_OK && !(fno.fattrib & AM_DIR)){
 					objectExist=true;
 			}
-			f_mount(0, volume.c_str(), 1);
+			f_unmount(volume.c_str());
 		}
 		
 		return objectExist;
@@ -226,7 +224,7 @@ bool PFileFATFS::clear(){
 		int fresult;
 
 	
-		fresult=f_mount(&g_sFatFs, volume.c_str(), 1);
+		fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
 		if(fresult==FR_OK){
 			fresult=f_open(&file, absolutePath().c_str(), FA_CREATE_ALWAYS);
 		}
