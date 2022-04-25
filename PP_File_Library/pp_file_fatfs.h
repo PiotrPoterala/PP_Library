@@ -2,7 +2,7 @@
 	#define _PP_FILE_FATFS_H
 
 		#include "pp_file.h"
-		
+		#include "ff.h"
 
 		using namespace std;
 

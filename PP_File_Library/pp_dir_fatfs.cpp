@@ -1,37 +1,37 @@
 #include "pp_dir_fatfs.h"
 
-bool PDirFATFS::cd(const string &dirName){
-	
-		if(dirName.compare("..")==0){
-			return cdUp();
-		}else{
-			
-			if(exists(dirName)){
-				
-				dirPath+="/";
-				dirPath+=dirName;
-				return true;
-			}
-		}
-	
-		return false;
-}
+//bool PDirFATFS::cd(const string &dirName){
+//	
+//		if(dirName.compare("..")==0){
+//			return cdUp();
+//		}else{
+//			
+//			if(exists(dirName)){
+//				
+//				dirPath+="/";
+//				dirPath+=dirName;
+//				return true;
+//			}
+//		}
+//	
+//		return false;
+//}
 
-bool PDirFATFS::cdUp(){
-		string path=absolutePath();
-		string newDirName;
-	
-		path.substr(0, path.find_last_of("/"));
-		newDirName=path.substr(path.find_last_of("/")+1);
-	
-		if(exists(newDirName)){
-			setPath(path);
-			return true;
-		}
-	
-		return false;
-	
-}
+//bool PDirFATFS::cdUp(){
+//		string path=absolutePath();
+//		string newDirName;
+//	
+//		path.substr(0, path.find_last_of("/"));
+//		newDirName=path.substr(path.find_last_of("/")+1);
+//	
+//		if(exists(newDirName)){
+//			setPath(path);
+//			return true;
+//		}
+//	
+//		return false;
+//	
+//}
 
 
 unsigned int	PDirFATFS::count(){
@@ -63,7 +63,7 @@ vector<unique_ptr<PFileInfo>>	PDirFATFS::entryInfoList(PDir::Filters filters){
 		vector<string> pathList=entryList();
 
 		for(auto it=pathList.begin(); it!=pathList.end(); it++){
-			fileInfoList.push_back(unique_ptr<PFileInfo>(new PFileInfoFATFS(absoluteFilePath(*it))));
+			fileInfoList.push_back(make_unique<PFileInfoFATFS>(absoluteFilePath(*it)));
 		}
 	
 	return fileInfoList;

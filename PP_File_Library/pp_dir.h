@@ -53,8 +53,8 @@ public:
 		string	absolutePath() const;
 		string	dirName() const;
 		
-		virtual bool	cd(const string &dirName)=0;
-		virtual bool	cdUp()=0;
+		virtual bool	cd(const string &dirName);
+		virtual bool	cdUp();
 		virtual unsigned int	count()=0;
 		virtual vector<unique_ptr<PFileInfo>>	entryInfoList(Filters filters = NoFilter)=0;
 		virtual vector<string> entryList(Filters filters = NoFilter)=0;
@@ -64,6 +64,7 @@ public:
 		void	setPath(const string &path);
 };
 
+using PDirPtr=unique_ptr<PDir>;	
 using PDirShrPtr=shared_ptr<PDir>;	
 
 #endif 

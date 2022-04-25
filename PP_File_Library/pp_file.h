@@ -5,7 +5,6 @@
 		
 		#include <string>
 
-		#include "ff.h"
 
 		using namespace std;
 

@@ -13,7 +13,6 @@ TEST_GROUP(PStringTestGroup)
 TEST(PStringTestGroup, findDataAfterAcronimTest)
 {
 	PString str("X10.123 Y20.458");
-	
 	STRCMP_EQUAL("10.123", str.findDataAfterAcronim('X').c_str());
 	STRCMP_EQUAL("20.458", str.findDataAfterAcronim('Y').c_str());
 }

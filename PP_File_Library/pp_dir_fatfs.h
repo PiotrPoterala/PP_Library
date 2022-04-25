@@ -48,8 +48,8 @@ class PDirFATFS : public PDir
 			PDirFATFS(const string &path):PDir(path){};
 			PDirFATFS(const char* path):PDir(path){};	
 
-			virtual bool	cd(const string &dirName) override;
-			virtual bool	cdUp() override;
+//			virtual bool	cd(const string &dirName) override;
+//			virtual bool	cdUp() override;
 			virtual unsigned int	count() override;
 			virtual vector<unique_ptr<PFileInfo>>	entryInfoList(PDir::Filters filters = NoFilter) override;
 			virtual vector<string> entryList(PDir::Filters filters = NoFilter) override;

@@ -328,7 +328,7 @@
             <uGnu>1</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
-            <v6LangP>3</v6LangP>
+            <v6LangP>6</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -380,13 +380,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>PP_Parameters_Library</GroupName>
           <Files>
-            <File>
-              <FileName>pstring.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\PP_String_Library\pstring.cpp</FilePath>
-            </File>
             <File>
               <FileName>stm32xx.h</FileName>
               <FileType>5</FileType>
@@ -446,6 +441,76 @@
               <FileName>pp_drive_algorithms_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pdir_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pdir_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pfile_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pfile_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pfileInfo_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pfileInfo_test.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PP_File_Library</GroupName>
+          <Files>
+            <File>
+              <FileName>pp_dir.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_File_Library\pp_dir.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_file.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_File_Library\pp_file.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_file_info.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_File_Library\pp_file_info.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PP _String_Library</GroupName>
+          <Files>
+            <File>
+              <FileName>pstring.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_String_Library\pstring.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PP_IOdevice_library</GroupName>
+          <Files>
+            <File>
+              <FileName>pp_iodevice.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_IOdevice_library\pp_iodevice.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mocks</GroupName>
+          <Files>
+            <File>
+              <FileName>pp_file_info_mock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_File_Library\pp_file_info_mock.h</FilePath>
+            </File>
+            <File>
+              <FileName>pp_dir_mock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_File_Library\pp_dir_mock.h</FilePath>
             </File>
           </Files>
         </Group>
