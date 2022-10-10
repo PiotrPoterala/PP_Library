@@ -19,52 +19,58 @@
 
 #include "pp_motorslist.h"
 
+PMotorsList::PMotorsList(const PMotorsList &other){
+	
+		copyListOfMotors(other.motors);
+	
+}
 
-//defOMotorsList::defOMotorsList(){
-//	
-//	
-//}
+PMotorsList::PMotorsList(const PMotorsMap& map){
 
-//PMotorsVector defOMotorsList::getMotors(void){
-//	
-//	return motors;
-//	
-//}
+    copyListOfMotors(map);
 
-//PMotorsData defOMotorsList::getMotor(char acronim){
-//	PMotorsData motor;
-//	auto it=getIterator(acronim);
-//	
-//	if(it!=motors.end()) motor.push_back(*it);
-//	
-//	return motor;
-//}
+}
 
+PMotorsList& PMotorsList::operator=(const PMotorsList& other){
+		
+	copyListOfMotors(other.motors);
+	return (*this);
+}
 
-//void defOMotorsList::insert(defOStepperMotorDriverShdPtr motor){
-//	
-//	motors.push_back(motor);
-//	
-//}
+PMotorsList::~PMotorsList(){
+	
+	clear();
+	
+}
 
+void PMotorsList::clear(){
+	
+		 if(motors.empty()==false){
+       motors.clear();
+    }	
+}
 
-//PMotorsVectorItr defOMotorsList::getIterator(){
+void PMotorsList::copyListOfMotors(const PMotorsMap &copyMotors){
 
-//	return motors.begin();
-//	
-//}
+    clear();
+		for (auto it=copyMotors.begin(); it != copyMotors.end(); ++it){
+			motors.insert(PParamPair((*it).first, (*it).second->clone()));
+		}
+		
+}
 
+map<char, int> PMotorsList::getPhyCoordValues(){
+	map<char, int> values;
+	
+	for(auto it=motors.begin(); it != motors.end(); ++it){
+		auto phyCoordAux=it->second->getPhyCoordClone();
+		values.insert(pair<char,int>(it->first, phyCoordAux.front()->getValue()));
+		
+	}
+	
+	return values;
+	
+}
 
-//PMotorsVectorItr defOMotorsList::getIterator(char acronim){
-
-//	PMotorsVectorItr it;
-//	
-//	for(it=motors.begin(); it!=motors.end(); it++){
-//		if((*it)->getAcronim()==acronim) break;
-//		
-//	}
-//	
-//	return it;
-//}
 
 	

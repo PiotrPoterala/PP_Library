@@ -39,50 +39,110 @@ class defOStepperMotorDriver{
 	
 		defOStepperMotorDriver(){};	
 			
+			enum{	
+				PHY_COORD_ERROR=1,	//błąd przekroczenia zakresu współrzędnych fizycznych
+				BASE_COORD_ERROR,	//błąd przekroczenia zakresu współrzędnych bazowych
+				SAFTY_STEP_COUNTER_ERROR	
+			};
+			
 		virtual void rotateForward() =0;
 		virtual void rotateBackwards() =0;
 
-		virtual void setAcronim(char pacronim)=0;
-		virtual char getAcronim()=0;
+//		virtual void setAcronim(char pacronim)=0;
+//		virtual char getAcronim()=0;
 			
-		virtual int getAccelerationMMperSEC2Value()=0;
-		virtual int getVelocityUMperSECValue()=0;
+		virtual void setError(char pacronim)=0;
+		virtual char getError()=0;
+			
+		virtual PParamData getAccelerationXperSEC2Clone()=0;
+		virtual PParamData getVelocityXperSECClone()=0;
+			
+		virtual PParamData getPhyCoordClone()=0;
+		virtual PParamData getBaseCoordClone()=0;
 			
 		virtual int getSignalMask()=0;
 			
 		virtual void setEnable(bool enable)=0;
 		virtual bool isEnable()=0;
+			
+		virtual shared_ptr<defOStepperMotorDriver> undecorate()=0;
+		
+	protected:
+		
+		virtual defOParamGeneralShdPtr getPhyCoord()=0;
+		virtual defOParamGeneralShdPtr getBaseCoord()=0;
+	
 	
 };
+
+using defOStepperMotorDriverShdPtr= shared_ptr<defOStepperMotorDriver>;
 
 class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 	
 	private:
-		char acronim;
+//		char acronim;
 		bool enable=false;
+	
+		int error;
 
-		defOParamGeneralShdPtr accelerationMMperSEC2;
-		defOParamGeneralShdPtr velocityUMperSEC;	
+		defOParamGeneralShdPtr accelerationXperSEC2;
+		defOParamGeneralShdPtr velocityXperSEC;	
+	
+		defOParamGeneralShdPtr phyCoord;
+		defOParamGeneralShdPtr baseCoord;
 	
 	public:
-		defOStepperMotorDriverPar(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC):accelerationMMperSEC2(paccelerationMMperSEC2), velocityUMperSEC(pvelocityUMperSEC){};	
+		defOStepperMotorDriverPar()=delete;
+		defOStepperMotorDriverPar(defOParamGeneralShdPtr paccelerationXperSEC2, defOParamGeneralShdPtr pvelocityXperSEC,
+															defOParamGeneralShdPtr pphyCoord, defOParamGeneralShdPtr pbaseCoord):
+															accelerationXperSEC2(paccelerationXperSEC2), velocityXperSEC(pvelocityXperSEC), phyCoord(pphyCoord), baseCoord(pbaseCoord){};	
 			
 		virtual void rotateForward(){};
 		virtual void rotateBackwards(){};
 
-		virtual void setAcronim(char acronim) final {this->acronim=acronim;};
-		virtual char getAcronim()final{return acronim;};
+//		virtual void setAcronim(char acronim) final {this->acronim=acronim;};
+//		virtual char getAcronim()final{return acronim;};
 		
-		virtual int getAccelerationMMperSEC2Value()final{return accelerationMMperSEC2->getValue();};
-		virtual int getVelocityUMperSECValue()final{return velocityUMperSEC->getValue();};
+		virtual void setError(char error) final {this->error=error;};
+		virtual char getError()final{return error;};
+		
+		virtual PParamData getAccelerationXperSEC2Clone()final{
+				PParamData value;
+				if(accelerationXperSEC2!=nullptr)value.push_back(accelerationXperSEC2->clone());
+				return value;
+		};
+		
+		virtual PParamData getVelocityXperSECClone()final{
+				PParamData value;
+				if(velocityXperSEC!=nullptr)value.push_back(velocityXperSEC->clone());
+				return value;
+		};
 			
+		virtual PParamData getPhyCoordClone()final{
+				PParamData value;
+				if(phyCoord!=nullptr)value.push_back(phyCoord->clone();
+				return value;
+		};
+		
+		virtual PParamData getBaseCoordClone()final{
+				PParamData value;
+				if(baseCoord!=nullptr)value.push_back(baseCoord->clone();
+				return value;
+		};
+		
 		virtual int getSignalMask(){return 0;};
 		
 		virtual void setEnable(bool enable)final{this->enable=enable;};
 		virtual bool isEnable()final{ return enable;};
+		
+		virtual defOStepperMotorDriverShdPtr undecorate(){return make_shared<defOStepperMotorDriverPar>(*this);};
 	
+	protected:
+		
+		virtual defOParamGeneralShdPtr getPhyCoord()final{return phyCoord;};
+		virtual defOParamGeneralShdPtr getBaseCoord()final{return baseCoord;};
+		
 };
 
 
-using defOStepperMotorDriverShdPtr= shared_ptr<defOStepperMotorDriver>;
 #endif

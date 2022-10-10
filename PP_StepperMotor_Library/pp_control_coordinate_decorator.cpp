@@ -18,41 +18,59 @@
  */
 
 #include "pp_control_coordinate_decorator.h"
+#include "pp_math.h"
 
-defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM):
-																															defOStepperMotorDriverDecorator(stepMotorDriver), baseCoord(bCoord){
-																						
-		defOStepperMotorDriverDecorator::setAcronim(pCoord.first);																							
+defOControlCoordinateDecorator::defOControlCoordinateDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, defOParamGeneralShdPtr corr):
+																															defOStepperMotorDriverDecorator(stepMotorDriver), correction(corr){
+													
+
+	phyCoord=defOStepperMotorDriverDecorator::getPhyCoord();
+	baseCoord=defOStepperMotorDriverDecorator::getBaseCoord();
 																																
-		phyCoord=pCoord.second;																																
-																																
-	if(corrUM>0){
-		correctionUM=corrUM;
-		typeOfCorrection=ADD_STEP;
-	}else if(corrUM<0){
-		correctionUM=abs(corrUM);
-		typeOfCorrection=SUBTRACT_STEP;
-	}else{
-		correctionUM=0;
-		typeOfCorrection=DO_NOTHING_WITH_STEP;
-	}																									
+//		defOStepperMotorDriverDecorator::setAcronim(pCoord.first);																							
+//																																
+//		phyCoord=pCoord.second;																																
+//																																
+//	if(corrUM>0){
+//		correctionUM=corrUM;
+//		typeOfCorrection=ADD_STEP;
+//	}else if(corrUM<0){
+//		correctionUM=abs(corrUM);
+//		typeOfCorrection=SUBTRACT_STEP;
+//	}else{
+//		correctionUM=0;
+//		typeOfCorrection=DO_NOTHING_WITH_STEP;
+//	}																									
 																																
 }
 
+bool defOControlCoordinateDecorator::isLeapStep(){
+	bool leapStep=false;
+	
+	defOParamGeneralShdPtr phyCoord=defOStepperMotorDriverDecorator::getPhyCoord();
+	
+	if(!(phyCoord->getValue()%(pow_pp(10, phyCoord->getUnit()-correction->getUnit())*correction->getValue())))leapStep=true;
 
+	
+	return leapStep;
+}
 
 
 void defOControlCoordinateDecorator::rotateBackwards(){	
 
-		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+	
+		if(correction->getValue()<0 && isLeapStep()){
 			phyCoord->decrementValue();
 			baseCoord->decrementValue();
 		}else{
 			defOStepperMotorDriverDecorator::rotateBackwards();
-	
-			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+		
+			if(correction->getValue()>0 && isLeapStep() && leapStepFlag==false){
+				leapStepFlag=true;
+			}else{
 				phyCoord->decrementValue();
 				baseCoord->decrementValue();
+				leapStepFlag=false;
 			}
 			
 		}
@@ -61,19 +79,21 @@ void defOControlCoordinateDecorator::rotateBackwards(){
 
 void defOControlCoordinateDecorator::rotateForward(){	
 
-		if(typeOfCorrection==SUBTRACT_STEP && !(phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
-			phyCoord->incrementValue();
-			baseCoord->incrementValue();
-		}else{
-			
-			defOStepperMotorDriverDecorator::rotateForward();
-			
-			if(typeOfCorrection!=ADD_STEP || (phyCoord->getValue()%static_cast<int>(pow(10, phyCoord->getUnit()-3)*correctionUM))){
+			if(correction->getValue()<0 && isLeapStep()){
 				phyCoord->incrementValue();
 				baseCoord->incrementValue();
+			}else{			
+				defOStepperMotorDriverDecorator::rotateForward();
+				
+				if(correction->getValue()>0 && isLeapStep() && leapStepFlag==false){
+					leapStepFlag=true;
+				}else{
+					phyCoord->incrementValue();
+					baseCoord->incrementValue();
+					leapStepFlag=false;
+				}
+				
 			}
-			
-		}
 		
 }
 

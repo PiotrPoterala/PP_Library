@@ -41,12 +41,9 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 		
 		protected:
 			defOMotorsListShdPtr motors;
-			defOParamListShdPtr phyCoord;
-			defOParamListShdPtr baseCoord;
 			PPpoint<int> phyStartPoint;
 			PPpoint<int> phyEndPoint;
-			PPpoint<int> phyIndirectPoint;
-			PPpoint<int> phyVector;
+			PPpoint<int> phyIndEndPoint;
 		
 			map<char, int> counter;
 
@@ -54,21 +51,19 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 		public:
 			DriveStatus status;
 		
-			defODriveAlgorithms(defOMotorsListShdPtr mot, defOParamListShdPtr pCoord, defOParamListShdPtr bCoord);
+			defODriveAlgorithms(defOMotorsListShdPtr mot);
 		
 		
-			void setParToDriveForValue(map<char, int> &values);
-			void setParToDriveToBaseCoordinates(map<char, int> &values);		
+			void driveToEndPoint(map<char, int> &values);
 		
 			virtual DriveStatus drive(void)=0;
 		
 		
-			static unsigned int getFrequencykResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, int accelerationMMperSEC2, int velocityUMperSEC, unsigned int stepPM);
-			static unsigned int getClockDividerResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, int accelerationMMperSEC2, int velocityUMperSEC, unsigned int frequencyOfClock, unsigned int stepPM);
-			static unsigned int getFrequencyOfDriveInUniformMovement(int velocityUMperSEC, unsigned int stepPM);
-			static unsigned int getClockDividerInUniformMovement(int velocityUMperSEC, unsigned int frequencyOfClock, unsigned int stepPM);
-	//		static unsigned int getClockDividerInUniformMovementWithSecurity(int velocityUMperSEC, int defValue, unsigned int frequencyOfClock, unsigned int stepPM);
-			static unsigned int calculateAccelerateNumberOfSteps(int accelerationMMperSEC2, int velocityUMperSEC, unsigned int stepPM);
+			static unsigned int getFrequencykResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int stepMX);
+			static unsigned int getClockDividerResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int frequencyOfClock, unsigned int stepMX);
+			static unsigned int getFrequencyOfDriveInUniformMovement(unsigned int velocityXperSEC, unsigned int stepMX);
+			static unsigned int getClockDividerInUniformMovement(unsigned int velocityXperSEC, unsigned int frequencyOfClock, unsigned int stepMX);
+			static unsigned int calculateAccelerateNumberOfSteps(unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int stepMX);
 		
 		
 

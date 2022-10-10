@@ -127,6 +127,8 @@ void defOParam::restoreDefaultValue(void){
 void defOParam::setLowerLimit(int newLowerLimit){
 	
 		lowerLimit=newLowerLimit;
+		value=trimDataToRange(value);
+		defaultValue=trimDataToRange(defaultValue);
 }
 
 
@@ -140,10 +142,19 @@ int defOParam::trimDataToRange(int data) const{
 
 
 int defOParam::correctData(int data) const{
-		int trimVal;
-    trimVal=trimDataToRange(data);
-		trimVal-=trimVal%precision;
-		return trimVal;
+    data=trimDataToRange(data);
+	
+		int rest=data%precision;
+		data-=rest;
+		
+		if(precision>=2){
+			if(abs(rest)>precision/2){
+				if(rest>0)data+=precision;
+				else data-=precision;
+			}
+		}
+	
+		return data;
 }
 
 
@@ -156,6 +167,16 @@ bool defOParam::decrementValue(){
 	}
 
 	return changeParam;
+}
+
+bool defOParam::tryDecrementValue(){
+	bool possible=false;
+
+	if(value-precision>=lowerLimit){
+		possible=true;
+	}
+
+	return possible;
 }
 
 bool defOParam::decrementValue(int val){
@@ -178,6 +199,16 @@ bool defOParam::incrementValue(){
 	}
 
 	return changeParam;
+}
+
+bool defOParam::tryIncrementValue(){
+	bool possible=false;
+
+	if(value+precision<=upperLimit){
+		possible=true;
+	}
+
+	return possible;
 }
 
 bool defOParam::incrementValue(int val){

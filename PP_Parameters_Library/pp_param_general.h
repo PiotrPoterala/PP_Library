@@ -55,9 +55,11 @@ public:
 			
     virtual void restoreDefaultValue(void) noexcept=0;
 		virtual int correctData(int data) const noexcept=0;
-
+			
+		virtual bool tryDecrementValue() noexcept =0;
 		virtual bool decrementValue() noexcept=0;
 		virtual bool decrementValue(int val) noexcept=0;
+		virtual bool tryIncrementValue() noexcept =0;
 		virtual bool incrementValue() noexcept=0;
 		virtual bool incrementValue(int val) noexcept=0;
 			
@@ -65,5 +67,9 @@ public:
 };
 
 using defOParamGeneralShdPtr = shared_ptr<defOParamGeneral>;
+
+using PParamMap = map<char, defOParamGeneralShdPtr>;
+using PParamPair = pair<char, defOParamGeneralShdPtr>;
+using PParamData = vector<defOParamGeneralShdPtr>;
 
 #endif 

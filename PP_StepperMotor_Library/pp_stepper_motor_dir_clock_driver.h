@@ -38,12 +38,14 @@ class defOStepperMotorDirClockDriver : public defOStepperMotorDriverPar{
 		int maskStep;
 	
 	public:
-		defOStepperMotorDirClockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC):defOStepperMotorDriverPar(paccelerationMMperSEC2, pvelocityUMperSEC){};	
+		defOStepperMotorDirClockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSECdefOParamGeneralShdPtr pphyCoord, defOParamGeneralShdPtr pbaseCoord, ):
+																	defOStepperMotorDriverPar(paccelerationMMperSEC2, pvelocityUMperSEC, pphyCoord, pbaseCoord){};	
 	
 		virtual void rotateForward()override{maskStep=0;};
 		virtual void rotateBackwards()override{maskStep=1;};
 		virtual int getSignalMask()override{return maskStep;};
 
+		virtual defOStepperMotorDriverShdPtr undecorate()override{return make_shared<defOStepperMotorDirClockDriver>(*this);};
 };
 
 

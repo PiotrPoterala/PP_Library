@@ -25,29 +25,29 @@
    ----------------------------------------------------------------------
 @endverbatim
  */
+#ifndef _PP_CONTROL_COORDINATE_DECORATOR_H
+	#define _PP_CONTROL_COORDINATE_DECORATOR_H
 
-#ifndef _PP_RTX_DRIVE_ALGORITHMS_H
-	#define _PP_RTX_DRIVE_ALGORITHMS_H
-
-#include "pp_drive_algorithms.h"
-#include "cmsis_os2.h"
-
+#include "pp_stepper_motor_driver_decorator.h"
+#include "pp_paramlist.h"
 #include <vector>
 
-#define BASE_FREQUENCY_OF_TIMdrive							10000
+using namespace std;
+
+class defOControlCoordinateRangeDecorator : public defOStepperMotorDriverDecorator{
 	
-	class defORTX5driveAlgorithms : public defODriveAlgorithms{
+private:
+		defOParamGeneralShdPtr phyCoord;
+		defOParamGeneralShdPtr baseCoord;
 
-		public:
-			defORTX5driveAlgorithms(defOMotorsListShdPtr motors):defODriveAlgorithms(motors){};
-		
-		
-			virtual DriveStatus drive(void);
-		
-		
+	public:
+		defOControlCoordinateRangeDecorator(defOStepperMotorDriverShdPtr stepMotorDriver);	
+	
+		virtual void rotateForward()override;
+		virtual void rotateBackwards()override;
 
-	};
-
+	
+};
 
 
 #endif

@@ -36,23 +36,21 @@ using namespace std;
 
 class defOControlCoordinateDecorator : public defOStepperMotorDriverDecorator{
 	
-	#define DO_NOTHING_WITH_STEP			0
-	#define ADD_STEP									1
-	#define SUBTRACT_STEP							2
-	
 private:
-		int correctionUM;
-		int typeOfCorrection;
+		defOParamGeneralShdPtr correction;
 
 		defOParamGeneralShdPtr phyCoord;
 		defOParamGeneralShdPtr baseCoord;
+
+		bool leapStepFlag;
 	
 	public:
-		defOControlCoordinateDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, PParamPair pCoord, defOParamGeneralShdPtr bCoord, int corrUM=0);	
+		defOControlCoordinateDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, defOParamGeneralShdPtr corr);	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;
 
+		bool isLeapStep();
 	
 };
 

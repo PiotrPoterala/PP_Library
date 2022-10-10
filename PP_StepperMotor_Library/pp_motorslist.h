@@ -29,37 +29,40 @@
 #define PP_MOTOR_LIST_H
 
 #include <map>
+#include <vector>
 #include "pp_stepper_motor_driver.h"
 
-using PMotorsList = map<char, defOStepperMotorDriverShdPtr>;
+using PMotorsMap = map<char, defOStepperMotorDriverShdPtr>;
 using PMotorsPair = pair<char, defOStepperMotorDriverShdPtr>;
 
 //using PMotorsVector = vector<defOStepperMotorDriverShdPtr>;
 //using PMotorsVectorItr=vector<defOStepperMotorDriverShdPtr>::iterator; 
 //using PMotorsData = vector<defOStepperMotorDriverShdPtr>;
 
-//using namespace std;
+using namespace std;
 
-//class defOMotorsList
-//{
+class PMotorsList
+{
 
-//private:
-//   PMotorsVector motors;
+private:
+   PMotorsMap motors;
 
-//public:
-//    defOMotorsList();
-//		defOMotorsList(const defOMotorsList& list)=delete;
-//		defOMotorsList& operator=(const defOMotorsList& list)=delete;
+		void copyListOfMotors(const PMotorsMap &copyMotors);
 
-//		PMotorsVector getMotors(void);
-//    PMotorsData getMotor(char acronim);
+public:
+    PMotorsList();
+		PMotorsList(const PMotorsList& list);
+		PMotorsList(const PMotorsMap& map);
+		PMotorsList& operator=(const PMotorsList& other);
+		~PMotorsList();
 
-//		void insert(defOStepperMotorDriverShdPtr motor);
+		void clear(void);
+		shared_ptr<PMotorsList> clone() const;
 
-//		PMotorsVectorItr getIterator();
-//		PMotorsVectorItr getIterator(char acronim);
+		map<char, int> getPhyCoordValues();
 
-//};
 
-using defOMotorsListShdPtr = shared_ptr<PMotorsList>;
+};
+
+using PMotorsListShdPtr = shared_ptr<PMotorsList>;
 #endif 

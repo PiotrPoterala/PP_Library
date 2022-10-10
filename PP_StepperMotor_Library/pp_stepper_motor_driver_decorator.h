@@ -40,23 +40,34 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 
 		defOStepperMotorDriverShdPtr stepperMotorDriver;
 	
+		virtual defOParamGeneralShdPtr getPhyCoord()final{return stepperMotorDriver->getPhyCoord();};
+		virtual defOParamGeneralShdPtr getBaseCoord()final{return stepperMotorDriver->getBaseCoord();};
+	
 	public:
 		defOStepperMotorDriverDecorator(defOStepperMotorDriverShdPtr stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
 	
 		virtual void rotateForward()override{stepperMotorDriver->rotateForward();};
 		virtual void rotateBackwards()override{stepperMotorDriver->rotateBackwards();};
 	
-		virtual void setAcronim(char pacronim)override{stepperMotorDriver->setAcronim(pacronim);};
-		virtual char getAcronim()override{return stepperMotorDriver->getAcronim();};
+//		virtual void setAcronim(char pacronim)override{stepperMotorDriver->setAcronim(pacronim);};
+//		virtual char getAcronim()override{return stepperMotorDriver->getAcronim();};
 		
-		virtual int getAccelerationMMperSEC2Value()override{return stepperMotorDriver->getAccelerationMMperSEC2Value();};
-		virtual int getVelocityUMperSECValue()override{return stepperMotorDriver->getVelocityUMperSECValue();};
+		virtual void setError(char pacronim)final{stepperMotorDriver->setError(pacronim);};
+		virtual char getError()final{return stepperMotorDriver->getError();};
+		
+		virtual PParamData getAccelerationXperSEC2Clone()final{return stepperMotorDriver->getAccelerationXperSEC2Clone();};
+		virtual PParamData getVelocityXperSECClone()final{return stepperMotorDriver->getVelocityXperSECClone();};
+		
+		virtual PParamData getPhyCoordClone()final{return stepperMotorDriver->getPhyCoordClone();};
+		virtual PParamData getBaseCoordClone()final{return stepperMotorDriver->getBaseCoordClone();};
 		
 		virtual int getSignalMask()override{return stepperMotorDriver->getSignalMask();};
 
 		virtual void setEnable(bool enable)override{stepperMotorDriver->setEnable(enable);};
 		virtual bool isEnable()override{ return stepperMotorDriver->isEnable();};
-	
+		
+		defOStepperMotorDriverShdPtr undecorate()override{return stepperMotorDriver;}
+		
 };
 
 

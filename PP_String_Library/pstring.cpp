@@ -131,8 +131,8 @@ vector<PString> PString::split(char sep, SplitBehavior behavior){
     return stringList;
 }
 
-vector<string> PString::splitWithClamps(char sep, char clamps){
-				vector<string> stringList;
+StringList PString::splitWithClamps(char sep, char clamps){
+				StringList stringList;
 				string data;
         bool getData=false;
         int num_char=0;

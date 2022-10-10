@@ -39,10 +39,6 @@
 
 using namespace std;
 
-using PParamMap = map<char, defOParamGeneralShdPtr>;
-using PParamPair = pair<char, defOParamGeneralShdPtr>;
-using PParamData = vector<defOParamGeneralShdPtr>;
-
 class defOParamList
 {
 
@@ -60,10 +56,12 @@ public:
 
 		void clear(void);
 		shared_ptr<defOParamList> clone() const;
+		PParamData getParamClone(char acronim);
 		bool exists(char acronim);
 
 		PParamData getParam(char acronim) noexcept;
     PParamMap getParams(void) noexcept;
+
 
     int getParamValue(char acronim) noexcept;
 		int getParamUpperLimit(char acronim) noexcept;

@@ -63,11 +63,16 @@ defOParamListShdPtr defOParamList::clone() const{
 	return make_shared<defOParamList>(*this);
 }
 
-PParamMap defOParamList::getParams(void){
+PParamData defOParamList::getParamClone(char acronim){
+	PParamData value;
 
-    return param;
-
+	auto it=param.find(acronim);
+	
+	if(it!=param.end())value.push_back(it->second->clone());
+	
+  return value;
 }
+
 
 bool defOParamList::exists(char acronim){
 	
@@ -103,6 +108,7 @@ PParamPair defOParamList::getParamPair(char acronim){
 	
   return value;
 }
+
 
 int defOParamList::getParamValue(char acronim){
     auto par=getParam(acronim);

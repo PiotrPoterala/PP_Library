@@ -40,6 +40,8 @@
 
 using namespace std;
 
+using StringList=vector<string>;
+
 class PString: public string
 {
 public:
@@ -58,9 +60,12 @@ public:
 		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();
     vector<PString> split(char sep, SplitBehavior behavior = SkipEmptyParts);
-		vector<string> splitWithClamps(char sep, char clamps);
+		StringList splitWithClamps(char sep, char clamps);
 		
 //		static uint32_t charToInt(char sign);
 };
+
+
+using PStringList=vector<PString>;
 
 #endif // PSTRING_H

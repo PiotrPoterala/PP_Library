@@ -58,7 +58,8 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
 															0x1DC,0x1A0,0x164,0x128,0xEC,0xB0,0x74,0x38};
 	
 	public:
-		defOStepperMotor2clockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC, int tOfStep=FULL_STEP);	
+		defOStepperMotor2clockDriver(defOParamGeneralShdPtr paccelerationMMperSEC2, defOParamGeneralShdPtr pvelocityUMperSEC,
+																defOParamGeneralShdPtr pphyCoord, defOParamGeneralShdPtr pbaseCoord, int tOfStep=FULL_STEP);	
 	
 		void setTypeOfStep(int tOfStep);
 	
@@ -66,6 +67,8 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
 		virtual void rotateBackwards()override;
 		
 		virtual int getSignalMask()override{return *maskIter;};
+		
+		virtual defOStepperMotorDriverShdPtr undecorate()override{return make_shared<defOStepperMotor2clockDriver>(*this);};
 	
 };
 

@@ -59,7 +59,6 @@ public:
 			
 		virtual defOParamGeneralShdPtr clone() override;
 			
-			
     virtual string getName(void) const noexcept override;
     virtual int getValue(void) const noexcept override;
     virtual int getLowerLimit(void) const noexcept override;
@@ -75,8 +74,10 @@ public:
     virtual void restoreDefaultValue(void) noexcept override;
 		virtual int correctData(int data) const noexcept override;
 
+		virtual bool tryDecrementValue() noexcept override;
 		virtual bool decrementValue() noexcept override;
 		virtual bool decrementValue(int val) noexcept override;
+		virtual bool tryIncrementValue() noexcept override;
 		virtual bool incrementValue() noexcept override;
 		virtual bool incrementValue(int val) noexcept override;
 		

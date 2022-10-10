@@ -21,6 +21,8 @@
 //#include "pp_iodevice.h"
 #include "RTX_Config.h"
 
+#include "pp_math.h"
+
 DriveStatus defORTX5driveAlgorithms::drive(){
 
 	int tick = osKernelGetTickCount(); 
@@ -35,33 +37,52 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 		tick += OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive;   
 		
 		for(auto it=phyStartPoint.axes.begin(); it != phyStartPoint.axes.end(); it++){
-			
-			if(motors->find((*it).first)!=motors->end()){
-				auto cnt_it=counter.find((*it).first);
-				if(cnt_it!=counter.end()){
-					auto step=phyCoord->getParamPrecision((*it).first);
-					auto actualPos=phyCoord->getParamValue((*it).first);
-					if(cnt_it->second>=getClockDividerResponsibleForDriveSpeed(abs(actualPos-(*it).second)/step, 
-																																		abs(phyEndPoint.axes.find((*it).first)->second-actualPos)/step, 
-																																		motors->find((*it).first)->second->getAccelerationMMperSEC2Value(), 
-																																		motors->find((*it).first)->second->getVelocityUMperSECValue(), 
-																																		BASE_FREQUENCY_OF_TIMdrive, step*pow(10,6-phyCoord->getParamUnit((*it).first)))){
-																												
-																																			
-						if(phyVector.axes.find((*it).first)->second>0){
-							motors->find((*it).first)->second->rotateForward();
-						}else if(phyVector.axes.find((*it).first)->second<0){
-							motors->find((*it).first)->second->rotateBackwards();
+
+				auto motor=motors->find(it->first);
+				auto indEndP=phyIndEndPoint.axes.find(it->first);
+				auto cnt_it=counter.find(it->first);
+				if(motor!=motors->end() && cnt_it!=counter.end() && indEndP!=phyIndEndPoint.axes.end()){
+					auto phyCoordAux=motor->second->getPhyCoordClone();
+					if(!phyCoordAux.empty()){
+						int vector=indEndP->second-phyCoordAux.front()->getValue();
+						if(vector!=0){
+							auto velocityAux=motor->second->getVelocityXperSECClone();
+							auto accelerateAux=motor->second->getAccelerationXperSEC2Clone();
+							if(!velocityAux.empty() && !accelerateAux.empty()){
+								
+								if(cnt_it->second>=getClockDividerResponsibleForDriveSpeed(abs_pp(phyCoordAux.front()->getValue()-it->second)/phyCoordAux.front()->getPrecision(), 
+																																					abs_pp(indEndP->second-phyCoordAux.front()->getValue())/phyCoordAux.front()->getPrecision(), 
+																																					fs_mulBy10_pp(accelerateAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-accelerateAux.front()->getUnit()),
+																																					fs_mulBy10_pp(velocityAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-velocityAux.front()->getUnit()), 
+																																					BASE_FREQUENCY_OF_TIMdrive, phyCoordAux.front()->getPrecision())){
+																															
+																																						
+									if(vector>0){
+										motor->second->rotateForward();
+									}else{
+										motor->second->rotateBackwards();
+									}
+									(*cnt_it).second=1;
+								}else{
+									(*cnt_it).second++;
+								}
+							}
 						}
-						(*cnt_it).second=1;
-					}else{
-						(*cnt_it).second++;
 					}
 				}
-			}
+			
 			
 		}
 
+		if(pDrive.algorithm.params.phyIndEndPoint.comparePointWithValTab(&pDrive.algorithm.params.phyIndEndPoint.data, phyCoord.getParamValues(&phyCoord.data, tabToComp, MAX_NO_MOTORS), MAX_NO_MOTORS)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy do punktu spauzowania ruchu
+				if(pDrive.algorithm.params.phyEndPoint.exacComparePoints(&pDrive.algorithm.params.phyEndPoint.data, &pDrive.algorithm.params.phyIndEndPoint.data)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy to ustaw flage kończącą przejazd
+					status=DriveStatus::DRIVE_COMPLETED;	
+				}else{
+					status=DriveStatus::DRIVE_PAUSED;
+				}
+			}
+		
+		
 		if(phyEndPoint==phyCoord->getParamsValues())status=DriveStatus::DRIVE_COMPLETED;
 		
 		osDelayUntil(tick);
