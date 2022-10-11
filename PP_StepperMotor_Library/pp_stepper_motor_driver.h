@@ -45,6 +45,8 @@ class defOStepperMotorDriver{
 				SAFTY_STEP_COUNTER_ERROR	
 			};
 			
+		virtual shared_ptr<defOStepperMotorDriver> clone()=0;
+			
 		virtual void rotateForward() =0;
 		virtual void rotateBackwards() =0;
 
@@ -67,8 +69,7 @@ class defOStepperMotorDriver{
 			
 		virtual shared_ptr<defOStepperMotorDriver> undecorate()=0;
 		
-	protected:
-		
+
 		virtual defOParamGeneralShdPtr getPhyCoord()=0;
 		virtual defOParamGeneralShdPtr getBaseCoord()=0;
 	
@@ -97,8 +98,10 @@ class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 															defOParamGeneralShdPtr pphyCoord, defOParamGeneralShdPtr pbaseCoord):
 															accelerationXperSEC2(paccelerationXperSEC2), velocityXperSEC(pvelocityXperSEC), phyCoord(pphyCoord), baseCoord(pbaseCoord){};	
 			
-		virtual void rotateForward(){};
-		virtual void rotateBackwards(){};
+		virtual defOStepperMotorDriverShdPtr clone()override{return make_shared<defOStepperMotorDriverPar>(*this);};													
+																
+		virtual void rotateForward()override{};
+		virtual void rotateBackwards()override{};
 
 //		virtual void setAcronim(char acronim) final {this->acronim=acronim;};
 //		virtual char getAcronim()final{return acronim;};
@@ -120,25 +123,23 @@ class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 			
 		virtual PParamData getPhyCoordClone()final{
 				PParamData value;
-				if(phyCoord!=nullptr)value.push_back(phyCoord->clone();
+				if(phyCoord!=nullptr)value.push_back(phyCoord->clone());
 				return value;
 		};
 		
 		virtual PParamData getBaseCoordClone()final{
 				PParamData value;
-				if(baseCoord!=nullptr)value.push_back(baseCoord->clone();
+				if(baseCoord!=nullptr)value.push_back(baseCoord->clone());
 				return value;
 		};
 		
-		virtual int getSignalMask(){return 0;};
+		virtual int getSignalMask()override{return 0;};
 		
 		virtual void setEnable(bool enable)final{this->enable=enable;};
 		virtual bool isEnable()final{ return enable;};
 		
-		virtual defOStepperMotorDriverShdPtr undecorate(){return make_shared<defOStepperMotorDriverPar>(*this);};
+		virtual defOStepperMotorDriverShdPtr undecorate()override{return make_shared<defOStepperMotorDriverPar>(*this);};
 	
-	protected:
-		
 		virtual defOParamGeneralShdPtr getPhyCoord()final{return phyCoord;};
 		virtual defOParamGeneralShdPtr getBaseCoord()final{return baseCoord;};
 		

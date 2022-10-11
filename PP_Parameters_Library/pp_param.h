@@ -74,10 +74,10 @@ public:
     virtual void restoreDefaultValue(void) noexcept override;
 		virtual int correctData(int data) const noexcept override;
 
-		virtual bool tryDecrementValue() noexcept override;
+		virtual bool tryDecrementValue() const noexcept override;
 		virtual bool decrementValue() noexcept override;
 		virtual bool decrementValue(int val) noexcept override;
-		virtual bool tryIncrementValue() noexcept override;
+		virtual bool tryIncrementValue() const noexcept override;
 		virtual bool incrementValue() noexcept override;
 		virtual bool incrementValue(int val) noexcept override;
 		

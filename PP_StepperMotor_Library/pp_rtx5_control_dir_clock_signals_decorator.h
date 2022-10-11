@@ -52,6 +52,8 @@ class defORTX5ControlDirClockSignalsDecorator : public defOStepperMotorDriverDec
 	public:
 		defORTX5ControlDirClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> *iPins, osTimerId_t poffClockTimer=nullptr);	
 	
+		defOStepperMotorDriverShdPtr clone()override{return make_shared<defORTX5ControlDirClockSignalsDecorator>(*this);};
+	
 		virtual void rotateForward() override;
 		virtual void rotateBackwards()override;
 	

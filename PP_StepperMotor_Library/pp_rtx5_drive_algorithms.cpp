@@ -36,12 +36,12 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 
 		tick += OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive;   
 		
-		for(auto it=phyStartPoint.axes.begin(); it != phyStartPoint.axes.end(); it++){
+		for(auto it:phyStartPoint.axes){
 
-				auto motor=motors->find(it->first);
-				auto indEndP=phyIndEndPoint.axes.find(it->first);
-				auto cnt_it=counter.find(it->first);
-				if(motor!=motors->end() && cnt_it!=counter.end() && indEndP!=phyIndEndPoint.axes.end()){
+				auto motor=motorsList->motors.find(it.first);
+				auto indEndP=phyIndEndPoint.axes.find(it.first);
+				auto cnt_it=counter.find(it.first);
+				if(motor!=motorsList->motors.end() && cnt_it!=counter.end() && indEndP!=phyIndEndPoint.axes.end()){
 					auto phyCoordAux=motor->second->getPhyCoordClone();
 					if(!phyCoordAux.empty()){
 						int vector=indEndP->second-phyCoordAux.front()->getValue();
@@ -50,7 +50,7 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 							auto accelerateAux=motor->second->getAccelerationXperSEC2Clone();
 							if(!velocityAux.empty() && !accelerateAux.empty()){
 								
-								if(cnt_it->second>=getClockDividerResponsibleForDriveSpeed(abs_pp(phyCoordAux.front()->getValue()-it->second)/phyCoordAux.front()->getPrecision(), 
+								if(cnt_it->second>=getClockDividerResponsibleForDriveSpeed(abs_pp(phyCoordAux.front()->getValue()-it.second)/phyCoordAux.front()->getPrecision(), 
 																																					abs_pp(indEndP->second-phyCoordAux.front()->getValue())/phyCoordAux.front()->getPrecision(), 
 																																					fs_mulBy10_pp(accelerateAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-accelerateAux.front()->getUnit()),
 																																					fs_mulBy10_pp(velocityAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-velocityAux.front()->getUnit()), 
@@ -74,16 +74,17 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 			
 		}
 
-		if(pDrive.algorithm.params.phyIndEndPoint.comparePointWithValTab(&pDrive.algorithm.params.phyIndEndPoint.data, phyCoord.getParamValues(&phyCoord.data, tabToComp, MAX_NO_MOTORS), MAX_NO_MOTORS)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy do punktu spauzowania ruchu
-				if(pDrive.algorithm.params.phyEndPoint.exacComparePoints(&pDrive.algorithm.params.phyEndPoint.data, &pDrive.algorithm.params.phyIndEndPoint.data)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy to ustaw flage kończącą przejazd
+		map<char, int> phyCoordValues=motorsList->getPhyCoordValues();
+		
+		if(phyIndEndPoint.compare(phyCoordValues)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy do punktu spauzowania ruchu
+				if(phyEndPoint==phyIndEndPoint){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy to ustaw flage kończącą przejazd
 					status=DriveStatus::DRIVE_COMPLETED;	
 				}else{
 					status=DriveStatus::DRIVE_PAUSED;
 				}
 			}
 		
-		
-		if(phyEndPoint==phyCoord->getParamsValues())status=DriveStatus::DRIVE_COMPLETED;
+
 		
 		osDelayUntil(tick);
 		

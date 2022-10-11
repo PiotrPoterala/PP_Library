@@ -40,12 +40,11 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 
 		defOStepperMotorDriverShdPtr stepperMotorDriver;
 	
-		virtual defOParamGeneralShdPtr getPhyCoord()final{return stepperMotorDriver->getPhyCoord();};
-		virtual defOParamGeneralShdPtr getBaseCoord()final{return stepperMotorDriver->getBaseCoord();};
-	
 	public:
 		defOStepperMotorDriverDecorator(defOStepperMotorDriverShdPtr stepMotorDriver):stepperMotorDriver(stepMotorDriver){};
 	
+		defOStepperMotorDriverShdPtr clone()override{return stepperMotorDriver->clone();};
+			
 		virtual void rotateForward()override{stepperMotorDriver->rotateForward();};
 		virtual void rotateBackwards()override{stepperMotorDriver->rotateBackwards();};
 	
@@ -67,6 +66,9 @@ class defOStepperMotorDriverDecorator : public defOStepperMotorDriver{
 		virtual bool isEnable()override{ return stepperMotorDriver->isEnable();};
 		
 		defOStepperMotorDriverShdPtr undecorate()override{return stepperMotorDriver;}
+		
+		virtual defOParamGeneralShdPtr getPhyCoord()final{return stepperMotorDriver->getPhyCoord();};
+		virtual defOParamGeneralShdPtr getBaseCoord()final{return stepperMotorDriver->getBaseCoord();};
 		
 };
 

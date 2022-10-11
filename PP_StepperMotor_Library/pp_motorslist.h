@@ -45,11 +45,12 @@ class PMotorsList
 {
 
 private:
-   PMotorsMap motors;
-
+	
 		void copyListOfMotors(const PMotorsMap &copyMotors);
 
 public:
+		PMotorsMap motors;
+
     PMotorsList();
 		PMotorsList(const PMotorsList& list);
 		PMotorsList(const PMotorsMap& map);
@@ -60,6 +61,7 @@ public:
 		shared_ptr<PMotorsList> clone() const;
 
 		map<char, int> getPhyCoordValues();
+		map<char, int> getBaseCoordValues();
 
 
 };

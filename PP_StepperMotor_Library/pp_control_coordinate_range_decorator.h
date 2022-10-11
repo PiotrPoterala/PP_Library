@@ -43,6 +43,8 @@ private:
 	public:
 		defOControlCoordinateRangeDecorator(defOStepperMotorDriverShdPtr stepMotorDriver);	
 	
+		defOStepperMotorDriverShdPtr clone()override{return make_shared<defOControlCoordinateRangeDecorator>(*this);};
+	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;
 

@@ -39,7 +39,7 @@
 	class defORTX5driveAlgorithms : public defODriveAlgorithms{
 
 		public:
-			defORTX5driveAlgorithms(defOMotorsListShdPtr motors):defODriveAlgorithms(motors){};
+			defORTX5driveAlgorithms(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
 		
 		
 			virtual DriveStatus drive(void);

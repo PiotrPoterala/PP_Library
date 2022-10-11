@@ -32,8 +32,6 @@
 
 #include "stm32xx.h"
 #include <string>
-#include <map>
-#include <vector>
 #include "pp_param_general.h"
 #include "pstring.h"
 

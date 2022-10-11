@@ -169,7 +169,7 @@ bool defOParam::decrementValue(){
 	return changeParam;
 }
 
-bool defOParam::tryDecrementValue(){
+bool defOParam::tryDecrementValue() const{
 	bool possible=false;
 
 	if(value-precision>=lowerLimit){
@@ -201,7 +201,7 @@ bool defOParam::incrementValue(){
 	return changeParam;
 }
 
-bool defOParam::tryIncrementValue(){
+bool defOParam::tryIncrementValue() const{
 	bool possible=false;
 
 	if(value+precision<=upperLimit){

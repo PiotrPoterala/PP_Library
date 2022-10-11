@@ -39,8 +39,11 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 	
 	class defODriveAlgorithms{
 		
+		private:
+			void driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &startP);
+		
 		protected:
-			defOMotorsListShdPtr motors;
+			PMotorsListShdPtr motorsList;
 			PPpoint<int> phyStartPoint;
 			PPpoint<int> phyEndPoint;
 			PPpoint<int> phyIndEndPoint;
@@ -51,10 +54,13 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 		public:
 			DriveStatus status;
 		
-			defODriveAlgorithms(defOMotorsListShdPtr mot);
+			defODriveAlgorithms(PMotorsListShdPtr mot);
 		
-		
-			void driveToEndPoint(map<char, int> &values);
+			void driveForValue(map<char, int> &values);
+			void driveForValue(PPpoint<int> &values);
+			void driveToBaseCoordinates(map<char, int> &values);
+			void driveToBaseCoordinates(PPpoint<int> &values);
+			void driveToPhyCoordinates(PPpoint<int> &values);
 		
 			virtual DriveStatus drive(void)=0;
 		

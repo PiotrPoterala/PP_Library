@@ -63,6 +63,8 @@ class defOStepperMotor2clockDriver : public defOStepperMotorDriverPar{
 	
 		void setTypeOfStep(int tOfStep);
 	
+		virtual defOStepperMotorDriverShdPtr clone()override;	
+	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;
 		

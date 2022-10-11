@@ -27,6 +27,12 @@ defOStepperMotor2clockDriver::defOStepperMotor2clockDriver(defOParamGeneralShdPt
 	setTypeOfStep(tOfStep);
 	
 }
+																													
+defOStepperMotorDriverShdPtr defOStepperMotor2clockDriver::clone(){
+	
+	return make_shared<defOStepperMotor2clockDriver>(*this);
+
+};	
 
 void defOStepperMotor2clockDriver::setTypeOfStep(int tOfStep){
 	

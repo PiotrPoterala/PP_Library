@@ -20,41 +20,25 @@
 #include "pp_drive_algorithms.h"
 
  
-defODriveAlgorithms::defODriveAlgorithms(defOMotorsListShdPtr mot):motors(mot){
+defODriveAlgorithms::defODriveAlgorithms(PMotorsListShdPtr mot):motorsList(mot){
 	
 	
 }
 
 
 //funkcje związane z przejazdami w pracy ręcznej
-void defODriveAlgorithms::driveToEndPoint(map<char, int> &endPoint){
+void defODriveAlgorithms::driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &startP){
 
 	phyStartPoint.axes.clear();
 	phyEndPoint.axes.clear();
-//	phyVector.axes.clear();
 	counter.clear();
 	
-//	phyStartPoint=phyCoord->getParamsValues();
-//	phyEndPoint=phyStartPoint;
-	
-	
-	for(auto it=motors->begin(); it != motors->end(); it++){
-		
-		if(endPoint.find(it->first)!=endPoint.end()){
-			auto phyCoordAux=it->second->getPhyCoordClone();
-
-			if(!phyCoordAux.empty()){
-				auto startP=PPointIntPair(it->first, phyCoordAux.front()->getValue());
-				auto endP=endPoint.find(it->first);
-				
-				endP->second-=endP->second%phyCoordAux.front()->getPrecision();
-
-				if(endP->second!=startP.second){
-					phyStartPoint.axes.insert(startP);
-					phyEndPoint.axes.insert(*endP);
-					counter.insert(pair<char, int>(it->first, 0));
-				}
-			}
+	for(auto it:endP.axes){
+		auto startAx=startP.axes.find(it.first);
+		if(it.second!=startAx->second){
+			phyStartPoint.axes.insert(*startAx);
+			phyEndPoint.axes.insert(it);
+			counter.insert(pair<char, int>(it.first, 0));
 		}
 	}
 	
@@ -69,6 +53,44 @@ void defODriveAlgorithms::driveToEndPoint(map<char, int> &endPoint){
 	}
 														
 }
+
+void defODriveAlgorithms::driveForValue(map<char, int> &values){
+	PPpoint<int> val=values;
+	driveForValue(val);
+	
+}
+
+void defODriveAlgorithms::driveForValue(PPpoint<int> &values){
+	
+	PPpoint<int> startP=motorsList->getPhyCoordValues();
+	PPpoint<int> endP=startP;
+	endP+=values;
+	
+	driveToEndPoint(endP, startP);
+}
+
+void defODriveAlgorithms::driveToBaseCoordinates(map<char, int> &values){
+		PPpoint<int> val=values;
+		driveToBaseCoordinates(val);
+}
+
+void defODriveAlgorithms::driveToBaseCoordinates(PPpoint<int> &values){
+	
+	PPpoint<int> startP=motorsList->getPhyCoordValues();
+	PPpoint<int> endP=startP;
+	endP+=values;
+	endP-=motorsList->getBaseCoordValues();
+	
+	driveToEndPoint(endP, startP);
+}
+
+void defODriveAlgorithms::driveToPhyCoordinates(PPpoint<int> &values){
+	
+	PPpoint<int> startP=motorsList->getPhyCoordValues();
+	
+	driveToEndPoint(values, startP);
+}
+
 
 //void defODriveAlgorithms::setParToDriveToBaseCoordinates(map<char, int> &values){
 //	

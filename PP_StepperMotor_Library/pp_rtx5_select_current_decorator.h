@@ -52,6 +52,8 @@ class defORTX5SelectCurrentDecorator : public defOStepperMotorDriverDecorator{
 																	ticksToOff=ptimeToOff_MS*OS_TICK_FREQ/1000;
 																	};	
 	
+		defOStepperMotorDriverShdPtr clone()override{return make_shared<defORTX5SelectCurrentDecorator>(*this);};
+																	
 		virtual void rotateForward()override{
 			defOStepperMotorDriverDecorator::rotateForward();
 			osTimerStart(offClockTimer, ticksToOff);

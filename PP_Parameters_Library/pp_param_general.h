@@ -29,7 +29,8 @@
 #ifndef _PP_PARAM_GENERAL_H
 #define _PP_PARAM_GENERAL_H
 #include <string>
-
+#include <map>
+#include <vector>
 using namespace std;
 
 class defOParamGeneral
@@ -56,10 +57,10 @@ public:
     virtual void restoreDefaultValue(void) noexcept=0;
 		virtual int correctData(int data) const noexcept=0;
 			
-		virtual bool tryDecrementValue() noexcept =0;
+		virtual bool tryDecrementValue() const noexcept =0;
 		virtual bool decrementValue() noexcept=0;
 		virtual bool decrementValue(int val) noexcept=0;
-		virtual bool tryIncrementValue() noexcept =0;
+		virtual bool tryIncrementValue() const noexcept =0;
 		virtual bool incrementValue() noexcept=0;
 		virtual bool incrementValue(int val) noexcept=0;
 			

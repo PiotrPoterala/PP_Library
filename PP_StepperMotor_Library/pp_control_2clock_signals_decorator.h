@@ -55,6 +55,8 @@ class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator
 	
 	public:
 		defOControl2ClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar=B_HIGH);	
+
+		defOStepperMotorDriverShdPtr clone()override{return make_shared<defOControl2ClockSignalsDecorator>(*this);};	
 	
 		virtual void rotateForward()override;
 		virtual void rotateBackwards()override;

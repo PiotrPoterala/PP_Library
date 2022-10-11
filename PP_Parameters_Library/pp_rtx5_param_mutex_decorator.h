@@ -54,8 +54,8 @@ class defORTX5ParamMutexDecorator : public defOParamGeneral
 		
 		virtual defOParamGeneralShdPtr clone() override{
 	
-			return make_shared<defORTX5ParamMutexDecorator>(paramGeneral->clone());
-	
+	//		return make_shared<defORTX5ParamMutexDecorator>(paramGeneral->clone());
+			return paramGeneral->clone();
 		}
 		
     virtual string getName(void) const override{return paramGeneral->getName();};
@@ -66,6 +66,9 @@ class defORTX5ParamMutexDecorator : public defOParamGeneral
     virtual int getUnit(void) const override{return paramGeneral->getUnit();};
     virtual int getDefaultValue(void) const override{return paramGeneral->getDefaultValue();};
 
+		virtual bool tryDecrementValue() const override{return paramGeneral->tryDecrementValue();};
+		virtual bool tryIncrementValue() const override{return paramGeneral->tryIncrementValue();};
+		
 
     virtual void setValue(int newValue) override{		
 			if(osKernelGetState() != osKernelRunning){

@@ -54,7 +54,7 @@ void PMotorsList::copyListOfMotors(const PMotorsMap &copyMotors){
 
     clear();
 		for (auto it=copyMotors.begin(); it != copyMotors.end(); ++it){
-			motors.insert(PParamPair((*it).first, (*it).second->clone()));
+			motors.insert(PMotorsPair((*it).first, (*it).second->clone()));
 		}
 		
 }
@@ -72,5 +72,16 @@ map<char, int> PMotorsList::getPhyCoordValues(){
 	
 }
 
-
+map<char, int> PMotorsList::getBaseCoordValues(){
+	map<char, int> values;
+	
+	for(auto it=motors.begin(); it != motors.end(); ++it){
+		auto baseCoordAux=it->second->getBaseCoordClone();
+		values.insert(pair<char,int>(it->first, baseCoordAux.front()->getValue()));
+		
+	}
+	
+	return values;
+	
+}
 	
