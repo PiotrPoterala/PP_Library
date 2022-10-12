@@ -27,11 +27,6 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 
 	int tick = osKernelGetTickCount(); 
 
-	status=DriveStatus::DRIVE_IN_PROGRESS;
-//	phyIndirectPoint.axes.clear();
-//	phyIndirectPoint=phyEndPoint;
-
-
 	while(status!=DriveStatus::DRIVE_COMPLETED && status!=DriveStatus::DRIVE_ABORTED){		
 
 		tick += OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive;   

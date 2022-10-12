@@ -18,6 +18,7 @@
  */
 
 #include "pp_motorslist.h"
+#include <vector>
 
 PMotorsList::PMotorsList(const PMotorsList &other){
 	
@@ -85,3 +86,41 @@ map<char, int> PMotorsList::getBaseCoordValues(){
 	
 }
 	
+
+PParamData PMotorsList::getPhyCoordClone(char acronim){
+	PParamData data;
+	
+	auto motor=motors.find(acronim);
+	if(motor!=motors.end())data=motor->second->getPhyCoordClone();
+	
+	return data;
+}
+		
+PParamData PMotorsList::getBaseCoordClone(char acronim){
+	PParamData data;
+	
+	auto motor=motors.find(acronim);
+	if(motor!=motors.end())data=motor->second->getBaseCoordClone();
+	
+	return data;
+	
+}
+
+
+PParamData PMotorsList::getAccelerationXperSEC2Clone(char acronim){
+	PParamData data;
+	
+	auto motor=motors.find(acronim);
+	if(motor!=motors.end())data=motor->second->getAccelerationXperSEC2Clone();
+	
+	return data;
+}
+	
+PParamData PMotorsList::getVelocityXperSECClone(char acronim){
+	PParamData data;
+	
+	auto motor=motors.find(acronim);
+	if(motor!=motors.end())data=motor->second->getVelocityXperSECClone();
+	
+	return data;
+}

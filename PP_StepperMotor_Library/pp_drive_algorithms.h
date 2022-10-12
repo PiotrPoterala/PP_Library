@@ -41,19 +41,23 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 		
 		private:
 			void driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &startP);
+			char calculateMasterAxis();
 		
 		protected:
 			PMotorsListShdPtr motorsList;
 			PPpoint<int> phyStartPoint;
 			PPpoint<int> phyEndPoint;
 			PPpoint<int> phyIndEndPoint;
+			PPpoint<double> phyNextStepPoint;
 		
 			map<char, int> counter;
-
+			char masterAxis;
+		
+			virtual DriveStatus drive(void)=0;
 		
 		public:
 			DriveStatus status;
-		
+			defODriveAlgorithms()=delete;
 			defODriveAlgorithms(PMotorsListShdPtr mot);
 		
 			void driveForValue(map<char, int> &values);
@@ -62,19 +66,40 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 			void driveToBaseCoordinates(PPpoint<int> &values);
 			void driveToPhyCoordinates(PPpoint<int> &values);
 		
-			virtual DriveStatus drive(void)=0;
-		
-		
 			static unsigned int getFrequencykResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int stepMX);
 			static unsigned int getClockDividerResponsibleForDriveSpeed(unsigned int nrOfStepsFromStart, unsigned int nrOfStepsToEnd, unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int frequencyOfClock, unsigned int stepMX);
 			static unsigned int getFrequencyOfDriveInUniformMovement(unsigned int velocityXperSEC, unsigned int stepMX);
 			static unsigned int getClockDividerInUniformMovement(unsigned int velocityXperSEC, unsigned int frequencyOfClock, unsigned int stepMX);
-			static unsigned int calculateAccelerateNumberOfSteps(unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int stepMX);
-		
-		
+			static unsigned int calculateAccelerateNumberOfSteps(unsigned int accelerationXperSEC2, unsigned int velocityXperSEC, unsigned int stepMX);	
 
 	};
 
 using defODriveAlgorithmsShdPtr = shared_ptr<defODriveAlgorithms>;
 
+	
+	class PPdriveAlgorithmsContext{
+		
+		private:
+			defODriveAlgorithmsShdPtr algorithm;
+	
+		public:
+			PPdriveAlgorithmsContext()=delete;
+			PPdriveAlgorithmsContext(defODriveAlgorithmsShdPtr alg): algorithm(alg){};
+				
+    void setAlgorithm(defODriveAlgorithmsShdPtr algorithm){
+        this->algorithm = algorithm;
+    }
+
+		void driveForValue(map<char, int> &values){algorithm->driveForValue(values);};
+		void driveForValue(PPpoint<int> &values){algorithm->driveForValue(values);};
+		void driveToBaseCoordinates(map<char, int> &values){algorithm->driveToBaseCoordinates(values);};
+		void driveToBaseCoordinates(PPpoint<int> &values){algorithm->driveToBaseCoordinates(values);};
+		void driveToPhyCoordinates(PPpoint<int> &values){algorithm->driveToPhyCoordinates(values);};
+		
+		
+	};
+	
+using PPdriveAlgorithmsContextPtr = unique_ptr<PPdriveAlgorithmsContext>; 	
+	
+	
 #endif

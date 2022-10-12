@@ -63,6 +63,12 @@ public:
 		map<char, int> getPhyCoordValues();
 		map<char, int> getBaseCoordValues();
 
+		PParamData getPhyCoordClone(char acronim);
+		PParamData getBaseCoordClone(char acronim);
+
+		PParamData getAccelerationXperSEC2Clone(char acronim);
+		PParamData getVelocityXperSECClone(char acronim);
+
 
 };
 

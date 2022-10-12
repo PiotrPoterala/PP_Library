@@ -35,10 +35,12 @@ void defODriveAlgorithms::driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &star
 	
 	for(auto it:endP.axes){
 		auto startAx=startP.axes.find(it.first);
-		if(it.second!=startAx->second){
-			phyStartPoint.axes.insert(*startAx);
-			phyEndPoint.axes.insert(it);
-			counter.insert(pair<char, int>(it.first, 0));
+		if(startAx!=startP.axes.end()){
+			if(it.second!=startAx->second){
+				phyStartPoint.axes.insert(*startAx);
+				phyEndPoint.axes.insert(it);
+				counter.insert(pair<char, int>(it.first, 0));
+			}
 		}
 	}
 	
@@ -49,6 +51,10 @@ void defODriveAlgorithms::driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &star
 //	printf("\r\n");
 	if(phyEndPoint.axes.size()>0){
 		phyIndEndPoint=phyEndPoint;
+		phyNextStepPoint=phyStartPoint;
+		calculateMasterAxis();
+
+		status=DriveStatus::DRIVE_IN_PROGRESS;
 		drive();
 	}
 														
@@ -91,6 +97,27 @@ void defODriveAlgorithms::driveToPhyCoordinates(PPpoint<int> &values){
 	driveToEndPoint(values, startP);
 }
 
+char defODriveAlgorithms::calculateMasterAxis(){
+			char master=0;
+			int maxSteps=0;
+	
+			auto vector=phyEndPoint;
+			vector-=phyStartPoint;
+	
+			for(auto motor:motorsList->motors){
+				auto phyCoordAux=motorsList->getPhyCoordClone(motor.first);
+				auto vec=vector.axes.find(motor.first);
+				int steps=abs(vec->second)/phyCoordAux.front()->getPrecision();
+				
+				if(steps>maxSteps){
+					maxSteps=steps;
+					master=motor.first;
+				}
+			}
+	
+	
+			return master;
+}
 
 //void defODriveAlgorithms::setParToDriveToBaseCoordinates(map<char, int> &values){
 //	

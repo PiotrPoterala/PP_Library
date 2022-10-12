@@ -26,8 +26,8 @@
 @endverbatim
  */
 
-#ifndef _PP_RTX_DRIVE_ALGORITHMS_H
-	#define _PP_RTX_DRIVE_ALGORITHMS_H
+#ifndef _PP_RTX_PATH_DRIVE_ALGORITHMS_H
+	#define _PP_RTX_PATH_DRIVE_ALGORITHMS_H
 
 #include "pp_drive_algorithms.h"
 #include "cmsis_os2.h"
@@ -36,11 +36,11 @@
 
 #define BASE_FREQUENCY_OF_TIMdrive							10000
 	
-	class defORTX5driveAlgorithms : public defODriveAlgorithms{
+	class defORTX5pathDriveAlgorithms : public defODriveAlgorithms{
 
 		public:
-			defORTX5driveAlgorithms()=delete;
-			defORTX5driveAlgorithms(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
+			defORTX5pathDriveAlgorithms()=delete;
+			defORTX5pathDriveAlgorithms(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
 		
 		
 			virtual DriveStatus drive(void);
