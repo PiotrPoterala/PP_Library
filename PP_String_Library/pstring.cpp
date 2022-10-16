@@ -18,6 +18,7 @@
  */
 
 #include "pstring.h"
+#include "pp_math.h"
 #include <iostream>
 
 PString::PString():string ()
@@ -51,7 +52,7 @@ string PString::findDataAfterAcronim(char acronim){
 
 				if(i!=string::npos){
             for(i=i+1; i<size(); i++){
-                if((at(i)>='0' && at(i)<='9') || at(i)=='-' || at(i)=='+' || at(i)=='.'){
+                if(isdigit(at(i)) || at(i)=='-' || at(i)=='+' || at(i)=='.'){
                     line+=at(i);
                 }else break;
 
@@ -158,4 +159,31 @@ StringList PString::splitWithClamps(char sep, char clamps){
 
 
         return stringList;
+}
+
+string PString::doubleToString(double doubleToStr, int unit){
+		string str;
+		
+		if(unit<0){
+			str=to_string(doubleToStr);
+		}else if(unit>0){
+			char format[20];
+			char str_c[50];
+			int data=doubleToStr*pow_pp(10, unit);
+			int unitToDisplay;
+			
+			for(unitToDisplay=unit; unitToDisplay>0; unitToDisplay--){
+				if(data%10)break;
+				data/=10;
+			}
+			if(data<0)sprintf(format, "-%%i.%%0%ii", unitToDisplay);
+			else sprintf(format, "%%i.%%0%ii", unitToDisplay);
+			
+			sprintf(str_c, format, abs(data)/pow_pp(10, unitToDisplay), abs(data)%pow_pp(10, unitToDisplay));
+			str=str_c;
+		}else{
+			str=to_string(static_cast<int>(doubleToStr));
+		}
+
+		return str;
 }

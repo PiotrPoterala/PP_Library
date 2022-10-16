@@ -7,10 +7,9 @@
 TEST_GROUP(defOParamTestGroup)
 {
 	
-	defOParamListShdPtr list;
+	defOParamListShdPtr list=make_shared<defOParamList>();
 	
   void setup() {
-		list=make_shared<defOParamList>();
 		list->insert(PParamPair('f', make_shared<defOParam>("velocity", 2500, 1, 2500)));
 		list->insert(PParamPair('a', make_shared<defOParam>("acceleration", 2, 1, 30)));
 		list->insert(PParamPair('T', make_shared<defOParam>("impulse", 4750, 1000, 9000, 250, 3)));
@@ -22,9 +21,36 @@ TEST_GROUP(defOParamTestGroup)
 };
 
 
+TEST(defOParamTestGroup, getParamValueTest)
+{
+	LONGS_EQUAL(2500, list->getParamValue('f'));
+
+}
+
+TEST(defOParamTestGroup, getParamTest)
+{
+	auto param=list->getParam('T');
+	LONGS_EQUAL(1, param.size());
+	LONGS_EQUAL(4750, param.front()->getValue());
+
+}
+
+TEST(defOParamTestGroup, getParamCloneTest)
+{
+	auto param=list->getParamClone('T');
+	LONGS_EQUAL(1, param.size());
+	LONGS_EQUAL(4750, param.front()->getValue());
+	
+	param.front()->setValue(1234);
+	LONGS_EQUAL(1250, param.front()->getValue());
+	LONGS_EQUAL(4750, list->getParamValue('T'));
+
+}
+
 TEST(defOParamTestGroup, getStringWithParams)
 {
-	STRCMP_EQUAL("f2500 a2 T4.75", list->getStringWithParams().c_str());
+	
+	STRCMP_EQUAL("T4.75 a2 f2500", list->getStringWithParams().c_str());
 
 }
 

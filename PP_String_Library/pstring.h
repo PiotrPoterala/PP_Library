@@ -63,6 +63,7 @@ public:
 		StringList splitWithClamps(char sep, char clamps);
 		
 //		static uint32_t charToInt(char sign);
+		static string doubleToString(double doubleToStr, int unit);
 };
 
 

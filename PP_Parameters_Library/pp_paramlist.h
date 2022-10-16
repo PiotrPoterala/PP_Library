@@ -69,6 +69,7 @@ public:
 		PParamPair getParamPair(char acronim) noexcept;
 		map<char, int> getParamsValues();
 		map<char, double> getParamsRealValues();
+		string getStringWithParam(char acronim);
 		string getStringWithParams();
 
 		void insert(PParamPair pair);

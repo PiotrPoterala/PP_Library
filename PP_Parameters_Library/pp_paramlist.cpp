@@ -18,7 +18,8 @@
  */
 
 #include "pp_paramlist.h"
-
+#include "pp_math.h"
+#include "pstring.h"
 
 defOParamList::defOParamList(void){
 
@@ -344,6 +345,19 @@ void defOParamList::setParamsBasedString(const char *data){
 //	
 //}
 
+string defOParamList::getStringWithParam(char acronim){
+	
+	string answer;
+	auto param=getParam(acronim);
+
+	if(param.size()>0){
+		answer+=acronim;  
+		answer+=PString::doubleToString(static_cast<double>(param.front()->getValue())/pow_pp(10, param.front()->getUnit()), param.front()->getUnit());
+	}
+
+	return answer;
+}
+
 string defOParamList::getStringWithParams(){
 	
 	string answer;
@@ -352,8 +366,7 @@ string defOParamList::getStringWithParams(){
 	it_last_elem--;
 	
 		for (auto i=param.begin(); i!=param.end(); i++) {
-				answer+=(*i).first;  
-				answer+=to_string(static_cast<double>((*i).second->getValue())/pow(10.0, (*i).second->getUnit())); 
+				answer+=getStringWithParam(i->first);  
 				if(i!=it_last_elem)answer+=" ";
 		}
 	

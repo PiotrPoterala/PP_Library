@@ -30,30 +30,44 @@
 	#define _PP_POINT_H
 
 	#include <map>
-	#include <type_traits>
 	
 	#include "pstring.h"
 	
+	
+using PPointIntPair = pair<char, int>;
 
 template <typename Type>
 	class PPpoint{
 		
 		public:
-			static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");
-		
 		map<char, Type> axes;	
 		
 		PPpoint(){};
 		PPpoint(map<char, Type> point){axes=point;};
 	
 			
-		PPpoint<Type>& operator=(const PPpoint &point){
+		PPpoint<Type>& operator=(const PPpoint<Type> &point){
 
 			axes=point.axes;
 			return (*this);
 
 		};		
 			
+		
+		template <typename From>
+		PPpoint<Type> operator=(const PPpoint<From> &pointToConvert){
+
+				PPpoint<Type> point;
+	
+				for(auto pkt:pointToConvert.axes){
+					point.axes.insert(pair<char, Type>(pkt.first, static_cast<Type>(pkt.second)));
+					
+				}
+			
+			return point;
+
+		};	
+		
 		
 		PPpoint<Type>& operator=(const map<char, Type> point){
 
@@ -65,28 +79,37 @@ template <typename Type>
 		
 		bool operator==(PPpoint &point){
 			if(axes.size()==point.axes.size()){
-				for(auto it=axes.begin(); it!=axes.end(); it++){
-					auto it_to_comp=point.axes.find((*it).first);
-					if(it_to_comp!=point.axes.end()){
-						if((*it_to_comp).second!=(*it).second)return false;		
-					}else return false;
-					
-				}
-			}else return false;
+				compare(point);
+			}return false;
 			return true;
 
-	}
+		}
 		
-		bool operator==(map<char, Type> point){
+		bool compare(PPpoint &point){
+			for(auto it=axes.begin(); it!=axes.end(); it++){
+				auto it_to_comp=point.axes.find((*it).first);
+				if(it_to_comp!=point.axes.end()){
+					if((*it_to_comp).second!=(*it).second)return false;		
+				}else return false;
+				
+			}
+			return true;
+		}
+		
+		bool operator==(map<char, Type> &point){
 			if(axes.size()==point.size()){
-				for(auto it=axes.begin(); it!=axes.end(); it++){
-					auto it_to_comp=point.find((*it).first);
-					if(it_to_comp!=point.end()){
-						if((*it_to_comp).second!=(*it).second)return false;		
-					}else return false;
-					
-				}		
-			}else return false;
+				compare(point);		
+			}return false;
+			return true;
+		};
+		
+	bool compare(map<char, Type> &point){
+			for(auto it=axes.begin(); it!=axes.end(); it++){
+				auto it_to_comp=point.find((*it).first);
+				if(it_to_comp!=point.end()){
+					if((*it_to_comp).second!=(*it).second)return false;		
+				}else return false;
+			}		
 			return true;
 	};
 		
@@ -110,8 +133,25 @@ template <typename Type>
 					(*it).second+=(*it_to_add).second;
 				}
 			}
-
-	}
+		}
+		
+		void operator-=(PPpoint &point){
+			for(auto it=axes.begin(); it!=axes.end(); it++){
+				auto it_to_add=point.axes.find((*it).first);
+				if(it_to_add!=point.axes.end()){
+					(*it).second-=(*it_to_add).second;
+				}
+			}
+		}
+		
+		void operator-=(const map<char, Type> point){
+			for(auto it=axes.begin(); it!=axes.end(); it++){
+				auto it_to_add=point.find((*it).first);
+				if(it_to_add!=point.end()){
+					(*it).second-=(*it_to_add).second;
+				}
+			}
+		}
 		
 	void setAxesBasedString(PString &data){
 
@@ -121,7 +161,7 @@ template <typename Type>
 		
 	}
 	
-	bool setAxValue(char acronim, int val){
+	bool setAxValue(char acronim, Type val){
     auto it=axes.find(acronim);
     if(it!=axes.end()){
         (*it).second=val;
@@ -148,14 +188,26 @@ bool exists(char acronim){
 	}
 	
 };
+	
+
+template<typename To, typename From>
+PPpoint<To> convertPPpointType(const PPpoint<From>& pointToConvert){
+	PPpoint<To> point{};
+	
+		for(auto pkt:pointToConvert.axes){
+			point.axes.insert(pair<char, To>(pkt.first, static_cast<To>(pkt.second)));
+			
+		}
+	
+	return point;
+};
+
 
 template <typename Type>
 	class PPpointXY{
 		
 		
 		public:
-			static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");	
-		
 			Type x=0;
 			Type y=0;	
 		
@@ -258,7 +310,7 @@ template <typename Type>
 
 
 using PPpointList=vector<PPpoint<double>>;
-
+using PPpointListShdPtr=shared_ptr<PPpointList>;
 
 
 

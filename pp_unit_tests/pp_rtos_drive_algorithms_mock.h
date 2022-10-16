@@ -8,7 +8,7 @@
 
 		public:
 	//		defORTOSdriveAlgorithmsMock(){};
-			defORTOSdriveAlgorithmsMock(defOMotorsListShdPtr motors, defOParamListShdPtr pCoord, defOParamListShdPtr bCoord):defODriveAlgorithms(motors, pCoord, bCoord){};
+			defORTOSdriveAlgorithmsMock(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
 		
 		
 				virtual DriveStatus drive(void){return DriveStatus::DRIVE_COMPLETED;};
