@@ -51,7 +51,7 @@ private:
 public:
 		PMotorsMap motors;
 
-    PMotorsList();
+    PMotorsList(){};
 		PMotorsList(const PMotorsList& list);
 		PMotorsList(const PMotorsMap& map);
 		PMotorsList& operator=(const PMotorsList& other);
@@ -63,6 +63,9 @@ public:
 		map<char, int> getPhyCoordValues();
 		map<char, int> getBaseCoordValues();
 
+		PParamMap getPhyCoordClone();
+		PParamMap getBaseCoordClone();
+			
 		PParamData getPhyCoordClone(char acronim);
 		PParamData getBaseCoordClone(char acronim);
 

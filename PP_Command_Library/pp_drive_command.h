@@ -11,27 +11,27 @@
 class PDriveForValueCommand : public PCommand{
 		
 		private:
-			defOParamListShdPtr param;
+			PMotorsListShdPtr motorsList;
 			defOTaskQueuesIntShrPtr taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
 	
 		public:
-			PDriveForValueCommand(defOParamListShdPtr par, defOTaskQueuesIntShrPtr commQueues):param(par),taskCommunicationQueues(commQueues){};
+			PDriveForValueCommand(PMotorsListShdPtr motors, defOTaskQueuesIntShrPtr commQueues):motorsList(motors),taskCommunicationQueues(commQueues){};
 	
 			virtual bool execute(string &data) override{
 				PString str(data);
-				map<char, double> values;
-				values=str.findValuesAfterAcronims();
+				auto auxCoord=motorsList->getBaseCoordClone();			
+				defOParamList::setParamsBasedString(auxCoord, str);
 				
-				if(!values.empty()){
+				if(!auxCoord.empty()){
 					vector<int> valuesToSend;
 				
 					valuesToSend.push_back(qMARK_ATC);
 					valuesToSend.push_back(AT_TAG_TRVV);
-					valuesToSend.push_back(values.size());
+					valuesToSend.push_back(auxCoord.size());
 					
-					for(auto it=values.begin(); it!=values.end(); ++it){
-						valuesToSend.push_back((*it).first);
-						valuesToSend.push_back((*it).second*pow(10.0, param->getParamUnit((*it).first)));
+					for(auto it:auxCoord){
+						valuesToSend.push_back(it.first);
+						valuesToSend.push_back(it.second->getValue());
 					}
 					
 					
@@ -43,39 +43,75 @@ class PDriveForValueCommand : public PCommand{
 
 	};
 
-
-class PDriveToBaseCoordCommand : public PCommand{
+	
+	
+	class PDriveToBaseCoordCommand : public PCommand{
 		
 		private:
-			defOParamListShdPtr param;
+			PMotorsListShdPtr motorsList;
 			defOTaskQueuesIntShrPtr taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
 	
 		public:
-			PDriveToBaseCoordCommand(defOParamListShdPtr par, defOTaskQueuesIntShrPtr commQueues):param(par),taskCommunicationQueues(commQueues){};
+			PDriveToBaseCoordCommand(PMotorsListShdPtr motors, defOTaskQueuesIntShrPtr commQueues):motorsList(motors),taskCommunicationQueues(commQueues){};
 	
 			virtual bool execute(string &data) override{
 				PString str(data);
-				map<char, double> values;
-				values=str.findValuesAfterAcronims();
+				auto auxCoord=motorsList->getBaseCoordClone();			
+				defOParamList::setParamsBasedString(auxCoord, str);
 				
-				if(!values.empty()){
+				if(!auxCoord.empty()){
 					vector<int> valuesToSend;
 				
 					valuesToSend.push_back(qMARK_ATC);
 					valuesToSend.push_back(AT_TAG_TRVCO);
-					valuesToSend.push_back(values.size());
+					valuesToSend.push_back(auxCoord.size());
 					
-					for(auto it=values.begin(); it!=values.end(); ++it){
-						valuesToSend.push_back((*it).first);
-						valuesToSend.push_back((*it).second*pow(10.0, param->getParamUnit((*it).first)));
+					for(auto it:auxCoord){
+						valuesToSend.push_back(it.first);
+						valuesToSend.push_back(it.second->getValue());
 					}
 					
-					return true;
+					
 					taskCommunicationQueues->xQueueSendConteinerToBackWithSemaphore(valuesToSend);
+					return true;
 				}
 				return false;
 			};
 
 	};
+
+//class PDriveToBaseCoordCommand : public PCommand{
+//		
+//		private:
+//			defOParamListShdPtr param;
+//			defOTaskQueuesIntShrPtr taskCommunicationQueues;/**<pointer to queue used to comunication between two threads*/
+//	
+//		public:
+//			PDriveToBaseCoordCommand(defOParamListShdPtr par, defOTaskQueuesIntShrPtr commQueues):param(par),taskCommunicationQueues(commQueues){};
+//	
+//			virtual bool execute(string &data) override{
+//				PString str(data);
+//				map<char, double> values;
+//				values=str.findValuesAfterAcronims();
+//				
+//				if(!values.empty()){
+//					vector<int> valuesToSend;
+//				
+//					valuesToSend.push_back(qMARK_ATC);
+//					valuesToSend.push_back(AT_TAG_TRVCO);
+//					valuesToSend.push_back(values.size());
+//					
+//					for(auto it=values.begin(); it!=values.end(); ++it){
+//						valuesToSend.push_back((*it).first);
+//						valuesToSend.push_back((*it).second*pow(10.0, param->getParamUnit((*it).first)));
+//					}
+//					
+//					return true;
+//					taskCommunicationQueues->xQueueSendConteinerToBackWithSemaphore(valuesToSend);
+//				}
+//				return false;
+//			};
+
+//	};
 	
 #endif

@@ -318,7 +318,7 @@ bool defOParamList::comparingParamsValue(map<char, int> &paramToComp){
 void defOParamList::setParamsBasedString(PString &data){
 
 	for(auto it=param.begin(); it!=param.end(); ++it){
-		    (*it).second->setValue(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow(10.0, (*it).second->getUnit()))*pow(10.0, (*it).second->getUnit()));
+		    (*it).second->setValue(data.findValueAfterAcronim((*it).first, static_cast<double>((*it).second->getValue())/pow_pp(10, (*it).second->getUnit()))*pow_pp(10, (*it).second->getUnit()));
 	}
 	
 }
@@ -332,6 +332,13 @@ void defOParamList::setParamsBasedString(string &data){
 void defOParamList::setParamsBasedString(const char *data){
 	PString str(data);
 	setParamsBasedString(str);
+}
+
+void defOParamList::setParamsBasedString(PParamMap &param, PString &data){
+	for(auto it:param){
+		 it.second->setValue(data.findValueAfterAcronim(it.first, static_cast<double>(it.second->getValue())/pow_pp(10, it.second->getUnit()))*pow_pp(10, it.second->getUnit()));
+	}
+	
 }
 
 //void defOParamList::checksParamsValue(){

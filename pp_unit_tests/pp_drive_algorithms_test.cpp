@@ -19,19 +19,19 @@ TEST_GROUP(defODriveAlgorithmsTestGroup)
 };
 
 
-TEST(defODriveAlgorithmsTestGroup, getFrequencykResponsibleForDriveSpeedTest)
-{
+//TEST(defODriveAlgorithmsTestGroup, getFrequencykResponsibleForDriveSpeedTest)
+//{
 
-	LONGS_EQUAL(1000, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 2500));
-	LONGS_EQUAL(500, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 5000));
-}
+//	LONGS_EQUAL(1000, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 2500));
+//	LONGS_EQUAL(500, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 5000));
+//}
 
 
-TEST(defODriveAlgorithmsTestGroup, getClockDividerResponsibleForDriveSpeedTest)
-{
+//TEST(defODriveAlgorithmsTestGroup, getClockDividerResponsibleForDriveSpeedTest)
+//{
 
-	LONGS_EQUAL(10, defODriveAlgorithms::getClockDividerResponsibleForDriveSpeed(2000, 2000, 2, 2500,  10000, 2500));
-}
+//	LONGS_EQUAL(10, defODriveAlgorithms::getClockDividerResponsibleForDriveSpeed(2000, 2000, 2, 2500,  10000, 2500));
+//}
 
 //TEST(defOParamTestGroup, comparingParamsValueWithParamsMap)
 //{

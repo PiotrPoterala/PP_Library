@@ -70,10 +70,17 @@ bool PDir::cdUp(){
 
 void PDir::setPath(const string &path){
 
-
 	int find=path.find("/");
-	volume=path.substr(0, find+1);
-	dirPath=path.substr(find+1);
 
+	if(find!=string::npos){
+		volume=path.substr(0, find+1);
+		dirPath=path.substr(find+1);
+		if(dirPath.back()=='/'){
+			dirPath.pop_back();
+		}
+	}else{
+		volume=path;
+		dirPath.clear();
+	}
 
 };

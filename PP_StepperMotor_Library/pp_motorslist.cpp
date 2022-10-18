@@ -63,9 +63,9 @@ void PMotorsList::copyListOfMotors(const PMotorsMap &copyMotors){
 map<char, int> PMotorsList::getPhyCoordValues(){
 	map<char, int> values;
 	
-	for(auto it=motors.begin(); it != motors.end(); ++it){
-		auto phyCoordAux=it->second->getPhyCoordClone();
-		values.insert(pair<char,int>(it->first, phyCoordAux.front()->getValue()));
+	for(auto it:motors){
+		auto phyCoordAux=it.second->getPhyCoordClone();
+		values.insert(pair<char,int>(it.first, phyCoordAux.front()->getValue()));
 		
 	}
 	
@@ -76,9 +76,9 @@ map<char, int> PMotorsList::getPhyCoordValues(){
 map<char, int> PMotorsList::getBaseCoordValues(){
 	map<char, int> values;
 	
-	for(auto it=motors.begin(); it != motors.end(); ++it){
-		auto baseCoordAux=it->second->getBaseCoordClone();
-		values.insert(pair<char,int>(it->first, baseCoordAux.front()->getValue()));
+	for(auto it:motors){
+		auto baseCoordAux=it.second->getBaseCoordClone();
+		values.insert(pair<char,int>(it.first, baseCoordAux.front()->getValue()));
 		
 	}
 	
@@ -86,6 +86,33 @@ map<char, int> PMotorsList::getBaseCoordValues(){
 	
 }
 	
+PParamMap PMotorsList::getPhyCoordClone(){
+	PParamMap coordList;
+			
+	for(auto it:motors){
+		auto phyCoordAux=it.second->getPhyCoordClone();
+		if(phyCoordAux.size()>0){
+			coordList.insert(PParamPair(it.first, phyCoordAux.front()));
+		}
+		
+	}	
+	return coordList;
+}
+
+
+PParamMap PMotorsList::getBaseCoordClone(){
+	PParamMap coordList;
+			
+	for(auto it:motors){
+		auto phyCoordAux=it.second->getBaseCoordClone();
+		if(phyCoordAux.size()>0){
+			coordList.insert(PParamPair(it.first, phyCoordAux.front()));
+		}
+		
+	}	
+	return coordList;
+}
+
 
 PParamData PMotorsList::getPhyCoordClone(char acronim){
 	PParamData data;

@@ -81,7 +81,6 @@ using defOStepperMotorDriverShdPtr= shared_ptr<defOStepperMotorDriver>;
 class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 	
 	private:
-//		char acronim;
 		bool enable=false;
 	
 		int error;
@@ -102,9 +101,6 @@ class defOStepperMotorDriverPar : public defOStepperMotorDriver{
 																
 		virtual void rotateForward()override{};
 		virtual void rotateBackwards()override{};
-
-//		virtual void setAcronim(char acronim) final {this->acronim=acronim;};
-//		virtual char getAcronim()final{return acronim;};
 		
 		virtual void setError(char error) final {this->error=error;};
 		virtual char getError()final{return error;};

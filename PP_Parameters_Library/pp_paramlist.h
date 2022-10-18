@@ -90,6 +90,9 @@ public:
     void setParamsBasedString(PString &data);
 		void setParamsBasedString(string &data);
 		void setParamsBasedString(const char *data);
+		
+		
+		static void setParamsBasedString(PParamMap &param, PString &data);
 };
 
 using defOParamListShdPtr=shared_ptr<defOParamList>;
