@@ -79,17 +79,17 @@ template <typename Type>
 		
 		bool operator==(PPpoint &point){
 			if(axes.size()==point.axes.size()){
-				compare(point);
-			}return false;
-			return true;
-
+				return compare(point);
+			}
+			
+			return false;
 		}
 		
 		bool compare(PPpoint &point){
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_comp=point.axes.find((*it).first);
+			for(auto it:axes){
+				auto it_to_comp=point.axes.find(it.first);
 				if(it_to_comp!=point.axes.end()){
-					if((*it_to_comp).second!=(*it).second)return false;		
+					if(it_to_comp->second!=it.second)return false;		
 				}else return false;
 				
 			}
@@ -98,16 +98,17 @@ template <typename Type>
 		
 		bool operator==(map<char, Type> &point){
 			if(axes.size()==point.size()){
-				compare(point);		
-			}return false;
-			return true;
+				return compare(point);		
+			}
+			
+			return false;
 		};
 		
 	bool compare(map<char, Type> &point){
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_comp=point.find((*it).first);
+		for(auto it:axes){
+				auto it_to_comp=point.find(it.first);
 				if(it_to_comp!=point.end()){
-					if((*it_to_comp).second!=(*it).second)return false;		
+					if(it_to_comp->second!=it.second)return false;		
 				}else return false;
 			}		
 			return true;

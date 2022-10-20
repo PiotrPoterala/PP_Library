@@ -402,6 +402,11 @@
               <FileType>8</FileType>
               <FilePath>..\PP_StepperMotor_Library\pp_drive_algorithms.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_point.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_Point\pp_point.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -451,6 +456,11 @@
               <FileName>pfileInfo_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pfileInfo_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_point_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_point_test.cpp</FilePath>
             </File>
           </Files>
         </Group>

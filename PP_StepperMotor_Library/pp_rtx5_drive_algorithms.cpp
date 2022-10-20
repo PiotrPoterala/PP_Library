@@ -69,7 +69,7 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 			
 		}
 
-		map<char, int> phyCoordValues=motorsList->getPhyCoordValues();
+		auto phyCoordValues=motorsList->getPhyCoordValues();
 		
 		if(phyIndEndPoint.compare(phyCoordValues)){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy do punktu spauzowania ruchu
 				if(phyEndPoint==phyIndEndPoint){	//jezeli wszystkie silniki zrealizowaly swoje przejazdy to ustaw flage kończącą przejazd
