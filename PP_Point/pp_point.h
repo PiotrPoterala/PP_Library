@@ -116,11 +116,11 @@ template <typename Type>
 		
 	PPpoint<Type> operator+(PPpoint &point){
 			PPpoint<Type> newPoint;
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_add=point.axes.find((*it).first);
+			for(auto it:axes){
+				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					newPoint.axes.insert(pair<char, Type>((*it).first, (*it_to_add).second+(*it).second));		
-				}else newPoint.axes.insert(pair<char, Type>((*it).first, (*it).second));
+					newPoint.axes.insert(pair<char, Type>(it.first, it_to_add->second+it.second));		
+				}else newPoint.axes.insert(pair<char, Type>(it.first, it.second));
 				
 			}
 			return newPoint;
@@ -128,36 +128,36 @@ template <typename Type>
 	}
 	
 		void operator+=(PPpoint &point){
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_add=point.axes.find((*it).first);
+			for(auto&& it:axes){
+				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					(*it).second+=(*it_to_add).second;
+					it.second+=it_to_add->second;
 				}
 			}
 		}
 		
 		void operator-=(PPpoint &point){
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_add=point.axes.find((*it).first);
+			for(auto&& it:axes){
+				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					(*it).second-=(*it_to_add).second;
+					it.second-=it_to_add->second;
 				}
 			}
 		}
 		
 		void operator-=(const map<char, Type> point){
-			for(auto it=axes.begin(); it!=axes.end(); it++){
-				auto it_to_add=point.find((*it).first);
+			for(auto&& it:axes){
+				auto it_to_add=point.find(it.first);
 				if(it_to_add!=point.end()){
-					(*it).second-=(*it_to_add).second;
+					it.second-=it_to_add->second;
 				}
 			}
 		}
 		
 	void setAxesBasedString(PString &data){
 
-		for(auto it=axes.begin(); it!=axes.end(); ++it){
-					(*it).second=data.findValueAfterAcronim((*it).first, (*it).second);
+		for(auto&& it:axes){
+					it.second=data.findValueAfterAcronim(it.first, it.second);
 		}
 		
 	}

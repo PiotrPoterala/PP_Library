@@ -33,8 +33,6 @@
 #include "cmsis_os2.h"
 
 #include <vector>
-
-#define BASE_FREQUENCY_OF_TIMdrive							10000
 	
 	class defORTX5driveAlgorithms : public defODriveAlgorithms{
 

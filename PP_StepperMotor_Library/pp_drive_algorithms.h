@@ -34,6 +34,7 @@
 #include "pp_motorslist.h"
 #include "pp_point.h"
 
+constexpr int BASE_FREQUENCY_OF_TIMdrive=10000;
 
 enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, DRIVE_PAUSED, DRIVE_INTERRUPTED};
 	

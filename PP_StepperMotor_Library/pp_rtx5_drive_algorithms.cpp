@@ -29,7 +29,7 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 
 	while(status!=DriveStatus::DRIVE_COMPLETED && status!=DriveStatus::DRIVE_ABORTED){		
 
-		tick += OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive;   
+		tick += OS_TICK_FREQ/BASE_FREQUENCY_OF_TIMdrive;   
 		
 		for(auto it:phyStartPoint.axes){
 
@@ -57,9 +57,9 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 									}else{
 										motor->second->rotateBackwards();
 									}
-									(*cnt_it).second=1;
+									cnt_it->second=1;
 								}else{
-									(*cnt_it).second++;
+									cnt_it->second++;
 								}
 							}
 						}

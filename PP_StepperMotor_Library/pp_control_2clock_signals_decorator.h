@@ -39,6 +39,9 @@ typedef struct{
 	int mask;
 }uPortMask;
 
+using PortMaskMap = map<GPIO_TypeDef*, uPortMask>;
+using PortMaskPair = pair<GPIO_TypeDef*, uPortMask>;
+
 class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator{
 	
 
@@ -48,13 +51,13 @@ class defOControl2ClockSignalsDecorator : public defOStepperMotorDriverDecorator
 	
 	
 		vector<uPin> inputsPins;
-		map<GPIO_TypeDef*, uPortMask*> portMask;
+		PortMaskMap portMask;
 	
-		uPin *enablePin;
+		uPin enablePin;
 		int enablePolar;
 	
 	public:
-		defOControl2ClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> iPins, uPin *enPin, int enPolar=B_HIGH);	
+		defOControl2ClockSignalsDecorator(defOStepperMotorDriverShdPtr stepMotorDriver, vector<uPin> iPins, uPin enPin, int enPolar=B_HIGH);	
 
 		defOStepperMotorDriverShdPtr clone()override{return make_shared<defOControl2ClockSignalsDecorator>(*this);};	
 	

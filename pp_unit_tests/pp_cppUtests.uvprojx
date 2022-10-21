@@ -462,6 +462,11 @@
               <FileType>8</FileType>
               <FilePath>.\pp_point_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_motorslist_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_motorslist_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -526,6 +531,11 @@
               <FileName>pp_motorslist.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\PP_StepperMotor_Library\pp_motorslist.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_stepper_motor_2clock_driver.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_stepper_motor_2clock_driver.cpp</FilePath>
             </File>
           </Files>
         </Group>
