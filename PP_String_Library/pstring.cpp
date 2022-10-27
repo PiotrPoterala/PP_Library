@@ -71,29 +71,23 @@ PString PString::mid(int position, int n){
 int PString::toInt(int base){
 	int result=0;
 	
+	if(base!=16 && base!=10 && base!=2)base=10;
+	
 	if(base==16){
-    for (int i=0; i<size(); i++) {
-        if (at(i)>=48 && at(i)<=57){
-            result =result*16+(at(i)-48);
-        }else if(at(i)>=65 && at(i)<=70) {
-            result =result*16+(at(i)-55);
-        }else if(at(i)>=97 && at(i)<=102) {
-            result =result*16+(at(i)-87);
-        }
-    }
-	}else if(base==10){
-		
-		result=atoi(c_str());
+		if(isalnum(at(0)))result=stoi(data(), nullptr, base);
+	}else{
+		if(isdigit(at(0)))result=stoi(data(), nullptr, base);
 	}
 	
 	return result;
+		
 }
 
 double PString::findValueAfterAcronim(char acronim, double defValue){
         string line=findDataAfterAcronim(acronim);
         if(line.empty())return defValue;
 				
-				return atof( line.c_str());
+				return stod(line);
 }
 
 map<char, double> PString::findValuesAfterAcronims(){
@@ -112,6 +106,26 @@ map<char, double> PString::findValuesAfterAcronims(){
 				
         return valuesMap;
 }
+
+
+PString& PString::trimmed(){
+	
+	int i=0;
+	
+	for(i=0; i<size(); i++){
+		if(!isspace(at(i)))break;
+	}
+	erase(0, i);
+	
+	for(i=size()-1; i>=0; i--){
+		if(!isspace(at(i)))break;
+	}
+	
+	if(i<size()-1)erase(i+1);
+
+	return (*this);
+}
+
 
 vector<PString> PString::split(char sep, SplitBehavior behavior){
 		vector<PString> stringList;

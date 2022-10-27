@@ -75,7 +75,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (..\..\PP_library_C\PP_Math\pp_math.h)(0x632E2C9F)
 F (..\PP_Parameters_Library\pp_param.cpp)(0x63456119)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_param.o -MD)
 I (..\PP_Parameters_Library\pp_param.h)(0x634560DE)
@@ -152,7 +152,7 @@ I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cms
 I (C:\Users\poter\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\mpu_armv7.h)(0x626F9F3E)
 I (C:\Users\poter\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x61111520)
 F (..\PP_StepperMotor_Library\pp_drive_algorithms.cpp)(0x63471CBD)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_drive_algorithms.o -MD)
-I (..\PP_StepperMotor_Library\pp_drive_algorithms.h)(0x6346C800)
+I (..\PP_StepperMotor_Library\pp_drive_algorithms.h)(0x635301B1)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tree)(0x5D2DE014)
@@ -226,7 +226,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (..\PP_StepperMotor_Library\pp_motorslist.h)(0x634F033B)
 I (..\PP_StepperMotor_Library\pp_stepper_motor_driver.h)(0x634DAD66)
 I (..\PP_Parameters_Library\pp_param.h)(0x634560DE)
@@ -306,7 +306,7 @@ I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\TestOutput.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CommandLineArguments.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\TestFilter.h)(0x6211426B)
-F (.\pstring_test.cpp)(0x62670EE9)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pstring_test.o -MD)
+F (.\pstring_test.cpp)(0x635A8535)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pstring_test.o -MD)
 I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CppUTestConfig.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CppUTestGeneratedConfig.h)(0x6211426B)
@@ -375,7 +375,7 @@ I (..\..\cppUtest\include\CppUTest\TestFailure.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
@@ -472,7 +472,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (..\PP_Parameters_Library\pp_param.h)(0x634560DE)
 F (.\pp_drive_algorithms_test.cpp)(0x634D64F6)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_drive_algorithms_test.o -MD)
 I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
@@ -544,7 +544,7 @@ I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
 I (pp_rtos_drive_algorithms_mock.h)(0x634C6658)
-I (..\PP_StepperMotor_Library\pp_drive_algorithms.h)(0x6346C800)
+I (..\PP_StepperMotor_Library\pp_drive_algorithms.h)(0x635301B1)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tree)(0x5D2DE014)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__node_handle)(0x5CC15814)
@@ -564,7 +564,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (..\PP_StepperMotor_Library\pp_motorslist.h)(0x634F033B)
 I (..\PP_StepperMotor_Library\pp_stepper_motor_driver.h)(0x634DAD66)
 I (..\PP_Parameters_Library\pp_param.h)(0x634560DE)
@@ -645,10 +645,10 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
 I (..\PP_File_Library\pp_dir.h)(0x6262A1A6)
 I (..\PP_File_Library\pp_file_info.h)(0x620E799C)
-I (..\PP_File_Library\pp_file.h)(0x62629CB5)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
 I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
 I (..\PP_File_Library\pp_file_info_mock.h)(0x62670928)
-F (.\pfile_test.cpp)(0x62629C61)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pfile_test.o -MD)
+F (.\pfile_test.cpp)(0x635A7A59)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pfile_test.o -MD)
 I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CppUTestConfig.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CppUTestGeneratedConfig.h)(0x6211426B)
@@ -717,6 +717,9 @@ I (..\..\cppUtest\include\CppUTest\TestFailure.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
+I (..\PP_File_Library\pp_file_string_mock.h)(0x63594EE4)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
+I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
 F (.\pfileInfo_test.cpp)(0x62629C0C)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pfileinfo_test.o -MD)
 I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\CppUTestConfig.h)(0x6211426B)
@@ -787,7 +790,7 @@ I (..\..\cppUtest\include\CppUTest\TestPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakWarningPlugin.h)(0x6211426B)
 I (..\..\cppUtest\include\CppUTest\MemoryLeakDetectorNewMacros.h)(0x6211426B)
 I (..\PP_File_Library\pp_file_info.h)(0x620E799C)
-I (..\PP_File_Library\pp_file.h)(0x62629CB5)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
 I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
 F (.\pp_point_test.cpp)(0x63529E94)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_point_test.o -MD)
 I (..\..\cppUtest\include\CppUTest\TestHarness.h)(0x6211426B)
@@ -863,7 +866,7 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tree)(0x5D2DE014)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__node_handle)(0x5CC15814)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\optional)(0x5D1A42DC)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\vector)(0x5D7F1520)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
@@ -1020,10 +1023,10 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
 I (..\PP_File_Library\pp_file_info.h)(0x620E799C)
-I (..\PP_File_Library\pp_file.h)(0x62629CB5)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
 I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
 F (..\PP_File_Library\pp_file.cpp)(0x634D6467)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_file.o -MD)
-I (..\PP_File_Library\pp_file.h)(0x62629CB5)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
 I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
@@ -1131,10 +1134,10 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
-I (..\PP_File_Library\pp_file.h)(0x62629CB5)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
 I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
-F (..\PP_String_Library\pstring.cpp)(0x634C75A2)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pstring.o -MD)
-I (..\PP_String_Library\pstring.h)(0x634C766F)
+F (..\PP_String_Library\pstring.cpp)(0x635A84E2)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pstring.o -MD)
+I (..\PP_String_Library\pstring.h)(0x635A82D7)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
@@ -1230,6 +1233,156 @@ I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bitset)(0x5D1AC870)
 F (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)()
 F (..\PP_File_Library\pp_file_info_mock.h)(0x62670928)()
 F (..\PP_File_Library\pp_dir_mock.h)(0x62670C81)()
+F (..\PP_File_Library\pp_file_mock.cpp)(0x6357E8FD)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_file_mock.o -MD)
+I (..\PP_File_Library\pp_file_mock.h)(0x6357E634)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
+I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__string)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\algorithm)(0x5D5E3E18)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\initializer_list)(0x5CEF6D48)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstddef)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\version)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\type_traits)(0x5D79D1F8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstring)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\utility)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tuple)(0x5D108E6C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdint)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x5D0C6404)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__debug)(0x5C90ACB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iosfwd)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wchar.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wchar.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\memory)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\typeinfo)(0x5CEF6D36)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\exception)(0x5D0D8106)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\math.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits)(0x5D1AC85E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__undef_macros)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\new)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iterator)(0x5CFFB960)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__functional_base)(0x5D031D04)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\tuple)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdexcept)(0x5C8125E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cassert)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\functional)(0x5D3162E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bit)(0x5D376EB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdio)(0x5D773568)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwchar)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\fstream)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ostream)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ios)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__locale)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\mutex)(0x5D564BF2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__mutex_base)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\chrono)(0x5D543CF2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctime)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\time.h)(0x5DB3A1FE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ratio)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\climits)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits.h)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\limits.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\system_error)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__errc)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cerrno)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\errno.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\errno.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__threading_support)(0x5D5E3E22)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\locale.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\locale.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\support\arm\locale_arm.h)(0x5743C3C2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\clocale)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\support\xlocale\__posix_l_fallback.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\support\xlocale\__strtonum_fallback.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\streambuf)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\locale)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdarg)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x5DB3A1FE)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bsd_locale_fallbacks.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bitset)(0x5D1AC870)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__bit_reference)(0x5D2DE00E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\istream)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\filesystem)(0x5D543CFA)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stack)(0x5CEF6D50)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\deque)(0x5D52BBF8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__split_buffer)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iomanip)(0x5CEF6D50)
+F (..\PP_File_Library\pp_file_string_mock.cpp)(0x63594ED0)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_file_string_mock.o -MD)
+I (..\PP_File_Library\pp_file_string_mock.h)(0x63594EE4)
+I (..\PP_File_Library\pp_file.h)(0x6356A3A2)
+I (..\PP_IOdevice_library\pp_iodevice.h)(0x623E4744)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__config)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string_view)(0x5D1A42DC)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__string)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\algorithm)(0x5D5E3E18)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\initializer_list)(0x5CEF6D48)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstddef)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\version)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__nullptr)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\type_traits)(0x5D79D1F8)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstring)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\string.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\utility)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__tuple)(0x5D108E6C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdint)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h)(0x5D0C6404)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__debug)(0x5C90ACB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iosfwd)(0x5C43F13C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wchar.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wchar.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\memory)(0x5D7F1520)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\typeinfo)(0x5CEF6D36)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\exception)(0x5D0D8106)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdlib)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdlib.h)(0x5CC15814)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\math.h)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\math.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\limits)(0x5D1AC85E)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__undef_macros)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\new)(0x5CE77AE6)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\iterator)(0x5CFFB960)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\__functional_base)(0x5D031D04)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\tuple)(0x5D52BBF0)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdexcept)(0x5C8125E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cassert)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\assert.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\functional)(0x5D3162E2)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\bit)(0x5D376EB4)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cstdio)(0x5D773568)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\stdio.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\stdio.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwchar)(0x5D8BB10C)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cwctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\cctype)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\ctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\ctype.h)(0x5DB3A200)
+I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\wctype.h)(0x5C43F13A)
+I (C:\Keil_v5\ARM\ARMCLANG\include\wctype.h)(0x5DB3A200)
 F (..\PP_StepperMotor_Library\pp_motorslist.cpp)(0x6352A6FD)(-xc++ -std=c++14 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-funsigned-char -fshort-enums -fshort-wchar -fno-exceptions-gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../PP_String_Library -I ../../PP_library -I ../../cppUtest/include -I ../PP_Parameters_Library -I ../PP_StepperMotor_Library -I ../PP_Point -I ../PP_IOdevice_library -I ../PP_File_Library -I ../../PP_library_C/PP_Math-I./RTE/_Target_1-IC:/Users/poter/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include-IC:/Users/poter/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.16.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F429xx -DSTM32F429xx-o ./objects/pp_motorslist.o -MD)
 I (..\PP_StepperMotor_Library\pp_motorslist.h)(0x634F033B)
 I (C:\Keil_v5\ARM\ARMCLANG\include\libcxx\map)(0x5D329160)

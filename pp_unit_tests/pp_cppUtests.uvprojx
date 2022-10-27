@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math;..\PP_Interpret_Gcode_Library</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -467,6 +467,11 @@
               <FileType>8</FileType>
               <FilePath>.\pp_motorslist_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_gcode_resolver_strategy_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_gcode_resolver_strategy_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -522,6 +527,16 @@
               <FileType>5</FileType>
               <FilePath>..\PP_File_Library\pp_dir_mock.h</FilePath>
             </File>
+            <File>
+              <FileName>pp_file_mock.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_File_Library\pp_file_mock.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_file_string_mock.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_File_Library\pp_file_string_mock.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -546,6 +561,21 @@
               <FileName>pp_math.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\PP_library_C\PP_Math\pp_math.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PP_Interpret_Gcode_Library</GroupName>
+          <Files>
+            <File>
+              <FileName>pp_prog_gcode_resolver_strategy.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Interpret_Gcode_Library\pp_prog_gcode_resolver_strategy.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_program_resolver_strategy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_Interpret_Gcode_Library\pp_program_resolver_strategy.h</FilePath>
             </File>
           </Files>
         </Group>

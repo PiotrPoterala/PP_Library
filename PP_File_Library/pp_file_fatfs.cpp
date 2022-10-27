@@ -170,7 +170,6 @@ int PFileFATFS::read(char *data, int maxSize){
 string PFileFATFS::readLine(){
 		constexpr int buforSize=64;
 	
-		int i;
 		unsigned int readBytes=buforSize;
 		char bufor[buforSize];
 		string result;
@@ -182,17 +181,20 @@ string PFileFATFS::readLine(){
 			while(isEndSign==false && readBytes==buforSize){
 				f_lseek(&file, position);
 				f_read(&file, bufor, buforSize, &readBytes);	//pobranie n bajtów (wartość wskazywana przez ) z danego fileu i zapisanie ich do bufora  		
-
+	
 				
-				for(i=0; bufor[i]!='\0' && i<buforSize; i++){
-					if(isEndSign)bufor[i]='\0'; 
+				
+				for(int i=0; i<readBytes; i++){
 					if(bufor[i]=='\n'){
+						if(i+1<buforSize)bufor[i+1]='\0';
 						isEndSign=true;
-						position+=(i+1);
+						break;
 					}
 				}
-
-				result+=bufor;		
+				
+				result+=bufor;
+				position+=strlen(bufor);
+						
 			}
 		}
 
@@ -221,15 +223,21 @@ bool PFileFATFS::exists(){
 }
 
 bool PFileFATFS::clear(){
-		int fresult;
+//		int fresult;
 
-	
-		fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
-		if(fresult==FR_OK){
-			fresult=f_open(&file, absolutePath().c_str(), FA_CREATE_ALWAYS);
-		}
-	
-		if(fresult==FR_OK){
+//	
+//		fresult=f_mount(&g_sFatFs, volume.c_str(), 0);
+//		if(fresult==FR_OK){
+//			fresult=f_open(&file, absolutePath().c_str(), FA_CREATE_ALWAYS);
+//		}
+//	
+//		if(fresult==FR_OK){
+//			close();
+//			return true;
+//		}
+//		return false;
+//		
+		if(open(WriteOnly)){
 			close();
 			return true;
 		}

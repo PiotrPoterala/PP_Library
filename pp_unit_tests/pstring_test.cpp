@@ -30,6 +30,15 @@ TEST(PStringTestGroup, toIntTest)
 	PString str("234");
 	LONGS_EQUAL(234, str.toInt());
 	
+	str=" ";
+	LONGS_EQUAL(0, str.toInt());
+	
+	str="1 ";
+	LONGS_EQUAL(1, str.toInt());
+	
+	str="2;";
+	LONGS_EQUAL(2, str.toInt());
+	
 	str="CD";
 	LONGS_EQUAL(205, str.toInt(16));
 	
@@ -59,6 +68,16 @@ TEST(PStringTestGroup, findValuesAfterAcronimTest)
 	DOUBLES_EQUAL(20.458, (*it).second, 0.001);
 	
 }
+
+TEST(PStringTestGroup, trimmedTest)
+{
+	PString str("  lots\t of\nwhitespace\r\n ");
+	STRCMP_EQUAL("lots\t of\nwhitespace", str.trimmed().c_str());
+	
+	str="lots of whitespace";
+	STRCMP_EQUAL("lots of whitespace", str.trimmed().c_str());
+}
+
 
 TEST(PStringTestGroup, split)
 {

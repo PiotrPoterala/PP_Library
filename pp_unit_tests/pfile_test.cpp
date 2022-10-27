@@ -1,45 +1,37 @@
 #include "CppUTest/TestHarness.h"
 
-//#include "pp_file.h"
-//#include "stdio.h"
+#include "pp_file_string_mock.h"
+#include "stdio.h"
 
 
-//TEST_GROUP(PFileTestGroup)
-//{
-//	PIOdeviceShrPtr file;
-//	
-//  void setup() {
-//		file=make_shared<PFile>("1:/Gc/test.txt");
-//	}
-//	
-//  void teardown() {}
-//};
+TEST_GROUP(PFileTestGroup)
+{
+	PFileShrPtr file;
+	
+  void setup() {
+		file=make_shared<PFileStringMock>("C:/Gc_test/test.txt");
+		file->open(PIOdevice::WriteOnly);
+		file->write("G56\nG00 X0 Y0 Z0 A0\nG00 Z-2\nG00 Z2\n");
+		file->close();
+	}
+	
+  void teardown() {}
+};
 
 
-//TEST(PFileTestGroup, createPFileTest_1)
-//{
-//	STRCMP_EQUAL("1:/", file.data.volume);
-//	STRCMP_EQUAL("Gc/test.txt", file.data.path);
-//}
 
-//TEST(PFileTestGroup, createPFileTest_2)
-//{
-//	PFileConstruct(&file, "\0");
-//	STRCMP_EQUAL("\0", file.data.volume);
-//	STRCMP_EQUAL("\0", file.data.path);
-//}
+TEST(PFileTestGroup, getAbsolutePathTest)
+{
+	
+	STRCMP_EQUAL("C:/Gc_test/test.txt", file->absolutePath().c_str());
+}
 
-//TEST(PFileTestGroup, createPFileTest_3)
-//{
-//	PFileConstruct(&file, "1:/");
-//	STRCMP_EQUAL("1:/", file.data.volume);
-//	STRCMP_EQUAL("\0", file.data.path);
-//}
-
-//TEST(PFileTestGroup, getAbsolutePathTest)
-//{
-//	char absPath[ABS_PATH_LENGTH];
-//	file.absolutePath(&file.data, absPath, ABS_PATH_LENGTH);
-//	
-//	STRCMP_EQUAL("1:/Gc/test.txt", absPath);
-//}
+TEST(PFileTestGroup, readLineTest)
+{
+	file->open(PIOdevice::ReadOnly);
+	STRCMP_EQUAL("G56\n", file->readLine().c_str());
+	STRCMP_EQUAL("G00 X0 Y0 Z0 A0\n", file->readLine().c_str());
+	STRCMP_EQUAL("G00 Z-2\n", file->readLine().c_str());
+	STRCMP_EQUAL("G00 Z2\n", file->readLine().c_str());
+	file->close();
+}

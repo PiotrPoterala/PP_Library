@@ -53,16 +53,14 @@ public:
 		enum SplitBehavior{SkipEmptyParts, KeepEmptyParts};
 
 		PString mid(int position, int n);
-//		double toDouble(bool *ok=NULL);
 		int toInt(int base=10);
- //   double findValueAfterAcronim(char acronim, int defValue, int precision);
 		string findDataAfterAcronim(char acronim);
 		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();
+		PString&  trimmed();
     vector<PString> split(char sep, SplitBehavior behavior = SkipEmptyParts);
 		StringList splitWithClamps(char sep, char clamps);
 		
-//		static uint32_t charToInt(char sign);
 		static string doubleToString(double doubleToStr, int unit);
 };
 
