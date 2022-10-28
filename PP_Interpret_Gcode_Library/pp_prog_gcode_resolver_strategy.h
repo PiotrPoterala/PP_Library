@@ -33,7 +33,7 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 			void interpretGcode(PString &program);
 			void interpretMcode(PString &program);
 	
-			PPpointXY<double> getRealEndPointOfArc(PPpointXY<double> &circleCenterPoint, PPpointXY<double> &startCirclePoint, PPpointXY<double> &endCirclePoint, int turnCircle);
+			PPpointXY<int> getRealEndPointOfArc(PPpointXY<int> &circleCenterPoint, PPpointXY<int> &startCirclePoint, PPpointXY<int> &endCirclePoint, int turnCircle);
 			double arcImplicitFunction(double X, double Y, double R2);
 			void writeG00Line(PPpoint<double> &point);
 			void writePointParam(PPpoint<double> &point);

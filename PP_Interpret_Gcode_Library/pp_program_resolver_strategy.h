@@ -4,10 +4,10 @@
 	#include "pp_iodevice.h"
 	#include "pp_file.h"
 
-	#define START_PROG      1
-	#define STOP_PROG       1
-	#define G_KOD 			2
-	#define M_KOD 			3
+constexpr int START_PROG=1;
+constexpr int STOP_PROG=1;
+constexpr int G_KOD=2;
+constexpr int M_KOD=3;
 
 #define GKOD_NIEINTERPRETOWANY (-1)
 constexpr int G00=0;
@@ -15,6 +15,7 @@ constexpr int G01=1;
 constexpr int G02=2;
 constexpr int G03=3;
 constexpr int G04=4;
+constexpr int G50=50;
 constexpr int G80=80;
 constexpr int G81=81;
 constexpr int G87=87;

@@ -29,7 +29,7 @@ InterpretProgErr PProgGcodeResolverStrategy::interpretProg(){
         line = sourceFile->readLine();
         if(!line.empty()){
             if(line.at(0)=='%'){
-                outDevice<<(START_PROG<<10)<<" \r\n";  //zapisanie do pamięci flash znaku określającego początek programu
+                outDevice<<(START_PROG<<10)<<"\r\n";  //zapisanie do pamięci flash znaku określającego początek programu
 
                 line = sourceFile->readLine();
                 while(!line.empty()){											//pobieranie programu linijka po linijce z karty SD
@@ -299,11 +299,106 @@ void PProgGcodeResolverStrategy::writePointParam(PPpoint<double> &point){
 				if(phyCoord->exists('Z') && point.exists('Z'))out<<phyCoord->getParam('Z').front()->correctData(point.axes.find('Z')->second*pow(10, phyCoord->getParamUnit('Z')))<<" "; else out<<0<<" ";
 				if(phyCoord->exists('U') && point.exists('U'))out<<phyCoord->getParam('U').front()->correctData(point.axes.find('U')->second*pow(10, phyCoord->getParamUnit('U')))<<" "; else out<<0<<" ";
 				if(phyCoord->exists('V') && point.exists('V'))out<<phyCoord->getParam('V').front()->correctData(point.axes.find('V')->second*pow(10, phyCoord->getParamUnit('V')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('z') && point.exists('z'))out<<phyCoord->getParam('z').front()->correctData(point.axes.find('z')->second*pow(10, phyCoord->getParamUnit('z')))<<" "; else out<<0<<" ";
+				if(phyCoord->exists('z') && point.exists('z'))out<<phyCoord->getParam('z').front()->correctData(point.axes.find('z')->second*pow(10, phyCoord->getParamUnit('z')))<<" "; else out<<0;
 }
 
-PPpointXY<double> PProgGcodeResolverStrategy::getRealEndPointOfArc(PPpointXY<double> &circleCenterPoint, PPpointXY<double> &startCirclePoint, PPpointXY<double> &endCirclePoint, int turnCircle){
+PPpointXY<int> PProgGcodeResolverStrategy::getRealEndPointOfArc(PPpointXY<int> &circleCenterPoint, PPpointXY<int> &startCirclePoint, PPpointXY<int> &endCirclePoint, int turnCircle){
             double minDistance=0x1FFFFFFF, distance=0;
+						PPpointXY<int> pointEndReal, pointBegin, pointEnd, pointTest, vectorToEndPoint;
+            double radius;
+						double precisionX=0.01, precisionY=0.01, halfPrecisionX=0.005, halfPrecisionY=0.005;
+		
+						if(phyCoord->exists('X')){
+							precisionX=static_cast<double>(phyCoord->getParam('X').front()->getPrecision())/pow(10, phyCoord->getParam('X').front()->getUnit());
+							halfPrecisionX=precisionX/2;
+						}
+						if(phyCoord->exists('Y')){
+							precisionY=static_cast<double>(phyCoord->getParam('Y').front()->getPrecision())/pow(10, phyCoord->getParam('Y').front()->getUnit());
+							halfPrecisionY=precisionY/2;
+						}
+							
+						pointBegin=startCirclePoint-circleCenterPoint;
+						pointTest=pointBegin;
+						pointEnd=endCirclePoint-circleCenterPoint;
+						pointEndReal=pointBegin;
+
+						radius=sqrt(fpow_pp(pointBegin.x, 2)+fpow_pp(pointBegin.y, 2));
+	
+						
+            do{
+                if(turnCircle==CLOCKWISE){
+                    if(pointTest.y>0 && pointTest.x>=0 && pointTest.x<pointTest.y){												//opis II oktetu
+                        pointTest.x+=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y-halfPrecisionY, radius)>=0)pointTest.y-=precisionY;
+                    }else if(pointTest.y>0 && pointTest.x<0 && abs(pointTest.x)<=pointTest.y){					//opis III oktetu
+                        pointTest.x+=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y+halfPrecisionY, radius)<=0)pointTest.y+=precisionY;
+                    }else if(pointTest.y<0 && pointTest.x<=0 && abs(pointTest.x)<abs(pointTest.y)){	//opis VI oktetu
+                        pointTest.x-=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y+halfPrecisionY, radius)>=0)pointTest.y+=precisionY;
+                    }else if(pointTest.y<0 && pointTest.x>0 && pointTest.x<=abs(pointTest.y)){				//opis VII oktetu
+                        pointTest.x-=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y-halfPrecisionY, radius)<=0)pointTest.y-=precisionY;
+                    }
+                    else if(pointTest.y>0 && pointTest.x>0 && pointTest.x>=pointTest.y){									//opis I oktetu
+                        pointTest.y-=precisionY;
+                        if(arcImplicitFunction(pointTest.x+halfPrecisionX, pointTest.y, radius)<=0)pointTest.x+=precisionX;
+                    }else if(pointTest.y<=0 && pointTest.x>0 && pointTest.x>abs(pointTest.y)){					//opis VIII oktetu
+                        pointTest.y-=precisionY;
+                        if(arcImplicitFunction(pointTest.x-halfPrecisionX, pointTest.y, radius)>=0)pointTest.x-=precisionX;
+                    }else if(pointTest.y>=0 && pointTest.x<0 && abs(pointTest.x)>pointTest.y){					//opis IV oktetu
+                        pointTest.y+=precisionY;
+                        if(arcImplicitFunction(pointTest.x+halfPrecisionX, pointTest.y, radius)>=0)pointTest.x+=precisionX;
+                    }else if(pointTest.y<0 && pointTest.x<0 && abs(pointTest.x)>=abs(pointTest.y)){	//opis V oktetu
+                        pointTest.y+=precisionY;
+                        if(arcImplicitFunction(pointTest.x-halfPrecisionX, pointTest.y, radius)<=0)pointTest.x-=precisionX;
+                    }
+                }else{
+                    if(pointTest.y>0 && pointTest.x>0 && pointTest.x<=pointTest.y){												//opis II oktetu
+                        pointTest.x-=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y+halfPrecisionY, radius)<=0)pointTest.y+=precisionY;
+                    }else if(pointTest.y>0 && pointTest.x<=0 && abs(pointTest.x)<pointTest.y){					//opis III oktetu
+                        pointTest.x-=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y-halfPrecisionY, radius)>=0)pointTest.y-=precisionY;
+                    }else if(pointTest.y<0 && pointTest.x<0 && abs(pointTest.x)<=abs(pointTest.y)){	//opis VI oktetu
+                        pointTest.x+=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y-halfPrecisionY, radius)<=0)pointTest.y-=precisionY;
+                    }else if(pointTest.y<0 && pointTest.x>=0 && pointTest.x<abs(pointTest.y)){				//opis VII oktetu
+                        pointTest.x+=precisionX;
+                        if(arcImplicitFunction(pointTest.x, pointTest.y+halfPrecisionY, radius)>=0)pointTest.y+=precisionY;
+                    }
+                    else if(pointTest.y>=0 && pointTest.x>0 && pointTest.x>pointTest.y){									//opis I oktetu
+                        pointTest.y+=precisionY;
+                        if(arcImplicitFunction(pointTest.x-halfPrecisionX, pointTest.y, radius)>=0)pointTest.x-=precisionX;
+                    }else if(pointTest.y<0 && pointTest.x>0 && pointTest.x>=abs(pointTest.y)){					//opis VIII oktetu
+                        pointTest.y+=precisionY;
+                        if(arcImplicitFunction(pointTest.x+halfPrecisionX, pointTest.y, radius)<=0)pointTest.x+=precisionX;
+                    }else if(pointTest.y>0 && pointTest.x<0 && abs(pointTest.x)>=pointTest.y){					//opis IV oktetu
+                        pointTest.y-=precisionY;
+                        if(arcImplicitFunction(pointTest.x-halfPrecisionX, pointTest.y, radius)<=0)pointTest.x-=precisionX;
+                    }else if(pointTest.y<=0 && pointTest.x<0 && abs(pointTest.x)>abs(pointTest.y)){	//opis V oktetu
+                        pointTest.y-=precisionY;
+                        if(arcImplicitFunction(pointTest.x+halfPrecisionX, pointTest.y, radius)>=0)pointTest.x+=precisionX;
+                    }
+                }
+								
+								vectorToEndPoint=pointEnd-pointTest;
+                distance=sqrt(pow(vectorToEndPoint.x, 2)+pow(vectorToEndPoint.y, 2));
+                if(distance<minDistance){
+									pointEndReal=pointTest;
+                  minDistance=distance;
+                }
+
+            }while(pointTest!=pointBegin);
+						
+						pointEndReal+=circleCenterPoint;
+
+					return pointEndReal;
+}
+
+double PProgGcodeResolverStrategy::getNextStepPointOnArc(){
+	
+	            double minDistance=0x1FFFFFFF, distance=0;
 						PPpointXY<double> pointEndReal, pointBegin, pointEnd, pointTest, vectorToEndPoint;
             double radius;
 						double precisionX=0.01, precisionY=0.01, halfPrecisionX=0.005, halfPrecisionY=0.005;
@@ -394,7 +489,11 @@ PPpointXY<double> PProgGcodeResolverStrategy::getRealEndPointOfArc(PPpointXY<dou
 						pointEndReal+=circleCenterPoint;
 
 					return pointEndReal;
+	
+	
+	
 }
+
 
 double PProgGcodeResolverStrategy::arcImplicitFunction(double X, double Y, double R){
 			double F=0;
