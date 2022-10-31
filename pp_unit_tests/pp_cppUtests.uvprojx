@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math;..\PP_Interpret_Gcode_Library;..\PP_TextStream_Library</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math;..\PP_Interpret_Gcode_Library;..\PP_TextStream_Library;..\PP_Math</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -562,6 +562,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\PP_library_C\PP_Math\pp_math.c</FilePath>
             </File>
+            <File>
+              <FileName>pp_arc.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Math\pp_arc.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -576,6 +581,11 @@
               <FileName>pp_program_resolver_strategy.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\PP_Interpret_Gcode_Library\pp_program_resolver_strategy.h</FilePath>
+            </File>
+            <File>
+              <FileName>pp_prog_wedm_gcode_resolver_strategy.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Interpret_Gcode_Library\pp_prog_wedm_gcode_resolver_strategy.cpp</FilePath>
             </File>
           </Files>
         </Group>
