@@ -137,3 +137,21 @@ TEST(PPointTestGroup, setAxesBasedStringTest)
 	LONGS_EQUAL(48, list.axes.find('Z')->second);
 	
 }
+
+
+TEST(PPointTestGroup, setAxValueWithLimitsTest)
+{
+	
+	list.addLimit('X', tuple<int, int, int>(30, 10, 1));
+	
+	list.setAxValue('X', 25);
+	LONGS_EQUAL(25, list.axes.find('X')->second);
+	
+	list.setAxValue('X', 35);
+	LONGS_EQUAL(30, list.axes.find('X')->second);
+	
+}
+
+
+
+

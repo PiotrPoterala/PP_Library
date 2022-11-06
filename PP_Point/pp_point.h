@@ -32,14 +32,19 @@
 	#include <map>
 	
 	#include "pstring.h"
-	
+	#include "pp_math_ext.h"
 	
 using PPointIntPair = pair<char, int>;
 
 template <typename Type>
 	class PPpoint{
 		
-		public:
+	private:
+		map<char, tuple<Type,Type,Type>> limits;
+		
+	public:
+		static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");	
+		
 		map<char, Type> axes;	
 		
 		PPpoint(){};
@@ -157,36 +162,58 @@ template <typename Type>
 	void setAxesBasedString(PString &data){
 
 		for(auto&& it:axes){
-					it.second=data.findValueAfterAcronim(it.first, it.second);
+			setAxValue(it.first, data.findValueAfterAcronim(it.first, it.second));
+//					it.second=data.findValueAfterAcronim(it.first, it.second);
 		}
 		
 	}
 	
 	bool setAxValue(char acronim, Type val){
     auto it=axes.find(acronim);
+		auto limit=limits.find(acronim);
     if(it!=axes.end()){
-        (*it).second=val;
+				if(limit!=limits.end()){
+					it->second=trimAcc_pp(val, std::get<0>(limit->second), std::get<1>(limit->second), std::get<2>(limit->second));
+        }else it->second=val;
         return true;
     }
     return false;
+		
+		
 }
 	
-void setAxesByZero(void){
+	void addLimit(char acronim, tuple<Type,Type,Type> data){
 		
-		for(auto it=axes.begin(); it!=axes.end(); ++it){
-				(*it).second=0;
-		}
+		limits.insert(pair<char, tuple<Type,Type,Type>>(acronim, data));
 		
 	}
 
-bool exists(char acronim){
-		
-	auto it=axes.find(acronim);
-	
-	if(it!=axes.end())return true;
-  return false;
+
+	void ereseLimit(char acronim){
+		limits.erase(acronim);
 		
 	}
+
+	void ereseLimits(){
+		limits.clear();
+	}
+	
+	void setAxesByZero(void){
+			
+			for(auto it=axes.begin(); it!=axes.end(); ++it){
+					(*it).second=0;
+			}
+			
+		}
+
+	bool exists(char acronim){
+			
+		auto it=axes.find(acronim);
+		
+		if(it!=axes.end())return true;
+		return false;
+			
+		}
 	
 };
 	
@@ -202,6 +229,7 @@ PPpoint<To> convertPPpointType(const PPpoint<From>& pointToConvert){
 	
 	return point;
 };
+
 
 
 template <typename Type>

@@ -3,12 +3,13 @@
 #include "pp_prog_wedm_gcode_resolver_strategy.h"
 #include "pp_text_stream.h"
 #include "pp_math.h"
-
+#include "pp_math_ext.h"
+#include "pp_param.h"
+#include "pp_arc_ext.h"
 
 void PProgWedmGcodeResolverStrategy::resetInterpretSettings(){
 
 				PProgGcodeResolverStrategy::resetInterpretSettings();
-				startPoint.axes.clear();
 				endPoint.axes.clear();
 
 }
@@ -73,19 +74,23 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 							int idBPoint=nr_Gkod-54;
 							basePoint=basePointsList->at(idBPoint);
 							endPoint=basePoint;
+							
+							out<<((G_KOD<<10) | G50)<<" ";
+							writePointParam(basePoint);
+							out<<"\r\n";
+							
             }else if(!basePoint.axes.empty()){
 
 										if(nr_Gkod!=G00 && nr_Gkod!=G01 && G00occured==false){
 											G00occured=true;
-											startPoint=basePoint;
 											writeG00Line(basePoint);
 										}
 										
-										if(nr_Gkod==G81){						//cykl standardowy wykonywania serii gniazd
+										if(nr_Gkod==G81 && GcodeStandardCycle!=G81){						//cykl standardowy wykonywania serii gniazd
                         GcodeStandardCycle=G81;
                         repetitionsList.clear();
                         G81nrOfRepetitions=data.findValueAfterAcronim('L', 0);
-                        G81nrOfRepetitions=trimToRange(G81nrOfRepetitions, 100, 0);
+                        G81nrOfRepetitions=trim_pp(G81nrOfRepetitions, 100, 0);
 
                     }else if(nr_Gkod==G00 || nr_Gkod==G01){	
 												auto point=endPoint;
@@ -101,10 +106,8 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												
 												writeG00Line(endPoint);
 
-												if(G00occured==false){
-													G00occured=true;
-													startPoint=endPoint;
-												}
+												G00occured=true;
+
                     }else if(nr_Gkod==G02 || nr_Gkod==G03){	//interpolacja po łuku
 												PPpointXY<double>startCirclePoint(endPoint);
 												PPpointXY<double>endCirclePoint;
@@ -131,7 +134,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												circleCenterPoint.roundX(static_cast<double>(phyCoord->getParamPrecision('X'))/pow(10, phyCoord->getParamUnit('X')));
 												circleCenterPoint.roundY(static_cast<double>(phyCoord->getParamPrecision('Y'))/pow(10, phyCoord->getParamUnit('Y')));
 												
-                        endCirclePoint=getRealEndPointOfArc(circleCenterPoint, startCirclePoint, endCirclePoint, (nr_Gkod==G02)?CLOCKWISE:COUNTERCLOCKWISE);
+        //                endCirclePoint=getRealEndPointOfArc(circleCenterPoint, startCirclePoint, endCirclePoint, (nr_Gkod==G02)?CLOCKWISE:COUNTERCLOCKWISE);
 												
 												endPoint.setAxValue('X', endCirclePoint.x);
 												endPoint.setAxValue('Y', endCirclePoint.y);
@@ -149,7 +152,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
                         int timeOfDelay=0;
 
                         timeOfDelay=data.findValueAfterAcronim('P', 0);
-                        timeOfDelay=trimToRange(timeOfDelay, 3600000, 0);
+                        timeOfDelay=trim_pp(timeOfDelay, 3600000, 0);
                         out<<((G_KOD<<10) | nr_Gkod)<<" ";
                         out<<timeOfDelay<<" \r\n";
                     }else if(nr_Gkod==G87){	
@@ -192,7 +195,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 
 
-void PProgGcodeResolverStrategy::writePointParam(PPpoint<double> &point){
+void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<double> &point){
 
 				PTextStream out(destDevice);
 				if(phyCoord->exists('X') && point.exists('X'))out<<phyCoord->getParam('X').front()->correctData(point.axes.find('X')->second*pow(10, phyCoord->getParamUnit('X')))<<" "; else out<<0<<" ";

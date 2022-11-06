@@ -472,6 +472,11 @@
               <FileType>8</FileType>
               <FilePath>.\pp_gcode_resolver_strategy_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_math_ext_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_math_ext_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -563,9 +568,14 @@
               <FilePath>..\..\PP_library_C\PP_Math\pp_math.c</FilePath>
             </File>
             <File>
-              <FileName>pp_arc.cpp</FileName>
+              <FileName>pp_math_ext.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\PP_Math\pp_arc.cpp</FilePath>
+              <FilePath>..\PP_Math\pp_math_ext.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_arc_ext.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Math\pp_arc_ext.cpp</FilePath>
             </File>
           </Files>
         </Group>

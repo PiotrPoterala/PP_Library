@@ -1,12 +1,12 @@
 #include "CppUTest/TestHarness.h"
 
 #include "pp_file_string_mock.h"
-#include "pp_prog_gcode_resolver_strategy.h"
+#include "pp_prog_wedm_gcode_resolver_strategy.h"
 #include "pp_paramlist.h"
 #include "pp_param.h"
 #include "stdio.h"
 
-TEST_GROUP(PProgGcodeResolverStrategyTestGroup)
+TEST_GROUP(PProgWedmGcodeResolverStrategyTestGroup)
 {
 	PFileShrPtr progFile=make_shared<PFileStringMock>("C:/Gc_test/test.txt");
 	PFileShrPtr progAfterItpFile=make_shared<PFileStringMock>("C:/Gc_test/test2.txt");
@@ -16,7 +16,7 @@ TEST_GROUP(PProgGcodeResolverStrategyTestGroup)
 		
 	PPpointListShdPtr gBasePoints=make_shared<PPpointList>();
 	
-	PProgGcodeResolverStrategy itpStrategy{progAfterItpFile, progFile, phyCoord, workParams, gBasePoints};
+	PProgWedmGcodeResolverStrategy itpStrategy{progAfterItpFile, progFile, phyCoord, workParams, gBasePoints};
 	
   void setup() {
 			phyCoord->insert(PParamPair('X', make_shared<defOParam>("X", 100000, 0, 999000, 5, 3)));
@@ -45,7 +45,7 @@ TEST_GROUP(PProgGcodeResolverStrategyTestGroup)
 };
 
 
-TEST(PProgGcodeResolverStrategyTestGroup, interpretProgTest)
+TEST(PProgWedmGcodeResolverStrategyTestGroup, interpretProgTest)
 {
 	string data;
 	

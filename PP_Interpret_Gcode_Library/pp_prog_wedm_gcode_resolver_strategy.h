@@ -12,7 +12,6 @@
 class PProgWedmGcodeResolverStrategy : public PProgGcodeResolverStrategy{
 	
 	private:
-			PPpoint<double> startPoint;
 			PPpoint<double> endPoint;			
 		protected:
 			virtual void resetInterpretSettings() final;
@@ -20,7 +19,7 @@ class PProgWedmGcodeResolverStrategy : public PProgGcodeResolverStrategy{
 			virtual void writePointParam(PPpoint<double> &point) final;
 		public:
 			PProgWedmGcodeResolverStrategy()=delete;
-			PProgWedmGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgramResolverStrategy(destination, source, phy, workPar, bPointsList){};
+			PProgWedmGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgGcodeResolverStrategy(destination, source, phy, workPar, bPointsList){};
 			PProgWedmGcodeResolverStrategy& operator=(const PProgGcodeResolverStrategy&)=delete;
 				
 

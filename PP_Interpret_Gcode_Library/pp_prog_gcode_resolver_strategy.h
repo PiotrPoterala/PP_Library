@@ -27,8 +27,6 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 			void interpretMcode(PString &program);
 	
 			void writeG00Line(PPpoint<double> &point);
-			void writePointParam(PPpoint<double> &point);
-		//	int trimToRange(int value, int upperLimit, int lowerLimit);
 
 			virtual void resetInterpretSettings();
 			virtual void interpretGcode(PString &program)=0;

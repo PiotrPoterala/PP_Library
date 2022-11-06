@@ -18,6 +18,7 @@
  */
 
 #include "pp_param.h"
+#include "pp_math_ext.h"
 
 defOParam::defOParam(string pname, int pdefaultValue, int plowerLimit, int pupperLimit, int pprecision, int punit)
 {
@@ -134,27 +135,31 @@ void defOParam::setLowerLimit(int newLowerLimit){
 
 int defOParam::trimDataToRange(int data) const{
 
-    if(data>=upperLimit)data=upperLimit;
-    else if(data<=lowerLimit)data=lowerLimit;
+	return static_cast<int>(trim_pp(data, upperLimit, lowerLimit));
+//    if(data>=upperLimit)data=upperLimit;
+//    else if(data<=lowerLimit)data=lowerLimit;
 
-    return data;
+//    return data;
 }
 
 
 int defOParam::correctData(int data) const{
-    data=trimDataToRange(data);
 	
-		int rest=data%precision;
-		data-=rest;
-		
-		if(precision>=2){
-			if(abs(rest)>precision/2){
-				if(rest>0)data+=precision;
-				else data-=precision;
-			}
-		}
+	return static_cast<int>(trimAcc_pp(data, upperLimit, lowerLimit, precision));
 	
-		return data;
+//    data=trimDataToRange(data);
+//	
+//		int rest=data%precision;
+//		data-=rest;
+//		
+//		if(precision>=2){
+//			if(abs(rest)>precision/2){
+//				if(rest>0)data+=precision;
+//				else data-=precision;
+//			}
+//		}
+//	
+//		return data;
 }
 
 
