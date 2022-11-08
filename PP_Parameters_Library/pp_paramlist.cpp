@@ -122,8 +122,8 @@ int defOParamList::getParamValue(char acronim){
 map<char, int> defOParamList::getParamsValues(){
 	map<char, int> values;
 	
-	for(auto it=param.begin(); it != param.end(); ++it){
-		values.insert(pair<char,int>((*it).first, (*it).second->getValue()));
+	for(auto it:param){
+		values.insert(pair<char,int>(it.first, it.second->getValue()));
 		
 	}
 	
@@ -133,8 +133,19 @@ map<char, int> defOParamList::getParamsValues(){
 map<char, double> defOParamList::getParamsRealValues(){
 	map<char, double> values;
 	
-	for(auto it=param.begin(); it != param.end(); ++it){
-		values.insert(pair<char,double>((*it).first, static_cast<double>((*it).second->getValue())/pow(10,(*it).second->getUnit())));
+	for(auto it:param){
+		values.insert(pair<char,double>(it.first, static_cast<double>(it.second->getValue())/pow(10,it.second->getUnit())));
+		
+	}
+	
+	return values;
+}
+
+PParamLimits defOParamList::getParamLimits(){
+	PParamLimits values;
+	
+	for(auto it:param){
+		values.insert(pair<char, PParamLimit>(it.first, PParamLimit{it.second->getUpperLimit(), it.second->getLowerLimit(),it.second->getPrecision(),it.second->getUnit()}));
 		
 	}
 	

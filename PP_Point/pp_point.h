@@ -32,6 +32,7 @@
 	#include <map>
 	
 	#include "pstring.h"
+	#include "pp_math.h"
 	#include "pp_math_ext.h"
 	
 using PPointIntPair = pair<char, int>;
@@ -39,8 +40,10 @@ using PPointIntPair = pair<char, int>;
 template <typename Type>
 	class PPpoint{
 		
+	using TLimits=tuple<Type,Type,Type,int>;
+		
 	private:
-		map<char, tuple<Type,Type,Type>> limits;
+		map<char, TLimits> limits;
 		
 	public:
 		static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");	
@@ -162,7 +165,13 @@ template <typename Type>
 	void setAxesBasedString(PString &data){
 
 		for(auto&& it:axes){
-			setAxValue(it.first, data.findValueAfterAcronim(it.first, it.second));
+			auto limit=limits.find(it.first);
+			if(limit!=limits.end()){
+				setAxValue(it.first, data.findValueAfterAcronim(it.first, static_cast<double>(it.second/pow_pp(10, std::get<3>(limit->second))))*pow_pp(10, std::get<3>(limit->second)));
+			}else{
+				setAxValue(it.first, data.findValueAfterAcronim(it.first, it.second));
+			}
+			
 //					it.second=data.findValueAfterAcronim(it.first, it.second);
 		}
 		
@@ -182,9 +191,16 @@ template <typename Type>
 		
 }
 	
-	void addLimit(char acronim, tuple<Type,Type,Type> data){
+	void setLimits(map<char, TLimits>& newLimits){
 		
-		limits.insert(pair<char, tuple<Type,Type,Type>>(acronim, data));
+		limits=newLimits;
+		
+	}
+
+	
+	void addLimit(char acronim, TLimits data){
+		
+		limits.insert(pair<char, TLimits>(acronim, data));
 		
 	}
 

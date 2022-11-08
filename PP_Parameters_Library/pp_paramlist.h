@@ -30,9 +30,9 @@
 #ifndef PP_PARAM_LIST_H
 #define PP_PARAM_LIST_H
 
-#include "stm32xx.h"
 #include <string>
 #include "pp_param_general.h"
+#include "pp_param.h"
 #include "pstring.h"
 
 using namespace std;
@@ -69,6 +69,8 @@ public:
 		PParamPair getParamPair(char acronim) noexcept;
 		map<char, int> getParamsValues();
 		map<char, double> getParamsRealValues();
+		PParamLimits getParamLimits();
+		
 		string getStringWithParam(char acronim);
 		string getStringWithParams();
 

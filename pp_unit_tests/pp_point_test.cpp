@@ -136,13 +136,25 @@ TEST(PPointTestGroup, setAxesBasedStringTest)
 	LONGS_EQUAL(56, list.axes.find('Y')->second);
 	LONGS_EQUAL(48, list.axes.find('Z')->second);
 	
+	list.addLimit('X', tuple<int, int, int, int>{100000, 0, 5, 3});
+	list.addLimit('Y', tuple<int, int, int, int>{100000, 0, 5, 3});
+	list.addLimit('Z', tuple<int, int, int, int>{100000, 0, 5, 3});
+	
+	str="X25.456 Y56.678 Z48.655";
+	
+	list.setAxesBasedString(str);
+	
+	LONGS_EQUAL(25455, list.axes.find('X')->second);
+	LONGS_EQUAL(56680, list.axes.find('Y')->second);
+	LONGS_EQUAL(48655, list.axes.find('Z')->second);
+	
 }
 
 
 TEST(PPointTestGroup, setAxValueWithLimitsTest)
 {
 	
-	list.addLimit('X', tuple<int, int, int>(30, 10, 1));
+	list.addLimit('X', tuple<int, int, int, int>{30, 10, 1, 0});
 	
 	list.setAxValue('X', 25);
 	LONGS_EQUAL(25, list.axes.find('X')->second);

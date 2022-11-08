@@ -36,6 +36,10 @@
 
 using namespace std;
 
+
+using PParamLimit=tuple<int,int,int,int>;
+using PParamLimits=map<char, PParamLimit>;
+
 class defOParam : public defOParamGeneral
 {
 
