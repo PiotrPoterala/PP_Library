@@ -17,10 +17,8 @@ Type trim_pp(Type data, Type upperLimit, Type lowerLimit){
 };
 
 template <typename Type>
-Type trimAcc_pp(Type data, Type upperLimit, Type lowerLimit, Type precision){
+Type round_pp(Type data, Type precision){
 		static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");
-	
-    data=trim_pp(data, upperLimit, lowerLimit);
 	
 		int mul=data/precision;
 	
@@ -34,5 +32,17 @@ Type trimAcc_pp(Type data, Type upperLimit, Type lowerLimit, Type precision){
 	
 		return data;
 }
+
+template <typename Type>
+Type trimAcc_pp(Type data, Type upperLimit, Type lowerLimit, Type precision){
+		static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");
+	
+    data=trim_pp(data, upperLimit, lowerLimit);
+		data=round_pp(data, precision);
+	
+		return data;
+}
+
+
 	
 #endif

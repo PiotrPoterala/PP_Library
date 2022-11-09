@@ -102,7 +102,7 @@ void PProgGcodeResolverStrategy::resetInterpretSettings(){
 }
 
 
-void PProgGcodeResolverStrategy::writeG00Line(PPpoint<double> &point){
+void PProgGcodeResolverStrategy::writeG00Line(PPpoint<int> &point){
 
 			if(destDevice->isOpen()){
 				PTextStream out(destDevice);

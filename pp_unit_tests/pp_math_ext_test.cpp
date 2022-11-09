@@ -50,3 +50,14 @@ TEST(PPmathExtTestGroup, trimAccDoubleTest)
 	DOUBLES_EQUAL(25.005, trimAcc_pp(data, upperLimit, lowerLimit, 0.005), 0.0001);
 		
 }
+
+TEST(PPmathExtTestGroup, roundDoubleTest)
+{
+	double data=25.001;
+	
+	DOUBLES_EQUAL(25, round_pp(data, 0.005), 0.0001);
+	
+	data=25.004;
+	DOUBLES_EQUAL(25.005, round_pp(data, 0.005), 0.0001);
+		
+}

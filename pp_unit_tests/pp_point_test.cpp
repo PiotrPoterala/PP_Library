@@ -108,6 +108,35 @@ TEST(PPointTestGroup, addPointsTest)
 			
 }
 
+TEST(PPointTestGroup, addPointsWithLimitsTest)
+{
+	
+		PPpoint<int> listToAdd{};
+
+		listToAdd.axes.insert(pair<char, int>('X', 90));
+		listToAdd.axes.insert(pair<char, int>('Y', -80));
+			
+		list.addLimit('X', tuple<int, int, int, int>{100, 0, 1, 0});
+		list.addLimit('Y', tuple<int, int, int, int>{100, 0, 1, 0});
+			
+	
+		PPpoint<int> result=list+listToAdd;
+			
+		LONGS_EQUAL(100, result.axes.find('X')->second);
+		LONGS_EQUAL(0, result.axes.find('Y')->second);
+		
+		result+=listToAdd;
+		
+		LONGS_EQUAL(100, result.axes.find('X')->second);
+		LONGS_EQUAL(0, result.axes.find('Y')->second);
+			
+		list+=listToAdd;
+			
+		LONGS_EQUAL(100, list.axes.find('X')->second);
+		LONGS_EQUAL(0, list.axes.find('Y')->second);
+			
+}
+
 TEST(PPointTestGroup, subtractPointsTest)
 {
 	

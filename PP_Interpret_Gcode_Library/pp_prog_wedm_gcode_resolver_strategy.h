@@ -12,11 +12,11 @@
 class PProgWedmGcodeResolverStrategy : public PProgGcodeResolverStrategy{
 	
 	private:
-			PPpoint<double> endPoint;			
+			PPpoint<int> endPoint;			
 		protected:
 			virtual void resetInterpretSettings() final;
 			virtual void interpretGcode(PString &program) final;
-			virtual void writePointParam(PPpoint<double> &point) final;
+			virtual void writePointParam(PPpoint<int> &point) final;
 		public:
 			PProgWedmGcodeResolverStrategy()=delete;
 			PProgWedmGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgGcodeResolverStrategy(destination, source, phy, workPar, bPointsList){};

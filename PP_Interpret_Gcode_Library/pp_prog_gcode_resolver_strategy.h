@@ -13,6 +13,7 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 	
 	protected:
 			defOParamListShdPtr phyCoord;
+			defOParamListShdPtr baseCoord;
 			defOParamListShdPtr workParams;
 			PPpointListShdPtr basePointsList;
 	
@@ -21,19 +22,19 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 			int GcodeStandardCycle=0;
 			int G81nrOfRepetitions=0;
 	
-			PPpoint<double> basePoint;
+			PPpoint<int> basePoint;
 			PStringList repetitionsList;
 	
 			void interpretMcode(PString &program);
 	
-			void writeG00Line(PPpoint<double> &point);
+			void writeG00Line(PPpoint<int> &point);
 
 			virtual void resetInterpretSettings();
 			virtual void interpretGcode(PString &program)=0;
-			virtual void writePointParam(PPpoint<double> &point)=0;
+			virtual void writePointParam(PPpoint<int> &point)=0;
 		public:
 			PProgGcodeResolverStrategy()=delete;
-			PProgGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgramResolverStrategy(destination, source), phyCoord(phy), workParams(workPar), basePointsList(bPointsList){};
+			PProgGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr base, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgramResolverStrategy(destination, source), baseCoord(base), workParams(workPar), basePointsList(bPointsList){};
 			PProgGcodeResolverStrategy& operator=(const PProgGcodeResolverStrategy&)=delete;
 				
 			virtual InterpretProgErr interpretProg() final;

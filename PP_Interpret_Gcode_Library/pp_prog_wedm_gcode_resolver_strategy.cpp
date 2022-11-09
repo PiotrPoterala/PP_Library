@@ -95,6 +95,8 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
                     }else if(nr_Gkod==G00 || nr_Gkod==G01){	
 												auto point=endPoint;
 											
+												point.setLimits(baseCoord->getParamLimits());
+											
                         if(writeInAboluteValues==false)point.setAxesByZero();
 												point.setAxesBasedString(data);
 
@@ -109,14 +111,14 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												G00occured=true;
 
                     }else if(nr_Gkod==G02 || nr_Gkod==G03){	//interpolacja po łuku
-												PPpointXY<double>startCirclePoint(endPoint);
-												PPpointXY<double>endCirclePoint;
-												PPpointXY<double>circleCenterPoint;
+												PPpointXY<int>startCirclePoint{endPoint};
+												PPpointXY<int>endCirclePoint;
+												PPpointXY<int>circleCenterPoint;
 											
 												endCirclePoint.x=data.findValueAfterAcronim('X', 0);
 												endCirclePoint.y=data.findValueAfterAcronim('Y', 0);
 												if(writeInAboluteValues){
-													endCirclePoint+=basePoint;
+		//											endCirclePoint+=basePoint;
                         }else{
 													endCirclePoint+=startCirclePoint;		
                         }
@@ -195,7 +197,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 
 
-void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<double> &point){
+void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
 
 				PTextStream out(destDevice);
 				if(phyCoord->exists('X') && point.exists('X'))out<<phyCoord->getParam('X').front()->correctData(point.axes.find('X')->second*pow(10, phyCoord->getParamUnit('X')))<<" "; else out<<0<<" ";

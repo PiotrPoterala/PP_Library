@@ -57,6 +57,7 @@ template <typename Type>
 		PPpoint<Type>& operator=(const PPpoint<Type> &point){
 
 			axes=point.axes;
+			limits=point.getLimits();
 			return (*this);
 
 		};		
@@ -80,6 +81,7 @@ template <typename Type>
 		PPpoint<Type>& operator=(const map<char, Type> point){
 
 			axes=point;
+
 			return (*this);
 
 		};	
@@ -127,7 +129,13 @@ template <typename Type>
 			for(auto it:axes){
 				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					newPoint.axes.insert(pair<char, Type>(it.first, it_to_add->second+it.second));		
+
+					auto limit=limits.find(it.first);
+					if(limit!=limits.end()){
+							newPoint.axes.insert(pair<char, Type>(it.first, trimAcc_pp(it_to_add->second+it.second, std::get<0>(limit->second), std::get<1>(limit->second), std::get<2>(limit->second))));		
+							newPoint.addLimit(it.first, limit->second);
+					}else newPoint.axes.insert(pair<char, Type>(it.first, it_to_add->second+it.second));
+					
 				}else newPoint.axes.insert(pair<char, Type>(it.first, it.second));
 				
 			}
@@ -139,7 +147,7 @@ template <typename Type>
 			for(auto&& it:axes){
 				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					it.second+=it_to_add->second;
+					setAxValue(it.first, it.second+it_to_add->second);	
 				}
 			}
 		}
@@ -148,7 +156,7 @@ template <typename Type>
 			for(auto&& it:axes){
 				auto it_to_add=point.axes.find(it.first);
 				if(it_to_add!=point.axes.end()){
-					it.second-=it_to_add->second;
+					setAxValue(it.first, it.second-it_to_add->second);	
 				}
 			}
 		}
@@ -157,7 +165,7 @@ template <typename Type>
 			for(auto&& it:axes){
 				auto it_to_add=point.find(it.first);
 				if(it_to_add!=point.end()){
-					it.second-=it_to_add->second;
+					setAxValue(it.first, it.second-it_to_add->second);				
 				}
 			}
 		}
@@ -191,9 +199,14 @@ template <typename Type>
 		
 }
 	
-	void setLimits(map<char, TLimits>& newLimits){
+	void setLimits(map<char, TLimits> newLimits){
 		
 		limits=newLimits;
+		
+	}
+	
+	map<char, TLimits> getLimits() const{
+		return limits;
 		
 	}
 
@@ -251,6 +264,11 @@ PPpoint<To> convertPPpointType(const PPpoint<From>& pointToConvert){
 template <typename Type>
 	class PPpointXY{
 		
+		using TLimits=tuple<Type,Type,Type,int>;
+		
+		private:
+			map<char, TLimits> limits;
+
 		
 		public:
 			Type x=0;
@@ -318,38 +336,75 @@ template <typename Type>
 				y=0;
 			}
 			
-			void round(Type base){
-				roundX(base);
-				roundY(base);
+			void round(Type precision){
+				roundX(precision);
+				roundY(precision);
 			}
 			
 			
-			void roundX(Type base){
-				string unitS=to_string(base);
-				unitS.substr(unitS.find('.')+1);
-				
-				auto unit=unitS.size();
-				
-				int roundX=x*pow(10, unit);
-				base*=pow(10, unit);
-				roundX-=roundX%static_cast<int>(base);
-				x=static_cast<Type>(roundX)/pow(10, unit);
+			void roundX(Type precision){
+				round_pp(x, precision);
+//				string unitS=to_string(base);
+//				unitS.substr(unitS.find('.')+1);
+//				
+//				auto unit=unitS.size();
+//				
+//				int roundX=x*pow(10, unit);
+//				base*=pow(10, unit);
+//				roundX-=roundX%static_cast<int>(base);
+//				x=static_cast<Type>(roundX)/pow(10, unit);
 				
 			}
 			
 			
-			void roundY(Type base){
-				string unitS=to_string(base);
-				unitS.substr(unitS.find('.')+1);
-				
-				auto unit=unitS.size();
-				
-				int roundY=y*pow(10, unit);
-				base*=pow(10, unit);
-				roundY-=roundY%static_cast<int>(base);
-				y=static_cast<Type>(roundY)/pow(10, unit);
+			void roundY(Type precision){
+				round_pp(y, precision);
+//				string unitS=to_string(base);
+//				unitS.substr(unitS.find('.')+1);
+//				
+//				auto unit=unitS.size();
+//				
+//				int roundY=y*pow(10, unit);
+//				base*=pow(10, unit);
+//				roundY-=roundY%static_cast<int>(base);
+//				y=static_cast<Type>(roundY)/pow(10, unit);
 				
 			}
+			
+			
+	void setLimits(map<char, TLimits> newLimits){
+		
+		auto lim=newLimits.find('X');
+		if(lim!=newLimits.end())limits.insert(lim);
+		lim=newLimits.find('Y');
+		if(lim!=newLimits.end())limits.insert(lim);
+		
+		
+	}
+	
+		map<char, TLimits> getLimits() const{
+			return limits;
+			
+		}
+
+		
+		void addXLimit(char acronim, TLimits data){
+			
+			limits.insert(pair<char, TLimits>('X', data));
+			
+		}
+		
+		void addYLimit(TLimits data){
+			
+			limits.insert(pair<char, TLimits>('Y', data));
+			
+		}
+
+		void ereseLimits(){
+			limits.clear();
+		}
+				
+			
 
 };
 
