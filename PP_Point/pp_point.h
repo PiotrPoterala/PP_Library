@@ -51,7 +51,7 @@ template <typename Type>
 		map<char, Type> axes;	
 		
 		PPpoint(){};
-		PPpoint(map<char, Type> point){axes=point;};
+		PPpoint(map<char, Type> point){axes=point;}
 	
 			
 		PPpoint<Type>& operator=(const PPpoint<Type> &point){
@@ -60,7 +60,7 @@ template <typename Type>
 			limits=point.getLimits();
 			return (*this);
 
-		};		
+		}		
 			
 		
 		template <typename From>
@@ -75,7 +75,7 @@ template <typename Type>
 			
 			return point;
 
-		};	
+		}	
 		
 		
 		PPpoint<Type>& operator=(const map<char, Type> point){
@@ -84,7 +84,7 @@ template <typename Type>
 
 			return (*this);
 
-		};	
+		}	
 		
 		
 		bool operator==(PPpoint &point){
@@ -112,7 +112,7 @@ template <typename Type>
 			}
 			
 			return false;
-		};
+		}
 		
 	bool compare(map<char, Type> &point){
 		for(auto it:axes){
@@ -122,7 +122,7 @@ template <typename Type>
 				}else return false;
 			}		
 			return true;
-	};
+	}
 		
 	PPpoint<Type> operator+(PPpoint &point){
 			PPpoint<Type> newPoint;
@@ -199,6 +199,25 @@ template <typename Type>
 		
 }
 	
+	void setAxesByZero(void){
+			
+			for(auto it=axes.begin(); it!=axes.end(); ++it){
+					setAxValue(it->first, 0);
+		//			(*it).second=0;
+			}
+			
+		}
+
+	bool exists(char acronim){
+			
+		auto it=axes.find(acronim);
+		
+		if(it!=axes.end())return true;
+		return false;
+			
+		}
+
+	
 	void setLimits(map<char, TLimits> newLimits){
 		
 		limits=newLimits;
@@ -208,6 +227,16 @@ template <typename Type>
 	map<char, TLimits> getLimits() const{
 		return limits;
 		
+	}
+	
+	vector<TLimits> getLimit(char acronim) const{
+		vector<TLimits> lim;
+		
+		auto it=limits.find(acronim);
+	
+		if(it!=limits.end())lim.push_back(it->second);
+		
+		return lim;
 	}
 
 	
@@ -227,22 +256,13 @@ template <typename Type>
 		limits.clear();
 	}
 	
-	void setAxesByZero(void){
-			
-			for(auto it=axes.begin(); it!=axes.end(); ++it){
-					(*it).second=0;
-			}
-			
-		}
-
-	bool exists(char acronim){
-			
-		auto it=axes.find(acronim);
-		
-		if(it!=axes.end())return true;
+	bool existLimit(char acronim) const{
+		auto it=limits.find(acronim);
+	
+		if(it!=limits.end())return true;
 		return false;
-			
-		}
+	}
+	
 	
 };
 	
@@ -268,27 +288,57 @@ template <typename Type>
 		
 		private:
 			map<char, TLimits> limits;
-
-		
-		public:
 			Type x=0;
 			Type y=0;	
 		
-			PPpointXY(Type xpos=0, Type ypos=0):x(xpos), y(ypos){};
+		public:	
+		
+			PPpointXY(Type xpos=0, Type ypos=0):x(xpos), y(ypos){}
 				
 			PPpointXY(PPpoint<Type> &point){
-					if(point.exists('X'))x=point.axes.find('X')->second;
-					if(point.exists('Y'))y=point.axes.find('Y')->second;
-			};
+				if(point.existLimit('X'))addXLimit(point.getLimit('X').front());
+				if(point.existLimit('Y'))addYLimit(point.getLimit('Y').front());
+				if(point.exists('X'))setX(point.axes.find('X')->second);
+				if(point.exists('Y'))setY(point.axes.find('Y')->second);
+			}
+			
+			Type getX(){return x;}
+			Type getY(){return y;}
+			
+			void setX(Type val){
+				auto limit=limits.find('X');
+				if(limit!=limits.end()){
+					x=trimAcc_pp(val, std::get<0>(limit->second), std::get<1>(limit->second), std::get<2>(limit->second));
+				}else x=val;		
+			}
+			
+			void setRealX(double val){
+				auto limit=limits.find('X');
+				if(limit!=limits.end())val*=pow_pp(10, std::get<3>(limit->second));
+				setX(val);
+			}
+			
+			void setY(Type val){
+				auto limit=limits.find('Y');
+				if(limit!=limits.end()){
+					y=trimAcc_pp(val, std::get<0>(limit->second), std::get<1>(limit->second), std::get<2>(limit->second));
+				}else y=val;		
+			}
 
+			void setRealY(double val){
+				auto limit=limits.find('Y');
+				if(limit!=limits.end())val*=pow_pp(10, std::get<3>(limit->second));
+				setY(val);
+			}
 			
 			PPpointXY<Type>& operator=(const PPpoint<Type> &point){
-
-				if(point.exists('X'))x=point.axes.find('X')->second;
-				if(point.exists('Y'))y=point.axes.find('Y')->second;
+				if(point.existLimit('X'))addXLimit(point.getLimit('X').front());
+				if(point.existLimit('Y'))addYLimit(point.getLimit('Y').front());
+				if(point.exists('X'))setX(point.axes.find('X')->second);
+				if(point.exists('Y'))setY(point.axes.find('Y')->second);
 				return (*this);
 
-			};	
+			}	
 				
 			bool operator==(PPpointXY &point){
 					if(x==point.x && y==point.y)return true;
@@ -297,33 +347,35 @@ template <typename Type>
 			
 			PPpointXY<Type> operator+(PPpointXY &point){
 					PPpointXY<Type> newPoint;
-					newPoint.x=x+point.x;
-					newPoint.y=y+point.y;
+					newPoint.setLimits(point.getLimits());
+					newPoint.setX(x+point.x);
+					newPoint.setY(y+point.y);
 					return newPoint;
 
 			}
 			
 			PPpointXY<Type> operator-(PPpointXY &point){
 					PPpointXY<Type> newPoint;
-					newPoint.x=x-point.x;
-					newPoint.y=y-point.y;
+					newPoint.setLimits(point.getLimits());
+					newPoint.setX(x-point.x);
+					newPoint.setY(y-point.y);
 					return newPoint;
 
 			}
 			
 			void operator+=(PPpointXY &point){
-					x+=point.x;
-					y+=point.y;
+				setX(x+point.x);
+				setY(y+point.y);
 			}
 			
 			void operator+=(PPpoint<Type> &point){
-				if(point.exists('X'))x+=point.axes.find('X')->second;
-				if(point.exists('Y'))y+=point.axes.find('Y')->second;
+				if(point.exists('X'))setX(x+point.axes.find('X')->second);
+				if(point.exists('Y'))setY(y+point.axes.find('Y')->second);
 			}
 			
 			void operator-=(PPpointXY &point){
-					x-=point.x;
-					y-=point.y;
+					setX(x-point.x);
+					setY(y-point.y);
 			}
 			
 			bool operator!=(PPpointXY &point){
@@ -332,8 +384,8 @@ template <typename Type>
 			}
 			
 			void clear(void){
-				x=0;
-				y=0;
+				setX(0);
+				setY(0);
 			}
 			
 			void round(Type precision){
@@ -359,50 +411,46 @@ template <typename Type>
 			
 			void roundY(Type precision){
 				round_pp(y, precision);
-//				string unitS=to_string(base);
-//				unitS.substr(unitS.find('.')+1);
-//				
-//				auto unit=unitS.size();
-//				
-//				int roundY=y*pow(10, unit);
-//				base*=pow(10, unit);
-//				roundY-=roundY%static_cast<int>(base);
-//				y=static_cast<Type>(roundY)/pow(10, unit);
-				
 			}
 			
 			
-	void setLimits(map<char, TLimits> newLimits){
-		
-		auto lim=newLimits.find('X');
-		if(lim!=newLimits.end())limits.insert(lim);
-		lim=newLimits.find('Y');
-		if(lim!=newLimits.end())limits.insert(lim);
-		
-		
-	}
-	
-		map<char, TLimits> getLimits() const{
-			return limits;
+			void setLimits(map<char, TLimits> newLimits){
+				
+				auto lim=newLimits.find('X');
+				if(lim!=newLimits.end()){
+					limits.insert(pair<char, TLimits>(lim->first, lim->second));
+					setX(x);
+				}
+				lim=newLimits.find('Y');
+				if(lim!=newLimits.end()){
+					limits.insert(pair<char, TLimits>(lim->first, lim->second));
+					setY(y);
+				}
+			}
 			
-		}
+				map<char, TLimits> getLimits() const{
+					return limits;
+					
+				}
 
-		
-		void addXLimit(char acronim, TLimits data){
-			
-			limits.insert(pair<char, TLimits>('X', data));
-			
-		}
-		
-		void addYLimit(TLimits data){
-			
-			limits.insert(pair<char, TLimits>('Y', data));
-			
-		}
+				
+				void addXLimit(TLimits data){
+					
+					limits.insert(pair<char, TLimits>('X', data));
+					setX(x);
+					
+				}
+				
+				void addYLimit(TLimits data){
+					
+					limits.insert(pair<char, TLimits>('Y', data));
+					setY(y);
+					
+				}
 
-		void ereseLimits(){
-			limits.clear();
-		}
+				void ereseLimits(){
+					limits.clear();
+				}
 				
 			
 

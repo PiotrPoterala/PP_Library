@@ -22,7 +22,7 @@ unsigned int calculateNrOfStepCircle(PPpointXY<int> &endCirclePoint, PPpointXY<i
 			pointTest=pointBegin;
 			pointEnd=endCirclePoint-circleCenterPoint;
 			
-			int R=sqrt(fpow_pp(static_cast<double>(pointBegin.x)/pow_pp(10, unit), 2)+fpow_pp(static_cast<double>(pointBegin.y)/pow_pp(10, unit), 2))*pow_pp(10, unit);
+			int R=sqrt(fpow_pp(static_cast<double>(pointBegin.getX())/pow_pp(10, unit), 2)+fpow_pp(static_cast<double>(pointBegin.getY())/pow_pp(10, unit), 2))*pow_pp(10, unit);
 	
 	
 			while(pointTest!=pointEnd){
@@ -48,13 +48,13 @@ unsigned int calculateNrOfStepCircle(PPpointXY<int> &endCirclePoint, PPpointXY<i
 			pointEnd=endCirclePoint-circleCenterPoint;
 			pointEndReal=pointBegin;
 			
-			int R=sqrt(fpow_pp(static_cast<double>(pointBegin.x)/pow_pp(10, unit), 2)+fpow_pp(static_cast<double>(pointBegin.y)/pow_pp(10, unit), 2))*pow_pp(10, unit);
+			int R=sqrt(fpow_pp(static_cast<double>(pointBegin.getX())/pow_pp(10, unit), 2)+fpow_pp(static_cast<double>(pointBegin.getY())/pow_pp(10, unit), 2))*pow_pp(10, unit);
 
 			do{
 				pointTest=getNextStepPointOnArc(pointTest, R, precisionX, precisionY, unit, turnCircle);
 		
 					vectorToEndPoint=pointEnd-pointTest;
-					distance=sqrt(pow(vectorToEndPoint.x, 2)+pow(vectorToEndPoint.y, 2));
+					distance=sqrt(pow(vectorToEndPoint.getX(), 2)+pow(vectorToEndPoint.getY(), 2));
 					if(distance<minDistance){
 						pointEndReal=pointTest;
 						minDistance=distance;
@@ -77,61 +77,61 @@ PPpointXY<int> getNextStepPointOnArc(PPpointXY<int> pointTest, unsigned int radi
 				halfPrecisionX=(double)precisionX/2;
 				halfPrecisionY=(double)precisionY/2;
 	
-	if(turnCircle==CircleTurn::CLOCKWISE){
-					if(pointTest.y>0 && pointTest.x>=0 && pointTest.x<pointTest.y){												//opis II oktetu	
-						pointTest.x+=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y-halfPrecisionY, radius, unit)>=0){
-							pointTest.y-=precisionY; 
+				if(turnCircle==CircleTurn::CLOCKWISE){
+					if(pointTest.getY()>0 && pointTest.getX()>=0 && pointTest.getX()<pointTest.getY()){												//opis II oktetu	
+						pointTest.setX(pointTest.getX()+precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()-halfPrecisionY, radius, unit)>=0){
+							pointTest.setY(pointTest.getY()-precisionY);
 						}
-					}else if(pointTest.y>0 && pointTest.x<0 && fabs_pp(pointTest.x)<=pointTest.y){					//opis III oktetu
-						pointTest.x+=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y+halfPrecisionY, radius, unit)<=0)pointTest.y+=precisionY;
-					}else if(pointTest.y<0 && pointTest.x<=0 && fabs_pp(pointTest.x)<fabs_pp(pointTest.y)){	//opis VI oktetu
-						pointTest.x-=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y+halfPrecisionY, radius, unit)>=0)pointTest.y+=precisionY;
-					}else if(pointTest.y<0 && pointTest.x>0 && pointTest.x<=fabs_pp(pointTest.y)){				//opis VII oktetu
-						pointTest.x-=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y-halfPrecisionY, radius, unit)<=0)pointTest.y-=precisionY; 
+					}else if(pointTest.getY()>0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())<=pointTest.getY()){					//opis III oktetu
+						pointTest.setX(pointTest.getX()+precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()+halfPrecisionY, radius, unit)<=0)pointTest.setY(pointTest.getY()+precisionY);
+					}else if(pointTest.getY()<0 && pointTest.getX()<=0 && fabs_pp(pointTest.getX())<fabs_pp(pointTest.getY())){	//opis VI oktetu
+						pointTest.setX(pointTest.getX()-precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()+halfPrecisionY, radius, unit)>=0)pointTest.setY(pointTest.getY()+precisionY);
+					}else if(pointTest.getY()<0 && pointTest.getX()>0 && pointTest.getX()<=fabs_pp(pointTest.getY())){				//opis VII oktetu
+						pointTest.setX(pointTest.getX()-precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()-halfPrecisionY, radius, unit)<=0)pointTest.setY(pointTest.getY()-precisionY); 
 					}
-					else if(pointTest.y>0 && pointTest.x>0 && pointTest.x>=pointTest.y){									//opis I oktetu	
-						pointTest.y-=precisionY;
-						if(arcImplicitFunction((double)pointTest.x+halfPrecisionX, pointTest.y, radius, unit)<=0)pointTest.x+=precisionX;
-					}else if(pointTest.y<=0 && pointTest.x>0 && pointTest.x>fabs_pp(pointTest.y)){					//opis VIII oktetu
-						pointTest.y-=precisionY;
-						if(arcImplicitFunction((double)pointTest.x-halfPrecisionX, pointTest.y, radius, unit)>=0)pointTest.x-=precisionX;
-					}else if(pointTest.y>=0 && pointTest.x<0 && fabs_pp(pointTest.x)>pointTest.y){					//opis IV oktetu
-						pointTest.y+=precisionY;
-						if(arcImplicitFunction((double)pointTest.x+halfPrecisionX, pointTest.y, radius, unit)>=0)pointTest.x+=precisionX;
-					}else if(pointTest.y<0 && pointTest.x<0 && fabs_pp(pointTest.x)>=fabs_pp(pointTest.y)){	//opis V oktetu
-						pointTest.y+=precisionY;
-						if(arcImplicitFunction((double)pointTest.x-halfPrecisionX, pointTest.y, radius, unit)<=0)pointTest.x-=precisionX;
+					else if(pointTest.getY()>0 && pointTest.getX()>0 && pointTest.getX()>=pointTest.getY()){									//opis I oktetu	
+						pointTest.setY(pointTest.getY()-precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()+halfPrecisionX, pointTest.getY(), radius, unit)<=0)pointTest.setX(pointTest.getX()+precisionX);
+					}else if(pointTest.getY()<=0 && pointTest.getX()>0 && pointTest.getX()>fabs_pp(pointTest.getY())){					//opis VIII oktetu
+						pointTest.setY(pointTest.getY()-precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()-halfPrecisionX, pointTest.getY(), radius, unit)>=0)pointTest.setX(pointTest.getX()-precisionX);
+					}else if(pointTest.getY()>=0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())>pointTest.getY()){					//opis IV oktetu
+						pointTest.setY(pointTest.getY()+precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()+halfPrecisionX, pointTest.getY(), radius, unit)>=0)pointTest.setX(pointTest.getX()+precisionX);
+					}else if(pointTest.getY()<0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())>=fabs_pp(pointTest.getY())){	//opis V oktetu
+						pointTest.setY(pointTest.getY()+precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()-halfPrecisionX, pointTest.getY(), radius, unit)<=0)pointTest.setX(pointTest.getX()-precisionX);
 					}
 				}else{
-					if(pointTest.y>0 && pointTest.x>0 && pointTest.x<=pointTest.y){												//opis II oktetu	
-						pointTest.x-=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y+halfPrecisionY, radius, unit)<=0)pointTest.y+=precisionY;
-					}else if(pointTest.y>0 && pointTest.x<=0 && fabs_pp(pointTest.x)<pointTest.y){					//opis III oktetu
-						pointTest.x-=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y-halfPrecisionY, radius, unit)>=0)pointTest.y-=precisionY; 
-					}else if(pointTest.y<0 && pointTest.x<0 && fabs_pp(pointTest.x)<=fabs_pp(pointTest.y)){	//opis VI oktetu
-						pointTest.x+=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y-halfPrecisionY, radius, unit)<=0)pointTest.y-=precisionY;
-					}else if(pointTest.y<0 && pointTest.x>=0 && pointTest.x<fabs_pp(pointTest.y)){				//opis VII oktetu
-						pointTest.x+=precisionX;
-						if(arcImplicitFunction(pointTest.x, (double)pointTest.y+halfPrecisionY, radius, unit)>=0)pointTest.y+=precisionY;
+					if(pointTest.getY()>0 && pointTest.getX()>0 && pointTest.getX()<=pointTest.getY()){												//opis II oktetu	
+						pointTest.setX(pointTest.getX()-precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()+halfPrecisionY, radius, unit)<=0)pointTest.setY(pointTest.getY()+precisionY);
+					}else if(pointTest.getY()>0 && pointTest.getX()<=0 && fabs_pp(pointTest.getX())<pointTest.getY()){					//opis III oktetu
+						pointTest.setX(pointTest.getX()-precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()-halfPrecisionY, radius, unit)>=0)pointTest.setY(pointTest.getY()-precisionY);
+					}else if(pointTest.getY()<0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())<=fabs_pp(pointTest.getY())){	//opis VI oktetu
+						pointTest.setX(pointTest.getX()+precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()-halfPrecisionY, radius, unit)<=0)pointTest.setY(pointTest.getY()-precisionY);
+					}else if(pointTest.getY()<0 && pointTest.getX()>=0 && pointTest.getX()<fabs_pp(pointTest.getY())){				//opis VII oktetu
+						pointTest.setX(pointTest.getX()+precisionX);
+						if(arcImplicitFunction(pointTest.getX(), (double)pointTest.getY()+halfPrecisionY, radius, unit)>=0)pointTest.setY(pointTest.getY()+precisionY);
 					}
-					else if(pointTest.y>=0 && pointTest.x>0 && pointTest.x>pointTest.y){									//opis I oktetu	
-						pointTest.y+=precisionY;
-						if(arcImplicitFunction((double)pointTest.x-halfPrecisionX, pointTest.y, radius, unit)>=0)pointTest.x-=precisionX;
-					}else if(pointTest.y<0 && pointTest.x>0 && pointTest.x>=fabs_pp(pointTest.y)){					//opis VIII oktetu
-						pointTest.y+=precisionY;
-						if(arcImplicitFunction((double)pointTest.x+halfPrecisionX, pointTest.y, radius, unit)<=0)pointTest.x+=precisionX;
-					}else if(pointTest.y>0 && pointTest.x<0 && fabs_pp(pointTest.x)>=pointTest.y){					//opis IV oktetu
-						pointTest.y-=precisionY;
-						if(arcImplicitFunction((double)pointTest.x-halfPrecisionX, pointTest.y, radius, unit)<=0)pointTest.x-=precisionX;
-					}else if(pointTest.y<=0 && pointTest.x<0 && fabs_pp(pointTest.x)>fabs_pp(pointTest.y)){	//opis V oktetu
-						pointTest.y-=precisionY;
-						if(arcImplicitFunction((double)pointTest.x+halfPrecisionX, pointTest.y, radius, unit)>=0)pointTest.x+=precisionX;
+					else if(pointTest.getY()>=0 && pointTest.getX()>0 && pointTest.getX()>pointTest.getY()){									//opis I oktetu	
+						pointTest.setY(pointTest.getY()-precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()-halfPrecisionX, pointTest.getY(), radius, unit)>=0)pointTest.setX(pointTest.getX()-precisionX);
+					}else if(pointTest.getY()<0 && pointTest.getX()>0 && pointTest.getX()>=fabs_pp(pointTest.getY())){					//opis VIII oktetu
+						pointTest.setY(pointTest.getY()+precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()+halfPrecisionX, pointTest.getY(), radius, unit)<=0)pointTest.setX(pointTest.getX()+precisionX);
+					}else if(pointTest.getY()>0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())>=pointTest.getY()){					//opis IV oktetu
+						pointTest.setY(pointTest.getY()+precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()-halfPrecisionX, pointTest.getY(), radius, unit)<=0)pointTest.setX(pointTest.getX()-precisionX);
+					}else if(pointTest.getY()<=0 && pointTest.getX()<0 && fabs_pp(pointTest.getX())>fabs_pp(pointTest.getY())){	//opis V oktetu
+						pointTest.setY(pointTest.getY()-precisionY);
+						if(arcImplicitFunction((double)pointTest.getX()+halfPrecisionX, pointTest.getY(), radius, unit)>=0)pointTest.setX(pointTest.getX()+precisionX);
 					}
 				}
 	

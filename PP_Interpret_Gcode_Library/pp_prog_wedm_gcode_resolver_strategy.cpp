@@ -93,17 +93,17 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
                         G81nrOfRepetitions=trim_pp(G81nrOfRepetitions, 100, 0);
 
                     }else if(nr_Gkod==G00 || nr_Gkod==G01){	
-												auto point=endPoint;
+												auto auxPoint=endPoint;
 											
-												point.setLimits(baseCoord->getParamLimits());
+												auxPoint.setLimits(baseCoord->getParamLimits());
 											
-                        if(writeInAboluteValues==false)point.setAxesByZero();
-												point.setAxesBasedString(data);
+                        if(writeInAboluteValues==false)auxPoint.setAxesByZero();
+												auxPoint.setAxesBasedString(data);
 
                         if(writeInAboluteValues){
-													endPoint=basePoint+point;
+													endPoint=basePoint+auxPoint;
                         }else{
-													endPoint+=point;		
+													endPoint+=auxPoint;		
                         }
 												
 												writeG00Line(endPoint);
@@ -115,40 +115,33 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												PPpointXY<int>endCirclePoint;
 												PPpointXY<int>circleCenterPoint;
 											
-												endCirclePoint.x=data.findValueAfterAcronim('X', 0);
-												endCirclePoint.y=data.findValueAfterAcronim('Y', 0);
+												endCirclePoint.setLimits(baseCoord->getParamLimits());
+												circleCenterPoint.setLimits(baseCoord->getParamLimits());
+												
+												endCirclePoint.setRealX(data.findValueAfterAcronim('X', 0));
+												endCirclePoint.setRealY(data.findValueAfterAcronim('Y', 0));
 												if(writeInAboluteValues){
-		//											endCirclePoint+=basePoint;
+													endCirclePoint+=basePoint;
                         }else{
 													endCirclePoint+=startCirclePoint;		
                         }
-												circleCenterPoint.x=data.findValueAfterAcronim('I', 0);
-												circleCenterPoint.y=data.findValueAfterAcronim('J', 0);
+												circleCenterPoint.setRealX(data.findValueAfterAcronim('I', 0));
+												circleCenterPoint.setRealY(data.findValueAfterAcronim('J', 0));
 												circleCenterPoint+=startCirclePoint;		
-											
+																									
+//                        endCirclePoint=getRealEndPointOfArc(circleCenterPoint, startCirclePoint, endCirclePoint, (nr_Gkod==G02)?CLOCKWISE:COUNTERCLOCKWISE);
 												
-												startCirclePoint.roundX(static_cast<double>(phyCoord->getParamPrecision('X'))/pow(10, phyCoord->getParamUnit('X')));
-												startCirclePoint.roundY(static_cast<double>(phyCoord->getParamPrecision('Y'))/pow(10, phyCoord->getParamUnit('Y')));
-												
-												endCirclePoint.roundX(static_cast<double>(phyCoord->getParamPrecision('X'))/pow(10, phyCoord->getParamUnit('X')));
-												endCirclePoint.roundY(static_cast<double>(phyCoord->getParamPrecision('Y'))/pow(10, phyCoord->getParamUnit('Y')));
-												
-												circleCenterPoint.roundX(static_cast<double>(phyCoord->getParamPrecision('X'))/pow(10, phyCoord->getParamUnit('X')));
-												circleCenterPoint.roundY(static_cast<double>(phyCoord->getParamPrecision('Y'))/pow(10, phyCoord->getParamUnit('Y')));
-												
-        //                endCirclePoint=getRealEndPointOfArc(circleCenterPoint, startCirclePoint, endCirclePoint, (nr_Gkod==G02)?CLOCKWISE:COUNTERCLOCKWISE);
-												
-												endPoint.setAxValue('X', endCirclePoint.x);
-												endPoint.setAxValue('Y', endCirclePoint.y);
-												endPoint.setAxValue('U', endCirclePoint.x);
-												endPoint.setAxValue('V', endCirclePoint.y);
+												endPoint.setAxValue('X', endCirclePoint.getX());
+												endPoint.setAxValue('Y', endCirclePoint.getY());
+												endPoint.setAxValue('U', endCirclePoint.getX());
+												endPoint.setAxValue('V', endCirclePoint.getY());
 												
 												out<<((G_KOD<<10) | nr_Gkod)<<" ";
-												if(phyCoord->exists('X') && endPoint.exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second*pow(10, phyCoord->getParamUnit('X')))<<" "; else out<<0<<" ";
-												if(phyCoord->exists('Y') && endPoint.exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second*pow(10, phyCoord->getParamUnit('Y')))<<" "; else out<<0<<" ";
-												if(phyCoord->exists('Z') && endPoint.exists('Z'))out<<phyCoord->getParam('Z').front()->correctData(endPoint.axes.find('Z')->second*pow(10, phyCoord->getParamUnit('Z')))<<" "; else out<<0<<" ";
-												if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(circleCenterPoint.x*pow(10, phyCoord->getParamUnit('X')))<<" "; else out<<0<<" ";
-												if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(circleCenterPoint.y*pow(10, phyCoord->getParamUnit('Y')))<<" "; else out<<0<<" ";
+												if(endPoint.exists('X'))out<<endPoint.axes.find('X')->second<<" "; else out<<0<<" ";
+												if(endPoint.exists('Y'))out<<endPoint.axes.find('Y')->second<<" "; else out<<0<<" ";
+												if(endPoint.exists('Z'))out<<endPoint.axes.find('Z')->second<<" "; else out<<0<<" ";
+												out<<circleCenterPoint.getX()<<" ";
+												out<<circleCenterPoint.getY()<<" ";
 												out<<"\r\n";
                     }else if(nr_Gkod==G04){	//sterowana przerwa w ruchu
                         int timeOfDelay=0;
@@ -200,10 +193,10 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
 
 				PTextStream out(destDevice);
-				if(phyCoord->exists('X') && point.exists('X'))out<<phyCoord->getParam('X').front()->correctData(point.axes.find('X')->second*pow(10, phyCoord->getParamUnit('X')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('Y') && point.exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(point.axes.find('Y')->second*pow(10, phyCoord->getParamUnit('Y')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('Z') && point.exists('Z'))out<<phyCoord->getParam('Z').front()->correctData(point.axes.find('Z')->second*pow(10, phyCoord->getParamUnit('Z')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U') && point.exists('U'))out<<phyCoord->getParam('U').front()->correctData(point.axes.find('U')->second*pow(10, phyCoord->getParamUnit('U')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('V') && point.exists('V'))out<<phyCoord->getParam('V').front()->correctData(point.axes.find('V')->second*pow(10, phyCoord->getParamUnit('V')))<<" "; else out<<0<<" ";
-				if(phyCoord->exists('z') && point.exists('z'))out<<phyCoord->getParam('z').front()->correctData(point.axes.find('z')->second*pow(10, phyCoord->getParamUnit('z')))<<" "; else out<<0;
+				if(point.exists('X'))out<<point.axes.find('X')->second<<" "; else out<<0<<" ";
+				if(point.exists('Y'))out<<point.axes.find('Y')->second<<" "; else out<<0<<" ";
+				if(point.exists('Z'))out<<point.axes.find('Z')->second<<" "; else out<<0<<" ";
+				if(point.exists('U'))out<<point.axes.find('U')->second<<" "; else out<<0<<" ";
+				if(point.exists('V'))out<<point.axes.find('V')->second<<" "; else out<<0<<" ";
+				if(point.exists('z'))out<<point.axes.find('z')->second<<" "; else out<<0;
 }
