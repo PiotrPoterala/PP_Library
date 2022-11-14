@@ -44,15 +44,21 @@ template <typename Type>
 		
 	private:
 		map<char, TLimits> limits;
+		map<char, Type> axes;	
 		
 	public:
 		static_assert	(std::is_arithmetic<Type>::value, "<Type> must be integral or a floating point type");	
 		
-		map<char, Type> axes;	
+//		map<char, Type> axes;	
 		
 		PPpoint(){};
 		PPpoint(map<char, Type> point){axes=point;}
-	
+		PPpoint(map<char, Type> point, map<char, TLimits> lim){
+			limits=lim;
+			for(auto it:point){
+				addAx(it);
+			}
+		}
 			
 		PPpoint<Type>& operator=(const PPpoint<Type> &point){
 
@@ -64,27 +70,56 @@ template <typename Type>
 			
 		
 		template <typename From>
-		PPpoint<Type> operator=(const PPpoint<From> &pointToConvert){
+		PPpoint<Type>& operator=(const PPpoint<From> &pointToConvert){
 
-				PPpoint<Type> point;
+		//		PPpoint<Type> point;
+			
 	
 				for(auto pkt:pointToConvert.axes){
-					point.axes.insert(pair<char, Type>(pkt.first, static_cast<Type>(pkt.second)));
+					point.addAx(pair<char, Type>(pkt.first, static_cast<Type>(pkt.second)));
+					point.addLimit(char acronim, TLimits data)
 					
 				}
 			
-			return point;
-
+				return (*this);
 		}	
 		
 		
 		PPpoint<Type>& operator=(const map<char, Type> point){
 
 			axes=point;
+			limits.clear();
 
 			return (*this);
 
 		}	
+		
+		void clear(){
+			axes.clear();
+			limits.clear();
+		}
+		
+		void addAx(char acronim, Type value){
+			axes.insert(pair<char, Type>(acronim, 0));
+			setAxValue(acronim, value);
+			
+		}
+		
+		void addAx(pair<char, Type> ax){
+			axes.insert(ax);
+			setAxValue(ax.first, ax.second);
+			
+		}
+		
+		void eraseAx(char acronim, Type value){
+			axes.erase(acronim);
+			limits.erase(acronim);
+		}
+		
+		map<char, Type>& rGetAxes(){
+			return axes;
+
+		}			
 		
 		
 		bool operator==(PPpoint &point){
@@ -185,6 +220,21 @@ template <typename Type>
 		
 	}
 	
+	Type getAxValue(char acronim){
+		auto it=axes.find(acronim);
+		if(it!=axes.end())return it->second;
+		
+		return 0;
+	}
+	
+	Type getRealAxValue(char acronim){
+		auto val=getAxValue(acronim);
+		auto limit=limits.find(acronim);
+    if(limit!=limits.end())val*=pow_pp(10, std::get<3>(limit->second));
+		
+		return val;
+	}
+	
 	bool setAxValue(char acronim, Type val){
     auto it=axes.find(acronim);
 		auto limit=limits.find(acronim);
@@ -194,10 +244,14 @@ template <typename Type>
         }else it->second=val;
         return true;
     }
-    return false;
-		
-		
+    return false;	
 }
+	
+	void setRealAxValue(char acronim, double val){
+		auto limit=limits.find(acronim);
+		if(limit!=limits.end())val*=pow_pp(10, std::get<3>(limit->second));
+		setAxValue(acronim, static_cast<Type>(val));
+	}
 	
 	void setAxesByZero(void){
 			
@@ -298,8 +352,8 @@ template <typename Type>
 			PPpointXY(PPpoint<Type> &point){
 				if(point.existLimit('X'))addXLimit(point.getLimit('X').front());
 				if(point.existLimit('Y'))addYLimit(point.getLimit('Y').front());
-				if(point.exists('X'))setX(point.axes.find('X')->second);
-				if(point.exists('Y'))setY(point.axes.find('Y')->second);
+				if(point.exists('X'))setX(point.getAxValue('X'));
+				if(point.exists('Y'))setY(point.getAxValue('Y'));
 			}
 			
 			Type getX(){return x;}
@@ -369,8 +423,8 @@ template <typename Type>
 			}
 			
 			void operator+=(PPpoint<Type> &point){
-				if(point.exists('X'))setX(x+point.axes.find('X')->second);
-				if(point.exists('Y'))setY(y+point.axes.find('Y')->second);
+				if(point.exists('X'))setX(x+point.getAxValue('X'));
+				if(point.exists('Y'))setY(y+point.getAxValue('Y'));
 			}
 			
 			void operator-=(PPpointXY &point){
@@ -447,6 +501,20 @@ template <typename Type>
 					setY(y);
 					
 				}
+				
+				vector<TLimits> getXLimit(){		
+					vector<TLimits> limit;					
+					auto lim=limits.find('X');
+					if(lim!=limits.end())limit.push_back(lim->second);
+					return limit;
+				}
+				
+				vector<TLimits> getYLimit(){		
+					vector<TLimits> limit;					
+					auto lim=limits.find('Y');
+					if(lim!=limits.end())limit.push_back(lim->second);
+					return limit;
+				}
 
 				void ereseLimits(){
 					limits.clear();
@@ -457,8 +525,8 @@ template <typename Type>
 };
 
 
-using PPpointList=vector<PPpoint<double>>;
-using PPpointListShdPtr=shared_ptr<PPpointList>;
+using PPpointIntList=vector<PPpoint<int>>;
+using PPpointIntListShdPtr=shared_ptr<PPpointIntList>;
 
 
 

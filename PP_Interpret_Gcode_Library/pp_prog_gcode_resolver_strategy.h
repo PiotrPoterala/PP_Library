@@ -15,7 +15,7 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 			defOParamListShdPtr phyCoord;
 			defOParamListShdPtr baseCoord;
 			defOParamListShdPtr workParams;
-			PPpointListShdPtr basePointsList;
+			PPpointIntListShdPtr basePointsList;
 	
 			bool writeInAboluteValues=false;
 			bool G00occured=false;
@@ -34,7 +34,7 @@ class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 			virtual void writePointParam(PPpoint<int> &point)=0;
 		public:
 			PProgGcodeResolverStrategy()=delete;
-			PProgGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr base, defOParamListShdPtr workPar, PPpointListShdPtr bPointsList): PProgramResolverStrategy(destination, source), baseCoord(base), workParams(workPar), basePointsList(bPointsList){};
+			PProgGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr base, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgramResolverStrategy(destination, source), baseCoord(base), workParams(workPar), basePointsList(bPointsList){};
 			PProgGcodeResolverStrategy& operator=(const PProgGcodeResolverStrategy&)=delete;
 				
 			virtual InterpretProgErr interpretProg() final;

@@ -58,7 +58,7 @@ public:
 		bool exists(char acronim);
 
 		PParamData getParam(char acronim) noexcept;
-    PParamMap getParams(void) noexcept;
+ //   PParamMap getParams(void) noexcept;
 
 
     int getParamValue(char acronim) noexcept;

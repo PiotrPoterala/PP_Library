@@ -10,7 +10,7 @@
 void PProgWedmGcodeResolverStrategy::resetInterpretSettings(){
 
 				PProgGcodeResolverStrategy::resetInterpretSettings();
-				endPoint.axes.clear();
+				endPoint.clear();
 
 }
 
@@ -70,7 +70,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 							
 								out<<"\r\n";
 
-						}else if(nr_Gkod>=54 && nr_Gkod<=58 && basePoint.axes.empty()){
+						}else if(nr_Gkod>=54 && nr_Gkod<=58 && basePoint.rGetAxes().empty()){
 							int idBPoint=nr_Gkod-54;
 							basePoint=basePointsList->at(idBPoint);
 							endPoint=basePoint;
@@ -79,7 +79,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 							writePointParam(basePoint);
 							out<<"\r\n";
 							
-            }else if(!basePoint.axes.empty()){
+            }else if(!basePoint.rGetAxes().empty()){
 
 										if(nr_Gkod!=G00 && nr_Gkod!=G01 && G00occured==false){
 											G00occured=true;
@@ -128,8 +128,22 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												circleCenterPoint.setRealX(data.findValueAfterAcronim('I', 0));
 												circleCenterPoint.setRealY(data.findValueAfterAcronim('J', 0));
 												circleCenterPoint+=startCirclePoint;		
-																									
-//                        endCirclePoint=getRealEndPointOfArc(circleCenterPoint, startCirclePoint, endCirclePoint, (nr_Gkod==G02)?CLOCKWISE:COUNTERCLOCKWISE);
+														
+												int unitY=0, unitX=0, precisionX=1, precisionY=1;
+												auto limitY=startCirclePoint.getYLimit();
+												if(!limitY.empty()){
+													unitY=std::get<3>(limitY.front());
+													precisionY=std::get<2>(limitY.front());
+												}
+												
+												auto limitX=startCirclePoint.getXLimit();
+												if(!limitX.empty()){
+													unitX=std::get<3>(limitX.front());
+													precisionX=std::get<2>(limitX.front());
+												}
+												
+                        endCirclePoint=getRealEndPointOfArc(endCirclePoint, circleCenterPoint, startCirclePoint, 
+																														precisionX, precisionY,(unitX>=unitY)?unitX:unitY, (nr_Gkod==G02)?CircleTurn::CLOCKWISE:CircleTurn::COUNTERCLOCKWISE);
 												
 												endPoint.setAxValue('X', endCirclePoint.getX());
 												endPoint.setAxValue('Y', endCirclePoint.getY());
@@ -137,11 +151,11 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												endPoint.setAxValue('V', endCirclePoint.getY());
 												
 												out<<((G_KOD<<10) | nr_Gkod)<<" ";
-												if(endPoint.exists('X'))out<<endPoint.axes.find('X')->second<<" "; else out<<0<<" ";
-												if(endPoint.exists('Y'))out<<endPoint.axes.find('Y')->second<<" "; else out<<0<<" ";
-												if(endPoint.exists('Z'))out<<endPoint.axes.find('Z')->second<<" "; else out<<0<<" ";
+												out<<endPoint.getAxValue('X')<<" ";
+												out<<endPoint.getAxValue('Y')<<" "; 
+												out<<endPoint.getAxValue('Z')<<" "; 
 												out<<circleCenterPoint.getX()<<" ";
-												out<<circleCenterPoint.getY()<<" ";
+												out<<circleCenterPoint.getY();
 												out<<"\r\n";
                     }else if(nr_Gkod==G04){	//sterowana przerwa w ruchu
                         int timeOfDelay=0;
@@ -155,31 +169,30 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												double maxDistance=data.findValueAfterAcronim('s', 0);
 												double departureDistance=data.findValueAfterAcronim('d', 0);
 
-												if(endPoint.exists('z')){
-														
-													endPoint.axes.find('z')->second=basePoint.axes.find('z')->second-maxDistance;
+												if(endPoint.exists('z') && basePoint.exists('z')){
+													endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-maxDistance);
 													out<<((G_KOD<<10) | G87)<<" ";
 													writePointParam(endPoint);
 													out<<"\r\n";
 
-													endPoint.axes.find('z')->second=basePoint.axes.find('z')->second-drillingDepth;
+													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-drillingDepth);
 													writeG00Line(endPoint);
 
-													endPoint.axes.find('z')->second=basePoint.axes.find('z')->second+departureDistance;
+													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-departureDistance);
 													writeG00Line(endPoint);
 
 												}
-                    }else if(nr_Gkod==G88){	
+                    }else if(nr_Gkod==G88){					
 												double maxDistance=data.findValueAfterAcronim('s', 0);
 
 												if(endPoint.exists('z')){
-														
-													endPoint.axes.find('z')->second=basePoint.axes.find('z')->second-maxDistance;
+													endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-maxDistance);
 													out<<((G_KOD<<10) | G88)<<" ";
 													writePointParam(endPoint);
 													out<<"\r\n";
-
 												}
+												
+												
                     }
 
             }
@@ -193,10 +206,10 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
 
 				PTextStream out(destDevice);
-				if(point.exists('X'))out<<point.axes.find('X')->second<<" "; else out<<0<<" ";
-				if(point.exists('Y'))out<<point.axes.find('Y')->second<<" "; else out<<0<<" ";
-				if(point.exists('Z'))out<<point.axes.find('Z')->second<<" "; else out<<0<<" ";
-				if(point.exists('U'))out<<point.axes.find('U')->second<<" "; else out<<0<<" ";
-				if(point.exists('V'))out<<point.axes.find('V')->second<<" "; else out<<0<<" ";
-				if(point.exists('z'))out<<point.axes.find('z')->second<<" "; else out<<0;
+				out<<point.getAxValue('X')<<" "; 
+				out<<point.getAxValue('Y')<<" "; 
+				out<<point.getAxValue('Z')<<" "; 
+				out<<point.getAxValue('U')<<" ";
+				out<<point.getAxValue('V')<<" ";
+				out<<point.getAxValue('z');
 }

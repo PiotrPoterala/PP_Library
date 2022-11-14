@@ -74,7 +74,7 @@ InterpretProgErr PProgGcodeResolverStrategy::interpretProg(){
 
                 if(line.at(0)!='%'){
                     ans=InterpretProgErr::idLACK_MODULO;
-                }else if(!basePoint.axes.empty()){
+                }else if(!basePoint.rGetAxes().empty()){
                     ans=InterpretProgErr::idLACK_G50_G59;
                 }
             }else{
@@ -97,7 +97,7 @@ void PProgGcodeResolverStrategy::resetInterpretSettings(){
         GcodeStandardCycle=0;
         G81nrOfRepetitions=0;
 
-				basePoint.axes.clear();
+				basePoint.clear();
 
 }
 
