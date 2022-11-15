@@ -54,6 +54,7 @@ public:
 
 		PString mid(int position, int n);
 		int toInt(int base=10);
+		double toDouble();
 		string findDataAfterAcronim(char acronim);
 		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();

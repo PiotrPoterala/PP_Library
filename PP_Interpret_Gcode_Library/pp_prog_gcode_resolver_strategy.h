@@ -12,7 +12,6 @@
 class PProgGcodeResolverStrategy : public PProgramResolverStrategy{
 	
 	protected:
-			defOParamListShdPtr phyCoord;
 			defOParamListShdPtr baseCoord;
 			defOParamListShdPtr workParams;
 			PPpointIntListShdPtr basePointsList;

@@ -27,6 +27,45 @@ TEST_GROUP(PPointTestGroup)
 };
 
 
+TEST(PPointTestGroup, set_getAxRealValueTest)
+{
+
+		list.addLimit('X', tuple<int, int, int, int>{100000, 0, 5, 3});
+		list.setRealAxValue('X', 34.566);
+
+		LONGS_EQUAL(34565, list.getAxValue('X'));
+		DOUBLES_EQUAL(34.565, list.getRealAxValue('X'), 0.001);
+		
+}
+
+TEST(PPointTestGroup, assignmentToIntPointsTest)
+{
+
+		PPpoint<int> listToTest{};
+		
+		listToTest=list;
+
+		LONGS_EQUAL(20, listToTest.getAxValue('X'));
+		LONGS_EQUAL(30, listToTest.getAxValue('Y'));
+		LONGS_EQUAL(40, listToTest.getAxValue('Z'));
+		
+		LONGS_EQUAL(3, listToTest.rGetAxes().size());
+}
+
+TEST(PPointTestGroup, assignmentToDoublePointTest)
+{
+
+		PPpoint<double> listToTest{};
+			
+		listToTest=list;
+
+		DOUBLES_EQUAL(20, listToTest.getAxValue('X'), 0.001);
+		DOUBLES_EQUAL(30, listToTest.getAxValue('Y'), 0.001);
+		DOUBLES_EQUAL(40, listToTest.getAxValue('Z'), 0.001);
+		
+		LONGS_EQUAL(3, listToTest.rGetAxes().size());
+}
+
 TEST(PPointTestGroup, comparePointsTest)
 {
 

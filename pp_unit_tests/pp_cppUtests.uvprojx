@@ -597,6 +597,11 @@
               <FileType>8</FileType>
               <FilePath>..\PP_Interpret_Gcode_Library\pp_prog_wedm_gcode_resolver_strategy.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_prog_edf_resolver_strategy.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_Interpret_Gcode_Library\pp_prog_edf_resolver_strategy.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

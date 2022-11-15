@@ -19,7 +19,7 @@ class PProgWedmGcodeResolverStrategy : public PProgGcodeResolverStrategy{
 			virtual void writePointParam(PPpoint<int> &point) final;
 		public:
 			PProgWedmGcodeResolverStrategy()=delete;
-			PProgWedmGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgGcodeResolverStrategy(destination, source, phy, workPar, bPointsList){};
+			PProgWedmGcodeResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr base, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgGcodeResolverStrategy(destination, source, base, workPar, bPointsList){};
 			PProgWedmGcodeResolverStrategy& operator=(const PProgGcodeResolverStrategy&)=delete;
 				
 

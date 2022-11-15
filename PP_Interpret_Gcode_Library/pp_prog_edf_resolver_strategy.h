@@ -34,6 +34,7 @@
 	class PProgEDFResolverStrategy : public PProgramResolverStrategy{
 	
 	protected:
+			defOParamListShdPtr baseCoord;
 			defOParamListShdPtr phyCoord;
 			defOParamListShdPtr workParams;
 	
@@ -42,8 +43,7 @@
 			InterpretProgErr getPointOfChangeParFromEDFprog();
 			void interpretTextLineWithChangeParList(PEDFlinePar &linePar);
 			PPpoint<int> getPointFromTextLine(PString &program);
-			int trimToRange(int value, int upperLimit, int lowerLimit);
-	
+	//		int trimToRange(int value, int upperLimit, int lowerLimit);
 			virtual void interpretTextLineWithCoordinates(PString &program)=0;
 		public:
 			PProgEDFResolverStrategy()=delete;
@@ -55,8 +55,9 @@
 	
 class PProgWedmEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
-	private:
-			virtual void interpretTextLineWithCoordinates(PString &program) override;
+	protected:
+			virtual void interpretTextLineWithCoordinates(PString &program) final;
+
 	
 	public:
 			PProgWedmEDFResolverStrategy()=delete;
@@ -66,8 +67,9 @@ class PProgWedmEDFResolverStrategy : public PProgEDFResolverStrategy{
 
 class PProgDrillEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
-	private:
-			virtual void interpretTextLineWithCoordinates(PString &program) override;
+		protected:
+			virtual void interpretTextLineWithCoordinates(PString &program) final;
+	
 	
 		public:
 			PProgDrillEDFResolverStrategy()=delete; 

@@ -105,7 +105,6 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
                         }else{
 													endPoint+=auxPoint;		
                         }
-												
 												writeG00Line(endPoint);
 
 												G00occured=true;
@@ -178,21 +177,21 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-drillingDepth);
 													writeG00Line(endPoint);
 
-													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-departureDistance);
+													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')+departureDistance);
 													writeG00Line(endPoint);
 
 												}
                     }else if(nr_Gkod==G88){					
 												double maxDistance=data.findValueAfterAcronim('s', 0);
 
-												if(endPoint.exists('z')){
+												if(endPoint.exists('z') && basePoint.exists('z')){
 													endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-maxDistance);
 													out<<((G_KOD<<10) | G88)<<" ";
 													writePointParam(endPoint);
 													out<<"\r\n";
+													
+													endPoint.setAxValue('z', basePoint.getAxValue('z'));
 												}
-												
-												
                     }
 
             }

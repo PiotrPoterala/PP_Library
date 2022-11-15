@@ -269,22 +269,40 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &l
 }
 
 PPpoint<int> PProgEDFResolverStrategy::getPointFromTextLine(PString &program){
-				PPpoint<int> endPoint;
+				PPpoint<int> endPoint{baseCoord->getParamsValues(), baseCoord->getParamLimits()};
 				
-				endPoint.axes.insert(pair<char, int>('X', program.mid(9, 9).toInt()));
-				endPoint.axes.insert(pair<char, int>('Y', program.mid(19, 9).toInt()));
-				endPoint.axes.insert(pair<char, int>('U', program.mid(58, 9).toInt()));
-				endPoint.axes.insert(pair<char, int>('V', program.mid(68, 9).toInt()));
-				endPoint.axes.insert(pair<char, int>('d', program.mid(29, 9).toInt()));
+				endPoint.setRealAxValue('X', program.mid(9, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('Y', program.mid(19, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('Z', 0);
+				endPoint.setRealAxValue('U', program.mid(58, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('V', program.mid(68, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('z', program.mid(29, 9).toDouble()/pow_pp(10,6));
+				
+//				endPoint.addAx(pair<char, int>('Y', program.mid(19, 9).toInt()));
+//				endPoint.addAx(pair<char, int>('U', program.mid(58, 9).toInt()));
+//				endPoint.addAx(pair<char, int>('V', program.mid(68, 9).toInt()));
+//				endPoint.addAx(pair<char, int>('d', program.mid(29, 9).toInt()));
 				return endPoint;
 }
 
-int PProgEDFResolverStrategy::trimToRange(int value, int upperLimit, int lowerLimit){
-	
-		if(value>=upperLimit)value=upperLimit;
-    else if(value<=lowerLimit)value=lowerLimit;
-	
-		return value;
+//int PProgEDFResolverStrategy::trimToRange(int value, int upperLimit, int lowerLimit){
+//	
+//		if(value>=upperLimit)value=upperLimit;
+//    else if(value<=lowerLimit)value=lowerLimit;
+//	
+//		return value;
+//}
+
+
+void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
+
+				PTextStream out(destDevice);
+				out<<point.getAxValue('X')<<" "; 
+				out<<point.getAxValue('Y')<<" "; 
+				out<<point.getAxValue('Z')<<" "; 
+				out<<point.getAxValue('U')<<" ";
+				out<<point.getAxValue('V')<<" ";
+				out<<point.getAxValue('z');
 }
 
 
@@ -296,12 +314,12 @@ void PProgWedmEDFResolverStrategy::interpretTextLineWithCoordinates(PString &pro
 				auto endPoint=getPointFromTextLine(program);
 			
 				out<<((G_KOD<<10) | G00)<<" ";
-				if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second*pow(10, phyCoord->getParamUnit('X')-6))<<" "; else out<<endPoint.axes.find('X')->second<<" ";
-				if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second*pow(10, phyCoord->getParamUnit('Y')-6))<<" "; else out<<endPoint.axes.find('Y')->second<<" ";
-				if(phyCoord->exists('Z'))out<<phyCoord->getParamValue('Z')<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U'))out<<phyCoord->getParam('U').front()->correctData(endPoint.axes.find('U')->second*pow(10, phyCoord->getParamUnit('U')-6))<<" "; else out<<endPoint.axes.find('U')->second<<" ";
-				if(phyCoord->exists('V'))out<<phyCoord->getParam('V').front()->correctData(endPoint.axes.find('V')->second*pow(10, phyCoord->getParamUnit('V')-6))<<" "; else out<<endPoint.axes.find('V')->second<<" ";
-				if(phyCoord->exists('z'))out<<phyCoord->getParamValue('z')<<" "; else out<<0<<" ";
+				out<<endPoint.getAxValue('X')<<" "; 
+				out<<endPoint.getAxValue('Y')<<" "; 
+				out<<endPoint.getAxValue('Z')<<" "; 
+				out<<endPoint.getAxValue('U')<<" ";
+				out<<endPoint.getAxValue('V')<<" ";
+				out<<endPoint.getAxValue('z');
         out<<"\r\n";
 			}
 }

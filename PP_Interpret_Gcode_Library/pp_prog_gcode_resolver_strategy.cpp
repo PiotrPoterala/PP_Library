@@ -34,12 +34,9 @@ InterpretProgErr PProgGcodeResolverStrategy::interpretProg(){
                 line = sourceFile->readLine();
                 while(!line.empty()){											//pobieranie programu linijka po linijce z karty SD
                     if(line.at(0)=='%'){
-                        outDevice<<(START_PROG<<10)<<" \r\n";			//zapisanie do pamięci flash znaku określającego koniec programu
+                        outDevice<<(START_PROG<<10)<<"\r\n";			//zapisanie do pamięci flash znaku określającego koniec programu
                         break;
                     }
-                    interpretGcode(line);
-                    interpretMcode(line);
-										
 										
 										repetitions=0;
 
@@ -60,10 +57,10 @@ InterpretProgErr PProgGcodeResolverStrategy::interpretProg(){
 										}
 									
 										for(int k=0; k<repetitions; k++){
-											for(auto it=repetitionsList.begin(); it!=repetitionsList.end(); it++){
+											for(auto&& it:repetitionsList){
 												
-												interpretGcode(*it);
-												interpretMcode(*it);
+												interpretGcode(it);
+												interpretMcode(it);
 													
 											}
 										}					

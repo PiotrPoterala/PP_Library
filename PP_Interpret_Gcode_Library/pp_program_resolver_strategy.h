@@ -47,7 +47,7 @@ class PProgramResolverStrategy{
 		protected:
 			PIOdeviceShrPtr destDevice;
 			PFileShrPtr sourceFile;
-	
+			
 		public:
 			PProgramResolverStrategy()=delete;
 			PProgramResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source): destDevice(destination), sourceFile(source){};

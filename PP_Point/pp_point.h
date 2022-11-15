@@ -62,7 +62,7 @@ template <typename Type>
 			
 		PPpoint<Type>& operator=(const PPpoint<Type> &point){
 
-			axes=point.axes;
+			axes=point.getAxes();
 			limits=point.getLimits();
 			return (*this);
 
@@ -73,13 +73,18 @@ template <typename Type>
 		PPpoint<Type>& operator=(const PPpoint<From> &pointToConvert){
 
 		//		PPpoint<Type> point;
-			
+				axes.clear();
+				limits.clear();
 	
-				for(auto pkt:pointToConvert.axes){
-					point.addAx(pair<char, Type>(pkt.first, static_cast<Type>(pkt.second)));
-					point.addLimit(char acronim, TLimits data)
-					
+				for(auto pkt:pointToConvert.getAxes()){
+					addAx(pair<char, Type>(pkt.first, static_cast<Type>(pkt.second)));					
 				}
+				
+				for(auto lim:pointToConvert.getLimits()){
+					addLimit(lim.first, TLimits(static_cast<Type>(std::get<0>(lim.second)), static_cast<Type>(std::get<1>(lim.second)), static_cast<Type>(std::get<2>(lim.second)), std::get<3>(lim.second)));		
+				}
+				
+				
 			
 				return (*this);
 		}	
@@ -121,6 +126,10 @@ template <typename Type>
 
 		}			
 		
+		map<char, Type> getAxes() const{
+			return axes;
+
+		}		
 		
 		bool operator==(PPpoint &point){
 			if(axes.size()==point.axes.size()){
@@ -227,10 +236,10 @@ template <typename Type>
 		return 0;
 	}
 	
-	Type getRealAxValue(char acronim){
-		auto val=getAxValue(acronim);
+	double getRealAxValue(char acronim){
+		double val=static_cast<double>(getAxValue(acronim));
 		auto limit=limits.find(acronim);
-    if(limit!=limits.end())val*=pow_pp(10, std::get<3>(limit->second));
+    if(limit!=limits.end())val/=pow_pp(10, std::get<3>(limit->second));
 		
 		return val;
 	}

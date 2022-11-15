@@ -83,6 +83,14 @@ int PString::toInt(int base){
 		
 }
 
+double PString::toDouble(){
+		int result=0;
+		if(isdigit(at(0)))result=stod(data());
+	
+		return result;
+
+}
+
 double PString::findValueAfterAcronim(char acronim, double defValue){
         string line=findDataAfterAcronim(acronim);
         if(line.empty())return defValue;
