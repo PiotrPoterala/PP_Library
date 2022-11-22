@@ -32,41 +32,50 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 						else if(nr_Gkod==91) writeInAboluteValues=false;	//Współrzędne przyrostowe (droga) od aktualnego położenia osi narzędzia.
 
 						else if(nr_Gkod==G92){			//zmiana parametrów pracy
-								int dataToWrite;
-							
+
 								out<<((G_KOD<<10) | nr_Gkod)<<" ";
 							
-								dataToWrite=data.findValueAfterAcronim('T', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('T').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('T')))<<" "; 
-								else out<<dataToWrite<<" ";
+								int dataToWrite=data.findValueAfterAcronim('T', -1);
+								auto par=workParams->getParam('T');
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<par.front()->correctData(dataToWrite*pow_pp(10, par.front()->getUnit()))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('t', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('t').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('t') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								par=workParams->getParam('t');
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('t').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('t') ))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('P', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('P').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('P') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('P').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('P') ))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('z', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('z').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('z') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('z').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('z') ))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('N', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('N').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('N') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('N').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('N') ))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('D', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('D').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('D') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('D').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('D') ))<<" "; 
+								}else out<<-1<<" ";
 								
 								dataToWrite=data.findValueAfterAcronim('f', -1);
-								if(dataToWrite!=-1)out<<workParams->getParam('f').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('f') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('f').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('f') ))<<" "; 
+								}else out<<-1<<" ";
 										
 								dataToWrite=data.findValueAfterAcronim('j', -1);										
-								if(dataToWrite!=-1)out<<workParams->getParam('j').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('j') ))<<" "; 
-								else out<<dataToWrite<<" ";
+								if(dataToWrite!=-1 && !par.empty()){
+									out<<workParams->getParam('j').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('j') ))<<" "; 
+								}else out<<-1;
 							
 								out<<"\r\n";
 

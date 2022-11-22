@@ -27,6 +27,7 @@
 ".\objects\pp_arc_ext.o"
 ".\objects\pp_prog_gcode_resolver_strategy.o"
 ".\objects\pp_prog_wedm_gcode_resolver_strategy.o"
+".\objects\pp_prog_edf_resolver_strategy.o"
 ".\objects\pp_text_stream.o"
 ".\objects\retarget_io.o"
 ".\objects\startup_stm32f429xx.o"

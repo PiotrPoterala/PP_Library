@@ -225,34 +225,34 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &l
 					
 					out<<((G_KOD<<10) | G92)<<" ";
 					
-					if(workParams->exists('T')){
-						out<<workParams->getParam('T').front()->correctData(timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('T') ))<<" "; 
-					}else out<<timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('t')){
-						out<<workParams->getParam('t').front()->correctData(timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('t') ))<<" "; 
-					}else out<<timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('P')){
-						out<<workParams->getParam('P').front()->correctData(threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('P') ))<<" "; 
-					}else out<<threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('z')){
-						out<<workParams->getParam('z').front()->correctData(threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('z') ))<<" "; 
-					}else out<<threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('N')){
-						out<<workParams->getParam('N').front()->correctData(wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('N') ))<<" "; 
-					}else out<<wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('D')){
-						out<<workParams->getParam('D').front()->correctData(wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('D') ))<<" "; 
-					}else out<<wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)<<" ";
-					
-					if(workParams->exists('f')){
-						out<<workParams->getParam('f').front()->correctData(feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('f') ))<<" "; 
-					}else out<<feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)<<" ";
-					
+//					if(workParams->exists('T')){
+//						out<<workParams->getParam('T').front()->correctData(timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('T') ))<<" "; 
+//					}else out<<timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('t')){
+//						out<<workParams->getParam('t').front()->correctData(timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('t') ))<<" "; 
+//					}else out<<timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('P')){
+//						out<<workParams->getParam('P').front()->correctData(threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('P') ))<<" "; 
+//					}else out<<threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('z')){
+//						out<<workParams->getParam('z').front()->correctData(threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('z') ))<<" "; 
+//					}else out<<threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('N')){
+//						out<<workParams->getParam('N').front()->correctData(wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('N') ))<<" "; 
+//					}else out<<wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('D')){
+//						out<<workParams->getParam('D').front()->correctData(wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('D') ))<<" "; 
+//					}else out<<wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)<<" ";
+//					
+//					if(workParams->exists('f')){
+//						out<<workParams->getParam('f').front()->correctData(feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('f') ))<<" "; 
+//					}else out<<feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)<<" ";
+//					
 					if(linePar.toolsMask1 & 0x1) out<<((M_KOD<<10) | M40)<<"\r\n";
 					else out<<((M_KOD<<10) | M41)<<"\r\n";
 
@@ -269,14 +269,12 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &l
 }
 
 PPpoint<int> PProgEDFResolverStrategy::getPointFromTextLine(PString &program){
-				PPpoint<int> endPoint{baseCoord->getParamsValues(), baseCoord->getParamLimits()};
+				PPpoint<int> endPoint{basePoint};
 				
 				endPoint.setRealAxValue('X', program.mid(9, 9).toDouble()/pow_pp(10,6));
 				endPoint.setRealAxValue('Y', program.mid(19, 9).toDouble()/pow_pp(10,6));
-				endPoint.setRealAxValue('Z', 0);
 				endPoint.setRealAxValue('U', program.mid(58, 9).toDouble()/pow_pp(10,6));
 				endPoint.setRealAxValue('V', program.mid(68, 9).toDouble()/pow_pp(10,6));
-				endPoint.setRealAxValue('z', program.mid(29, 9).toDouble()/pow_pp(10,6));
 				
 //				endPoint.addAx(pair<char, int>('Y', program.mid(19, 9).toInt()));
 //				endPoint.addAx(pair<char, int>('U', program.mid(58, 9).toInt()));
@@ -293,8 +291,26 @@ PPpoint<int> PProgEDFResolverStrategy::getPointFromTextLine(PString &program){
 //		return value;
 //}
 
+double PProgEDFResolverStrategy::getDrillingDepthFromTextLine(PString &program){
 
-void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
+				return program.mid(29, 9).toDouble()/pow_pp(10,6);
+		
+}
+
+
+
+void PProgEDFResolverStrategy::writeG00Line(PPpoint<int> &point){
+
+			if(destDevice->isOpen()){
+				PTextStream out(destDevice);
+				out<<((G_KOD<<10) | G00)<<" ";
+				writePointParam(point);
+				out<<"\r\n";
+			}
+}
+
+
+void PProgEDFResolverStrategy::writePointParam(PPpoint<int> &point){
 
 				PTextStream out(destDevice);
 				out<<point.getAxValue('X')<<" "; 
@@ -313,14 +329,8 @@ void PProgWedmEDFResolverStrategy::interpretTextLineWithCoordinates(PString &pro
 				PTextStream out(destDevice);
 				auto endPoint=getPointFromTextLine(program);
 			
-				out<<((G_KOD<<10) | G00)<<" ";
-				out<<endPoint.getAxValue('X')<<" "; 
-				out<<endPoint.getAxValue('Y')<<" "; 
-				out<<endPoint.getAxValue('Z')<<" "; 
-				out<<endPoint.getAxValue('U')<<" ";
-				out<<endPoint.getAxValue('V')<<" ";
-				out<<endPoint.getAxValue('z');
-        out<<"\r\n";
+				writeG00Line(endPoint);
+			
 			}
 }
 
@@ -330,43 +340,22 @@ void PProgDrillEDFResolverStrategy::interpretTextLineWithCoordinates(PString &pr
 	
 		if(destDevice->isOpen()){
 				PTextStream out(destDevice);
-				PPpoint<int> endPoint=getPointFromTextLine(program);
+				auto endPoint=getPointFromTextLine(program);
 			
-				out<<((G_KOD<<10) | G00)<<" ";		
-				if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second)<<" "; else out<<endPoint.axes.find('X')->second<<" ";
-				if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second)<<" "; else out<<endPoint.axes.find('Y')->second<<" ";
-				if(phyCoord->exists('Z'))out<<phyCoord->getParamValue('Z')<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U'))out<<phyCoord->getParam('U').front()->correctData(endPoint.axes.find('U')->second)<<" "; else out<<endPoint.axes.find('U')->second<<" ";
-				if(phyCoord->exists('V'))out<<phyCoord->getParam('V').front()->correctData(endPoint.axes.find('V')->second)<<" "; else out<<endPoint.axes.find('V')->second<<" ";
-				if(phyCoord->exists('z'))out<<phyCoord->getParamValue('z')<<" "; else out<<0<<" ";
-        out<<"\r\n";
-
+				writeG00Line(endPoint);
+				if(endPoint.exists('z')){
+					
+				endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-20);
 				out<<((G_KOD<<10) | G87)<<" ";
-				if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second)<<" "; else out<<endPoint.axes.find('X')->second<<" ";
-				if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second)<<" "; else out<<endPoint.axes.find('Y')->second<<" ";
-				if(phyCoord->exists('Z'))out<<phyCoord->getParamValue('Z')<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U'))out<<phyCoord->getParam('U').front()->correctData(endPoint.axes.find('U')->second)<<" "; else out<<endPoint.axes.find('U')->second<<" ";
-				if(phyCoord->exists('V'))out<<phyCoord->getParam('V').front()->correctData(endPoint.axes.find('V')->second)<<" "; else out<<endPoint.axes.find('V')->second<<" ";
-				if(phyCoord->exists('z'))out<<phyCoord->getParamValue('z')-(20*pow(10, phyCoord->getParamUnit('z')))<<" "; else out<<0<<" ";
+				writePointParam(endPoint);
 				out<<"\r\n";
 
-				out<<((G_KOD<<10) | G00)<<" ";		
-				if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second)<<" "; else out<<endPoint.axes.find('X')->second<<" ";
-				if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second)<<" "; else out<<endPoint.axes.find('Y')->second<<" ";
-				if(phyCoord->exists('Z'))out<<phyCoord->getParamValue('Z')<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U'))out<<phyCoord->getParam('U').front()->correctData(endPoint.axes.find('U')->second)<<" "; else out<<endPoint.axes.find('U')->second<<" ";
-				if(phyCoord->exists('V'))out<<phyCoord->getParam('V').front()->correctData(endPoint.axes.find('V')->second)<<" "; else out<<endPoint.axes.find('V')->second<<" ";
-				if(phyCoord->exists('z'))out<<phyCoord->getParamValue('z')-phyCoord->getParam('z').front()->correctData(endPoint.axes.find('d')->second)-(2*pow(10, phyCoord->getParamUnit('z')))<<" "; else out<<0<<" ";
-				out<<"\r\n";
+				endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-getDrillingDepthFromTextLine(program));
+				writeG00Line(endPoint);
 
-				out<<((G_KOD<<10) | G00)<<" ";		
-				if(phyCoord->exists('X'))out<<phyCoord->getParam('X').front()->correctData(endPoint.axes.find('X')->second)<<" "; else out<<endPoint.axes.find('X')->second<<" ";
-				if(phyCoord->exists('Y'))out<<phyCoord->getParam('Y').front()->correctData(endPoint.axes.find('Y')->second)<<" "; else out<<endPoint.axes.find('Y')->second<<" ";
-				if(phyCoord->exists('Z'))out<<phyCoord->getParamValue('Z')<<" "; else out<<0<<" ";
-				if(phyCoord->exists('U'))out<<phyCoord->getParam('U').front()->correctData(endPoint.axes.find('U')->second)<<" "; else out<<endPoint.axes.find('U')->second<<" ";
-				if(phyCoord->exists('V'))out<<phyCoord->getParam('V').front()->correctData(endPoint.axes.find('V')->second)<<" "; else out<<endPoint.axes.find('V')->second<<" ";
-				if(phyCoord->exists('z'))out<<phyCoord->getParamValue('z')<<" "; else out<<0<<" ";
-				out<<"\r\n";
-
+				endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')+2);
+				writeG00Line(endPoint);
+					
+				}
 			}
 }

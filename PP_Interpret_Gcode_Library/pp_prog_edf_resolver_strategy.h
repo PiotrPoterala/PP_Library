@@ -34,8 +34,9 @@
 	class PProgEDFResolverStrategy : public PProgramResolverStrategy{
 	
 	protected:
-			defOParamListShdPtr baseCoord;
-			defOParamListShdPtr phyCoord;
+		//	defOParamListShdPtr baseCoord;
+		//	defOParamListShdPtr phyCoord;
+			PPpoint<int> basePoint;
 			defOParamListShdPtr workParams;
 	
 			vector<PEDFlinePar*> changeParList;
@@ -43,11 +44,16 @@
 			InterpretProgErr getPointOfChangeParFromEDFprog();
 			void interpretTextLineWithChangeParList(PEDFlinePar &linePar);
 			PPpoint<int> getPointFromTextLine(PString &program);
+			double getDrillingDepthFromTextLine(PString &program);
 	//		int trimToRange(int value, int upperLimit, int lowerLimit);
+	
+			void writeG00Line(PPpoint<int> &point);
+			void writePointParam(PPpoint<int> &point);
+	
 			virtual void interpretTextLineWithCoordinates(PString &program)=0;
 		public:
 			PProgEDFResolverStrategy()=delete;
-			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar): PProgramResolverStrategy(destination, source), phyCoord(phy), workParams(workPar){};
+			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgramResolverStrategy(destination, source), basePoint(basePt), workParams(workPar){};
 			virtual InterpretProgErr interpretProg() final;
 
 	};
@@ -61,7 +67,7 @@ class PProgWedmEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 	public:
 			PProgWedmEDFResolverStrategy()=delete;
-			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, phy, workPar){};
+			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
 
 	};
 
@@ -73,7 +79,7 @@ class PProgDrillEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 		public:
 			PProgDrillEDFResolverStrategy()=delete; 
-			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr phy, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, phy, workPar){};
+			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
 
 	};
 	
