@@ -477,6 +477,11 @@
               <FileType>8</FileType>
               <FilePath>.\pp_math_ext_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_edf_resolver_strategy_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_edf_resolver_strategy_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

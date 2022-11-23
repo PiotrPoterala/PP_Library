@@ -13,6 +13,8 @@ class PProgWedmGcodeResolverStrategy : public PProgGcodeResolverStrategy{
 	
 	private:
 			PPpoint<int> endPoint;			
+	
+			int getWorkParamFromTextLine(PString data, char acronim);
 		protected:
 			virtual void resetInterpretSettings() final;
 			virtual void interpretGcode(PString &program) final;

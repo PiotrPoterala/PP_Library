@@ -53,12 +53,22 @@ template <typename Type>
 		
 		PPpoint(){};
 		PPpoint(map<char, Type> point){axes=point;}
-		PPpoint(map<char, Type> point, map<char, TLimits> lim){
+		PPpoint(const PPpoint<Type> &point){
+			axes=point.getAxes();
+			limits=point.getLimits();
+		}
+		PPpoint(const map<char, Type> &point, const map<char, TLimits> &lim){
 			limits=lim;
 			for(auto it:point){
 				addAx(it);
 			}
 		}
+		
+		shared_ptr<PPpoint<Type>> clone() const{
+	
+			return make_shared<PPpoint<Type>>(*this);
+		}
+		
 			
 		PPpoint<Type>& operator=(const PPpoint<Type> &point){
 
@@ -533,6 +543,7 @@ template <typename Type>
 
 };
 
+using PPpointIntShdPtr=shared_ptr<PPpoint<int>>;
 
 using PPpointIntList=vector<PPpoint<int>>;
 using PPpointIntListShdPtr=shared_ptr<PPpointIntList>;

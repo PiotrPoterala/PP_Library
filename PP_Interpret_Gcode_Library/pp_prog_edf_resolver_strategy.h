@@ -8,6 +8,9 @@
 	#include "pstring.h"
 	#include "pp_point.h"
 	#include "pp_paramlist.h"
+	
+	map<char, vector<int>> parTab={pair<char, vector<int>>{'X', {10,20,30,40,50,60,70,80,90}}};
+	
 
 	class PEDFlinePar{
 
@@ -36,8 +39,9 @@
 	protected:
 		//	defOParamListShdPtr baseCoord;
 		//	defOParamListShdPtr phyCoord;
-			PPpoint<int> basePoint;
+			PPpointIntShdPtr basePoint;
 			defOParamListShdPtr workParams;
+			map<char, vector<int>> changeParRealValueList;
 	
 			vector<PEDFlinePar*> changeParList;
 		
@@ -45,6 +49,7 @@
 			void interpretTextLineWithChangeParList(PEDFlinePar &linePar);
 			PPpoint<int> getPointFromTextLine(PString &program);
 			double getDrillingDepthFromTextLine(PString &program);
+			int getWorkParamFromParTab(char acronim, int index);
 	//		int trimToRange(int value, int upperLimit, int lowerLimit);
 	
 			void writeG00Line(PPpoint<int> &point);
@@ -53,7 +58,17 @@
 			virtual void interpretTextLineWithCoordinates(PString &program)=0;
 		public:
 			PProgEDFResolverStrategy()=delete;
-			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgramResolverStrategy(destination, source), basePoint(basePt), workParams(workPar){};
+			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgramResolverStrategy(destination, source), basePoint(basePt), workParams(workPar){
+			
+				changeParRealValueList.insert(pair<char, vector<int>>{'P', {10,20,30,40,50,60,70,80,90}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'z', {10,20,30,40,50,60,70,80,90}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'D', {1, 2, 3, 4, 5, 6, 7, 8, 9}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'N', {1, 2, 3}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'T', {4, 6, 8}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'t', {20, 40, 60, 80, 100, 120, 160, 200, 400}});
+				changeParRealValueList.insert(pair<char, vector<int>>{'f', {1, 2, 5, 7, 11, 16, 22, 32, 47, 67, 95, 137, 203, 282, 425, 567}});
+			
+			};
 			virtual InterpretProgErr interpretProg() final;
 
 	};
@@ -67,7 +82,7 @@ class PProgWedmEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 	public:
 			PProgWedmEDFResolverStrategy()=delete;
-			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
+			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
 
 	};
 
@@ -79,7 +94,7 @@ class PProgDrillEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 		public:
 			PProgDrillEDFResolverStrategy()=delete; 
-			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpoint<int> basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
+			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
 
 	};
 	

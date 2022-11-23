@@ -32,52 +32,16 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 						else if(nr_Gkod==91) writeInAboluteValues=false;	//Współrzędne przyrostowe (droga) od aktualnego położenia osi narzędzia.
 
 						else if(nr_Gkod==G92){			//zmiana parametrów pracy
-
+							
 								out<<((G_KOD<<10) | nr_Gkod)<<" ";
-							
-								int dataToWrite=data.findValueAfterAcronim('T', -1);
-								auto par=workParams->getParam('T');
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<par.front()->correctData(dataToWrite*pow_pp(10, par.front()->getUnit()))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('t', -1);
-								par=workParams->getParam('t');
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('t').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('t') ))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('P', -1);
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('P').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('P') ))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('z', -1);
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('z').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('z') ))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('N', -1);
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('N').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('N') ))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('D', -1);
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('D').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('D') ))<<" "; 
-								}else out<<-1<<" ";
-								
-								dataToWrite=data.findValueAfterAcronim('f', -1);
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('f').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('f') ))<<" "; 
-								}else out<<-1<<" ";
-										
-								dataToWrite=data.findValueAfterAcronim('j', -1);										
-								if(dataToWrite!=-1 && !par.empty()){
-									out<<workParams->getParam('j').front()->correctData(dataToWrite*pow_pp(10, workParams->getParamUnit('j') ))<<" "; 
-								}else out<<-1;
-							
-								out<<"\r\n";
+								out<<getWorkParamFromTextLine(data, 'T')<<" ";
+								out<<getWorkParamFromTextLine(data, 't')<<" ";
+								out<<getWorkParamFromTextLine(data, 'P')<<" ";
+								out<<getWorkParamFromTextLine(data, 'z')<<" ";
+								out<<getWorkParamFromTextLine(data, 'N')<<" ";
+								out<<getWorkParamFromTextLine(data, 'D')<<" ";
+								out<<getWorkParamFromTextLine(data, 'f')<<" ";
+								out<<getWorkParamFromTextLine(data, 'j')<<"\r\n";
 
 						}else if(nr_Gkod>=54 && nr_Gkod<=58 && basePoint.rGetAxes().empty()){
 							int idBPoint=nr_Gkod-54;
@@ -220,4 +184,16 @@ void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
 				out<<point.getAxValue('U')<<" ";
 				out<<point.getAxValue('V')<<" ";
 				out<<point.getAxValue('z');
+}
+
+int PProgWedmGcodeResolverStrategy::getWorkParamFromTextLine(PString data, char acronim){
+				int parVal=-1;
+	
+				auto par=workParams->getParam(acronim);
+				auto paramValue=data.findValueAfterAcronim(acronim, -1);
+				if(paramValue!=-1 && !par.empty()){
+					parVal=par.front()->correctData(paramValue*pow_pp(10, par.front()->getUnit())); 
+				}
+				
+				return parVal;
 }

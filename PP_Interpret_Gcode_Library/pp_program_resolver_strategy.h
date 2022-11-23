@@ -29,16 +29,16 @@ constexpr int G92=92;
 #define G92_NR_OF_PAR 		8
 
 #define MKOD_NIEINTERPRETOWANY (-1)
-#define M00 0
-#define M38 38
-#define M39 39
-#define M40 40
-#define M41 41
-#define M42 42
-#define M43 43
-#define M44 44
-#define M45 45
-#define M46 46
+constexpr int M00=0;
+constexpr int M38=38;
+constexpr int M39=39;
+constexpr int M40=40;
+constexpr int M41=41;
+constexpr int M42=42;
+constexpr int M43=43;
+constexpr int M44=44;
+constexpr int M45=45;
+constexpr int M4=46;
 
 enum class InterpretProgErr{idNO_ERRORS, idNO_FILES, idINCORRECT_NR_OF_BLOCKS, idLACK_MODULO, idLACK_G50_G59};
 	

@@ -22,15 +22,37 @@ Dialog DLL:      TCM.DLL V1.36.5.0
  
 <h2>Project:</h2>
 C:\ARM\PP_library\pp_unit_tests\pp_cppUtests.uvprojx
-Project File Date:  11/15/2022
+Project File Date:  11/23/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.13.1', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'Target 1'
-compiling pp_gcode_resolver_strategy_test.cpp...
-linking...
-Program Size: Code=185948 RO-data=37496 RW-data=220 ZI-data=41092  
-".\Objects\pp_cppUtests.axf" - 0 Error(s), 0 Warning(s).
+../PP_Interpret_Gcode_Library/pp_prog_edf_resolver_strategy.cpp(260): error: no matching constructor for initialization of 'PPpoint<int>'
+                                PPpoint<int> endPoint{basePoint};
+                                             ^       ~~~~~~~~~~~
+../PP_Point\pp_point.h(55): note: candidate constructor not viable: no known conversion from 'PPpointIntShdPtr' (aka 'shared_ptr<PPpoint<int> >') to 'map<char, int>' for 1st argument
+                PPpoint(map<char, Type> point){axes=point;}
+                ^
+../PP_Point\pp_point.h(56): note: candidate constructor not viable: no known conversion from 'PPpointIntShdPtr' (aka 'shared_ptr<PPpoint<int> >') to 'const PPpoint<int>' for 1st argument
+                PPpoint(const PPpoint<Type> &point){
+                ^
+../PP_Point\pp_point.h(54): note: candidate constructor not viable: requires 0 arguments, but 1 was provided
+                PPpoint(){};
+                ^
+../PP_Point\pp_point.h(60): note: candidate constructor not viable: requires 2 arguments, but 1 was provided
+                PPpoint(const map<char, Type> &point, const map<char, TLimits> &lim){
+                ^
+../PP_Interpret_Gcode_Library/pp_prog_edf_resolver_strategy.cpp(341): error: no member named 'getRealAxValue' in 'std::__1::shared_ptr<PPpoint<int> >'; did you mean to use '->' instead of '.'?
+                                endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-getDrillingDepthFromTextLine(program));
+                                                                      ^
+                                                                      ->
+../PP_Interpret_Gcode_Library/pp_prog_edf_resolver_strategy.cpp(344): error: no member named 'getRealAxValue' in 'std::__1::shared_ptr<PPpoint<int> >'; did you mean to use '->' instead of '.'?
+                                endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')+2);
+                                                                      ^
+                                                                      ->
+3 errors generated.
+compiling pp_prog_edf_resolver_strategy.cpp...
+".\Objects\pp_cppUtests.axf" - 3 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -65,12 +87,13 @@ Package Vendor: Keil
       Source file:   Source\retarget_io.c
 
    * Component: Keil::Device:Startup:2.6.3
+      Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s
       Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c
-      Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
       Source file:   MDK\Device\Source\ARM\STM32F42xxx_43xxx_OPT.s
       Source file:   MDK\Device\Source\ARM\STM32F4xx_OTP.s
-      Source file:   Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f429xx.s
-Build Time Elapsed:  00:00:04
+      Include file:  Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
+Target not created.
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

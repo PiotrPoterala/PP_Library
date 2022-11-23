@@ -5,7 +5,7 @@
 #include "pp_text_stream.h"
 #include "pstring.h"
 #include "pp_point.h"
-
+#include "pp_math_ext.h"
 
 InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 	InterpretProgErr  ans=InterpretProgErr::idNO_ERRORS;
@@ -213,46 +213,18 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &l
 	
         if(destDevice->isOpen()){
 					PTextStream out(destDevice);
-					unique_ptr<PEDFlinePar> lineParWithRealValue(new PEDFlinePar());
 	
-					array<int, 9> threshOfWorkAllowedRealValues={10,20,30,40,50,60,70,80,90};
-					array<int, 9> threshOfCircuitAllowedRealValues={10,20,30,40,50,60,70,80,90};
-					array<int, 9> wireFeedAllowedRealValues={1, 2, 3, 4, 5, 6, 7, 8, 9};
-					array<int, 3> wireTensionAllowedRealValues={1, 2, 3};
-					array<int, 3> timeOfImpulseAllowedRealValues={4, 6, 8};
-					array<int, 9> timeOfBreakAllowedRealValues={20, 40, 60, 80, 100, 120, 160, 200, 400};
-					array<int, 16> feedAllowedRealValues={1, 2, 5, 7, 11, 16, 22, 32, 47, 67, 95, 137, 203, 282, 425, 567};
-					
 					out<<((G_KOD<<10) | G92)<<" ";
 					
-//					if(workParams->exists('T')){
-//						out<<workParams->getParam('T').front()->correctData(timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('T') ))<<" "; 
-//					}else out<<timeOfImpulseAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfImpulseAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('t')){
-//						out<<workParams->getParam('t').front()->correctData(timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('t') ))<<" "; 
-//					}else out<<timeOfBreakAllowedRealValues.at(trimToRange(linePar.threshOfWork, timeOfBreakAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('P')){
-//						out<<workParams->getParam('P').front()->correctData(threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('P') ))<<" "; 
-//					}else out<<threshOfWorkAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfWorkAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('z')){
-//						out<<workParams->getParam('z').front()->correctData(threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('z') ))<<" "; 
-//					}else out<<threshOfCircuitAllowedRealValues.at(trimToRange(linePar.threshOfWork, threshOfCircuitAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('N')){
-//						out<<workParams->getParam('N').front()->correctData(wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('N') ))<<" "; 
-//					}else out<<wireTensionAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireTensionAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('D')){
-//						out<<workParams->getParam('D').front()->correctData(wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('D') ))<<" "; 
-//					}else out<<wireFeedAllowedRealValues.at(trimToRange(linePar.threshOfWork, wireFeedAllowedRealValues.size(), 1)-1)<<" ";
-//					
-//					if(workParams->exists('f')){
-//						out<<workParams->getParam('f').front()->correctData(feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)* pow(10, workParams->getParamUnit('f') ))<<" "; 
-//					}else out<<feedAllowedRealValues.at(trimToRange(linePar.threshOfWork, feedAllowedRealValues.size(), 1)-1)<<" ";
-//					
+					out<<getWorkParamFromParTab('T', linePar.timeOfImpulse-1)<<" ";
+					out<<getWorkParamFromParTab('t', linePar.timeOfBreak-1)<<" ";
+					out<<getWorkParamFromParTab('P', linePar.threshOfWork-1)<<" ";
+					out<<getWorkParamFromParTab('z', linePar.threshOfCircuit-1)<<" ";
+					out<<getWorkParamFromParTab('N', linePar.wireTension-1)<<" ";
+					out<<getWorkParamFromParTab('D', linePar.wireFeed-1)<<" ";
+					out<<getWorkParamFromParTab('f', linePar.feed-1)<<" ";
+					out<<-1<<"\r\n";
+					
 					if(linePar.toolsMask1 & 0x1) out<<((M_KOD<<10) | M40)<<"\r\n";
 					else out<<((M_KOD<<10) | M41)<<"\r\n";
 
@@ -267,6 +239,22 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &l
 
 		}
 }
+
+
+int PProgEDFResolverStrategy::getWorkParamFromParTab(char acronim, int index){
+				int parVal=-1;
+	
+				auto par=workParams->getParam(acronim);
+				auto alowedValuesIt=changeParRealValueList.find(acronim);
+				if(alowedValuesIt!=changeParRealValueList.end() && !par.empty()){
+					index=trim_pp(index, static_cast<int>(alowedValuesIt->second.size()-1), 0);
+					
+					parVal=par.front()->correctData(alowedValuesIt->second.at(index))*pow_pp(10, par.front()->getUnit()); 
+				}
+				
+				return parVal;
+}
+
 
 PPpoint<int> PProgEDFResolverStrategy::getPointFromTextLine(PString &program){
 				PPpoint<int> endPoint{basePoint};
