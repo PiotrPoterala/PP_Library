@@ -124,6 +124,13 @@ PString& PString::trimmed(){
 		if(!isspace(at(i)))break;
 	}
 	erase(0, i);
+
+	return trimmedRight();
+}
+
+PString& PString::trimmedRight(){
+	
+	int i=0;
 	
 	for(i=size()-1; i>=0; i--){
 		if(!isspace(at(i)))break;

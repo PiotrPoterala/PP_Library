@@ -9,44 +9,46 @@
 	#include "pp_point.h"
 	#include "pp_paramlist.h"
 	
-	map<char, vector<int>> parTab={pair<char, vector<int>>{'X', {10,20,30,40,50,60,70,80,90}}};
+	//map<char, vector<int>> parTab={pair<char, vector<int>>{'X', {10,20,30,40,50,60,70,80,90}}};
 	
 
-	class PEDFlinePar{
+//	class PEDFlinePar{
 
-	public:
-			PEDFlinePar(int pblock=0, int psegment=0, int pthreshOfWork=0, int pthreshOfCircuit=0, int ptimeOfImpulse=0, int ptimeOfBreak=0, int pwireFeed=0, int pwireTension=0, int pfeed=0, int ptoolsMask1=0,
-									int ptoolsMask2=0, int ptoolsMask3=0, int pfunMask=0):block(pblock), segment(psegment), threshOfWork(pthreshOfWork), threshOfCircuit(pthreshOfCircuit), timeOfImpulse(ptimeOfImpulse),
-					timeOfBreak(ptimeOfBreak), wireFeed(pwireFeed), wireTension(pwireTension), feed(pfeed), toolsMask1(ptoolsMask1), toolsMask2(ptoolsMask2), toolsMask3(ptoolsMask3), funMask(pfunMask){}
-			int block;
-			int segment;
-			int threshOfWork;
-			int threshOfCircuit;
-			int timeOfImpulse;
-			int timeOfBreak;
-			int wireFeed;
-			int wireTension;
-			int feed;
-			int toolsMask1;
-			int toolsMask2;
-			int toolsMask3;
-			int funMask;
-	};
+//	public:
+//			PEDFlinePar(int pblock=0, int psegment=0, int pthreshOfWork=0, int pthreshOfCircuit=0, int ptimeOfImpulse=0, int ptimeOfBreak=0, int pwireFeed=0, int pwireTension=0, int pfeed=0, int ptoolsMask1=0,
+//									int ptoolsMask2=0, int ptoolsMask3=0, int pfunMask=0):block(pblock), segment(psegment), threshOfWork(pthreshOfWork), threshOfCircuit(pthreshOfCircuit), timeOfImpulse(ptimeOfImpulse),
+//					timeOfBreak(ptimeOfBreak), wireFeed(pwireFeed), wireTension(pwireTension), feed(pfeed), toolsMask1(ptoolsMask1), toolsMask2(ptoolsMask2), toolsMask3(ptoolsMask3), funMask(pfunMask){}
+//			int block;
+//			int segment;
+//			int threshOfWork;
+//			int threshOfCircuit;
+//			int timeOfImpulse;
+//			int timeOfBreak;
+//			int wireFeed;
+//			int wireTension;
+//			int feed;
+//			int toolsMask1;
+//			int toolsMask2;
+//			int toolsMask3;
+//			int funMask;
+//	};
 
+	using EDFlinePar=tuple<int, int, int, int, int, int, int, int, int, int, int, int, int>;
 	
 	class PProgEDFResolverStrategy : public PProgramResolverStrategy{
 	
 	protected:
 		//	defOParamListShdPtr baseCoord;
 		//	defOParamListShdPtr phyCoord;
-			PPpointIntShdPtr basePoint;
+			PPpointIntListShdPtr basePointsList;
+			PPpoint<int> basePoint;
 			defOParamListShdPtr workParams;
 			map<char, vector<int>> changeParRealValueList;
 	
-			vector<PEDFlinePar*> changeParList;
+			vector<EDFlinePar> changeParList;
 		
 			InterpretProgErr getPointOfChangeParFromEDFprog();
-			void interpretTextLineWithChangeParList(PEDFlinePar &linePar);
+			void interpretTextLineWithChangeParList(EDFlinePar &linePar);
 			PPpoint<int> getPointFromTextLine(PString &program);
 			double getDrillingDepthFromTextLine(PString &program);
 			int getWorkParamFromParTab(char acronim, int index);
@@ -58,7 +60,7 @@
 			virtual void interpretTextLineWithCoordinates(PString &program)=0;
 		public:
 			PProgEDFResolverStrategy()=delete;
-			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgramResolverStrategy(destination, source), basePoint(basePt), workParams(workPar){
+			PProgEDFResolverStrategy(PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgramResolverStrategy(destination, source), workParams(workPar), basePointsList(bPointsList){
 			
 				changeParRealValueList.insert(pair<char, vector<int>>{'P', {10,20,30,40,50,60,70,80,90}});
 				changeParRealValueList.insert(pair<char, vector<int>>{'z', {10,20,30,40,50,60,70,80,90}});
@@ -82,7 +84,7 @@ class PProgWedmEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 	public:
 			PProgWedmEDFResolverStrategy()=delete;
-			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
+			PProgWedmEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgEDFResolverStrategy(destination, source, workPar, bPointsList){};
 
 	};
 
@@ -94,7 +96,7 @@ class PProgDrillEDFResolverStrategy : public PProgEDFResolverStrategy{
 	
 		public:
 			PProgDrillEDFResolverStrategy()=delete; 
-			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, PPpointIntShdPtr basePt, defOParamListShdPtr workPar): PProgEDFResolverStrategy(destination, source, basePt, workPar){};
+			PProgDrillEDFResolverStrategy (PIOdeviceShrPtr destination, PFileShrPtr source, defOParamListShdPtr workPar, PPpointIntListShdPtr bPointsList): PProgEDFResolverStrategy(destination, source, workPar, bPointsList){};
 
 	};
 	

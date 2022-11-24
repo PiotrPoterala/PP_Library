@@ -1,5 +1,7 @@
 #include <cmath>
 
+#include <stdexcept> 
+
 #include "pp_prog_wedm_gcode_resolver_strategy.h"
 #include "pp_text_stream.h"
 #include "pp_math.h"
@@ -44,13 +46,21 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 								out<<getWorkParamFromTextLine(data, 'j')<<"\r\n";
 
 						}else if(nr_Gkod>=54 && nr_Gkod<=58 && basePoint.rGetAxes().empty()){
-							int idBPoint=nr_Gkod-54;
-							basePoint=basePointsList->at(idBPoint);
-							endPoint=basePoint;
+							unsigned int idBPoint=nr_Gkod-54;
+//							try {
+							if(!basePointsList->empty() && basePointsList->size()>=idBPoint+1){
+								basePoint=basePointsList->at(idBPoint);
+								endPoint=basePoint;
+								
+								out<<((G_KOD<<10) | G50)<<" ";
+								writePointParam(basePoint);
+								out<<"\r\n";
+								
+							}
+//							}catch (const std::out_of_range& oor) {
+//								printf("Out of Range error: %s", oor.what());
+//							}
 							
-							out<<((G_KOD<<10) | G50)<<" ";
-							writePointParam(basePoint);
-							out<<"\r\n";
 							
             }else if(!basePoint.rGetAxes().empty()){
 

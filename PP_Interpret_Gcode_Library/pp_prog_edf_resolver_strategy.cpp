@@ -31,9 +31,16 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 					destDevice->seek(0);
 				}
 
-
+				if(!basePointsList->empty()){
+					basePoint=basePointsList->at(0);	
+				}else{
+					return InterpretProgErr::idLACK_G50_G59;
+				}
+				
+				
         PTextStream outDevice(destDevice);
         PString line, secondLine;
+				
 
 
         line = sourceFile->readLine();
@@ -45,6 +52,8 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
                 uvCursor=sourceFile->pos();
 
                 line = sourceFile->readLine();
+							
+							
                 while(!line.empty() && blocks<(nrOfBlocks/2)+1){	//pobranie kursora początku zapisu w pliku informacji o dolnej głowicy
                     uvCursor=sourceFile->pos();
                     nrOfSegments=line.mid(0, 3).toInt(); 
@@ -57,60 +66,64 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 
                 nrOfSegments=0;
                 blocks=0;
-                outDevice<<(START_PROG<<10)<<" \r\n";     //zapisanie do pamięci flash znaku określającego początek programu
-                if(changeParListIterator!=changeParList.end() && (*changeParListIterator)->block==-1){
-                    interpretTextLineWithChangeParList(*(*changeParListIterator));	//zapisanie parametrów startowych
+                outDevice<<(START_PROG<<10)<<"\r\n";     //zapisanie do pamięci flash znaku określającego początek programu
+                if(changeParListIterator!=changeParList.end() && std::get<0>(*changeParListIterator)==-1){
+                    interpretTextLineWithChangeParList(*changeParListIterator);	//zapisanie parametrów startowych
                     changeParListIterator++;
                 }
 
                 sourceFile->seek(xyCursor);
                 line = sourceFile->readLine();
+								line.trimmedRight();
                 xyCursor=sourceFile->pos();
                 sourceFile->seek(uvCursor);
                 secondLine = sourceFile->readLine();
                 uvCursor=sourceFile->pos();
 
                 while(!secondLine.empty()){
-                    if(blocks>=(nrOfBlocks/2)){
-                        outDevice<<(START_PROG<<10)<<" \r\n";  //zapisanie do pamięci flash znaku określającego koniec programu
-                        break;
-                    }
 
-                    if(nrOfSegments==0){
-                        auxNrOfSegments=line.mid(0, 3).toInt(); 
-                        if(auxNrOfSegments>0){
-                            nrOfSegments=auxNrOfSegments;
-                            setBreak=true;
-                        }else if(auxNrOfSegments<0){
-                            nrOfSegments=abs(auxNrOfSegments);
-                        }
-                    }else{
+									if(nrOfSegments==0){
+											auxNrOfSegments=line.mid(0, 3).toInt(); 
+											if(auxNrOfSegments>0){
+													nrOfSegments=auxNrOfSegments;
+													setBreak=true;
+											}else if(auxNrOfSegments<0){
+													nrOfSegments=abs(auxNrOfSegments);
+											}
+									}else{
 
-                        line+=secondLine;
-                        interpretTextLineWithCoordinates(line);
-                        if(changeParListIterator!=changeParList.end()){
-                            if((*changeParListIterator)->block==blocks && (*changeParListIterator)->segment==auxNrOfSegments-nrOfSegments){
-                                interpretTextLineWithChangeParList(*(*changeParListIterator));	//zapisanie parametrów startowych
-																changeParListIterator++;
-                            }
-                        }
+											line+=secondLine;
+											interpretTextLineWithCoordinates(line);
+											if(changeParListIterator!=changeParList.end()){
+													if(std::get<0>(*changeParListIterator)==blocks && std::get<1>(*changeParListIterator)==auxNrOfSegments-nrOfSegments){
+															interpretTextLineWithChangeParList(*changeParListIterator);	//zapisanie parametrów startowych
+															changeParListIterator++;
+													}
+											}
 
-                        nrOfSegments--;
-                        if(nrOfSegments==0){
-                            blocks++;
-                            if(setBreak){
-                                setBreak=false;
-                                outDevice<<((M_KOD<<10) | M00)<<" \r\n";
-                            }
-                        }
-                    }
+											nrOfSegments--;
+											if(nrOfSegments==0){
+													blocks++;
+												
+													if(blocks>=(nrOfBlocks/2)){
+														outDevice<<(START_PROG<<10)<<"\r\n";  //zapisanie do pamięci flash znaku określającego koniec programu
+														break;
+													}
+												
+													if(setBreak){
+															setBreak=false;
+															outDevice<<((M_KOD<<10) | M00)<<"\r\n";
+													}
+											}
+									}
 
-                sourceFile->seek(xyCursor);
-                line = sourceFile->readLine();
-                xyCursor=sourceFile->pos();
-                sourceFile->seek(uvCursor);
-                secondLine = sourceFile->readLine();
-                uvCursor=sourceFile->pos();
+									sourceFile->seek(xyCursor);
+									line = sourceFile->readLine();
+									line.trimmedRight();
+									xyCursor=sourceFile->pos();
+									sourceFile->seek(uvCursor);
+									secondLine = sourceFile->readLine();
+									uvCursor=sourceFile->pos();
 
                 }
 
@@ -134,6 +147,7 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 			PString line;
 			vector<PString> paramsList;
 
+			changeParList.clear();
 
 			int numHash=0, numDolar=0, posOfChange=0;
 			int numOfChange=-1;
@@ -151,9 +165,9 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 									if(numHash==1){
 											paramsList=line.split(' ');
 											if(paramsList.size()>=13){
-													changeParList.push_back(new PEDFlinePar(-1, -1, paramsList.at(1).toInt(16), paramsList.at(2).toInt(16), paramsList.at(3).toInt(16), paramsList.at(4).toInt(16),
+													changeParList.push_back(EDFlinePar{-1, -1, paramsList.at(1).toInt(16), paramsList.at(2).toInt(16), paramsList.at(3).toInt(16), paramsList.at(4).toInt(16),
 																														 paramsList.at(6).toInt(16), paramsList.at(7).toInt(16), paramsList.at(11).toInt(16), paramsList.at(8).toInt(16),
-																														 paramsList.at(9).toInt(16), paramsList.at(10).toInt(16), paramsList.at(12).toInt(16)));
+																														 paramsList.at(9).toInt(16), paramsList.at(10).toInt(16), paramsList.at(12).toInt(16)});
 													getStartPar=true;
 											}
 									}else if(numDolar==1){
@@ -164,7 +178,7 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 															if(!getPosOfChange){
 																	paramsList=line.split(' ');
 																	if(paramsList.size()>=2){
-																			changeParList.push_back(new PEDFlinePar(paramsList.at(0).toInt(), paramsList.at(1).toInt()));
+																			changeParList.push_back(EDFlinePar{paramsList.at(0).toInt(), paramsList.at(1).toInt()});
 																	}
 																	posOfChange++;
 																	if(posOfChange>=numOfChange){
@@ -181,17 +195,29 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 																					}else{
 																							index=posOfChange;
 																					}
-																					changeParList.at(index)->threshOfWork=paramsList.at(1).toInt(16);
-																					changeParList.at(index)->threshOfCircuit=paramsList.at(2).toInt(16);
-																					changeParList.at(index)->timeOfImpulse=paramsList.at(3).toInt(16);
-																					changeParList.at(index)->timeOfBreak=paramsList.at(4).toInt(16);
-																					changeParList.at(index)->wireFeed=paramsList.at(6).toInt(16);
-																					changeParList.at(index)->wireTension=paramsList.at(7).toInt(16);
-																					changeParList.at(index)->feed=paramsList.at(11).toInt(16);
-																					changeParList.at(index)->toolsMask1=paramsList.at(8).toInt(16);
-																					changeParList.at(index)->toolsMask2=paramsList.at(9).toInt(16);
-																					changeParList.at(index)->toolsMask3=paramsList.at(10).toInt(16);
-																					changeParList.at(index)->funMask=paramsList.at(12).toInt(16);
+																					std::get<2>(changeParList.at(index))=paramsList.at(1).toInt(16);
+																					std::get<3>(changeParList.at(index))=paramsList.at(2).toInt(16);
+																					std::get<4>(changeParList.at(index))=paramsList.at(3).toInt(16);
+																					std::get<5>(changeParList.at(index))=paramsList.at(4).toInt(16);
+																					std::get<6>(changeParList.at(index))=paramsList.at(6).toInt(16);
+																					std::get<7>(changeParList.at(index))=paramsList.at(7).toInt(16);
+																					std::get<8>(changeParList.at(index))=paramsList.at(11).toInt(16);
+																					std::get<9>(changeParList.at(index))=paramsList.at(8).toInt(16);
+																					std::get<10>(changeParList.at(index))=paramsList.at(9).toInt(16);
+																					std::get<11>(changeParList.at(index))=paramsList.at(10).toInt(16);
+																					std::get<12>(changeParList.at(index))=paramsList.at(12).toInt(16);
+																					
+//																					changeParList.at(index)->threshOfWork=paramsList.at(1).toInt(16);
+//																					changeParList.at(index)->threshOfCircuit=paramsList.at(2).toInt(16);
+//																					changeParList.at(index)->timeOfImpulse=paramsList.at(3).toInt(16);
+//																					changeParList.at(index)->timeOfBreak=paramsList.at(4).toInt(16);
+//																					changeParList.at(index)->wireFeed=paramsList.at(6).toInt(16);
+//																					changeParList.at(index)->wireTension=paramsList.at(7).toInt(16);
+//																					changeParList.at(index)->feed=paramsList.at(11).toInt(16);
+//																					changeParList.at(index)->toolsMask1=paramsList.at(8).toInt(16);
+//																					changeParList.at(index)->toolsMask2=paramsList.at(9).toInt(16);
+//																					changeParList.at(index)->toolsMask3=paramsList.at(10).toInt(16);
+//																					changeParList.at(index)->funMask=paramsList.at(12).toInt(16);
 																			}
 																			posOfChange++;
 																	}
@@ -209,32 +235,48 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 				return ans;
 }
 
-void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(PEDFlinePar &linePar){
+void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(EDFlinePar &linePar){
 	
         if(destDevice->isOpen()){
 					PTextStream out(destDevice);
 	
+					int threshOfWork;
+					int threshOfCircuit;
+					int timeOfImpulse;
+					int timeOfBreak;
+					int wireFeed;
+					int wireTension;
+					int feed;
+					int toolsMask1;
+					int toolsMask2;
+					int toolsMask3;
+					int funMask;
+					
+					
+					std::tie(std::ignore, std::ignore, threshOfWork, threshOfCircuit, timeOfImpulse, timeOfBreak, wireFeed, wireTension, feed, toolsMask1, toolsMask2, toolsMask3, funMask)=linePar;
+					
+					
 					out<<((G_KOD<<10) | G92)<<" ";
 					
-					out<<getWorkParamFromParTab('T', linePar.timeOfImpulse-1)<<" ";
-					out<<getWorkParamFromParTab('t', linePar.timeOfBreak-1)<<" ";
-					out<<getWorkParamFromParTab('P', linePar.threshOfWork-1)<<" ";
-					out<<getWorkParamFromParTab('z', linePar.threshOfCircuit-1)<<" ";
-					out<<getWorkParamFromParTab('N', linePar.wireTension-1)<<" ";
-					out<<getWorkParamFromParTab('D', linePar.wireFeed-1)<<" ";
-					out<<getWorkParamFromParTab('f', linePar.feed-1)<<" ";
+					out<<getWorkParamFromParTab('T', timeOfImpulse-1)<<" ";
+					out<<getWorkParamFromParTab('t', timeOfBreak-1)<<" ";
+					out<<getWorkParamFromParTab('P', threshOfWork-1)<<" ";
+					out<<getWorkParamFromParTab('z', threshOfCircuit-1)<<" ";
+					out<<getWorkParamFromParTab('N', wireTension-1)<<" ";
+					out<<getWorkParamFromParTab('D', wireFeed-1)<<" ";
+					out<<getWorkParamFromParTab('f', feed-1)<<" ";
 					out<<-1<<"\r\n";
 					
-					if(linePar.toolsMask1 & 0x1) out<<((M_KOD<<10) | M40)<<"\r\n";
+					if(toolsMask1 & 0x1) out<<((M_KOD<<10) | M40)<<"\r\n";
 					else out<<((M_KOD<<10) | M41)<<"\r\n";
 
-					if(linePar.toolsMask2 & 0x1) out<<((M_KOD<<10) | M44)<<"\r\n";
+					if(toolsMask2 & 0x1) out<<((M_KOD<<10) | M44)<<"\r\n";
 					else out<<((M_KOD<<10) | M45)<<"\r\n";
 
-					if(linePar.toolsMask3 & 0x4) out<<((M_KOD<<10) | M42)<<"\r\n";
+					if(toolsMask3 & 0x4) out<<((M_KOD<<10) | M42)<<"\r\n";
 					else out<<((M_KOD<<10) | M43)<<"\r\n";
 
-					if(linePar.funMask==1) out<<((M_KOD<<10) | M38)<<"\r\n";
+					if(funMask==1) out<<((M_KOD<<10) | M38)<<"\r\n";
 					else out<<((M_KOD<<10) | M39)<<"\r\n";
 
 		}
@@ -246,10 +288,10 @@ int PProgEDFResolverStrategy::getWorkParamFromParTab(char acronim, int index){
 	
 				auto par=workParams->getParam(acronim);
 				auto alowedValuesIt=changeParRealValueList.find(acronim);
-				if(alowedValuesIt!=changeParRealValueList.end() && !par.empty()){
-					index=trim_pp(index, static_cast<int>(alowedValuesIt->second.size()-1), 0);
+				if(alowedValuesIt!=changeParRealValueList.end() && !alowedValuesIt->second.empty() && !par.empty()){
+					index=trim_pp(index, static_cast<int>(alowedValuesIt->second.size())-1, 0);
 					
-					parVal=par.front()->correctData(alowedValuesIt->second.at(index))*pow_pp(10, par.front()->getUnit()); 
+					parVal=par.front()->correctData(alowedValuesIt->second.at(index)*pow_pp(10, par.front()->getUnit())); 
 				}
 				
 				return parVal;
@@ -261,8 +303,8 @@ PPpoint<int> PProgEDFResolverStrategy::getPointFromTextLine(PString &program){
 				
 				endPoint.setRealAxValue('X', program.mid(9, 9).toDouble()/pow_pp(10,6));
 				endPoint.setRealAxValue('Y', program.mid(19, 9).toDouble()/pow_pp(10,6));
-				endPoint.setRealAxValue('U', program.mid(58, 9).toDouble()/pow_pp(10,6));
-				endPoint.setRealAxValue('V', program.mid(68, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('U', program.mid(57, 9).toDouble()/pow_pp(10,6));
+				endPoint.setRealAxValue('V', program.mid(67, 9).toDouble()/pow_pp(10,6));
 				
 //				endPoint.addAx(pair<char, int>('Y', program.mid(19, 9).toInt()));
 //				endPoint.addAx(pair<char, int>('U', program.mid(58, 9).toInt()));

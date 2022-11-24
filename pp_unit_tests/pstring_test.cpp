@@ -78,6 +78,14 @@ TEST(PStringTestGroup, trimmedTest)
 	STRCMP_EQUAL("lots of whitespace", str.trimmed().c_str());
 }
 
+TEST(PStringTestGroup, trimmedRightTest)
+{
+	PString str("  lots\t of\nwhitespace\r\n ");
+	STRCMP_EQUAL("  lots\t of\nwhitespace", str.trimmedRight().c_str());
+	
+	str="lots of whitespace";
+	STRCMP_EQUAL("lots of whitespace", str.trimmedRight().c_str());
+}
 
 TEST(PStringTestGroup, split)
 {

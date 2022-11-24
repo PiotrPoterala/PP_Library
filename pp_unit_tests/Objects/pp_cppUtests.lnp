@@ -14,6 +14,7 @@
 ".\objects\pp_motorslist_test.o"
 ".\objects\pp_gcode_resolver_strategy_test.o"
 ".\objects\pp_math_ext_test.o"
+".\objects\pp_edf_resolver_strategy_test.o"
 ".\objects\pp_dir.o"
 ".\objects\pp_file.o"
 ".\objects\pp_file_info.o"

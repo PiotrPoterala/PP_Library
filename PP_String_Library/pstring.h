@@ -58,7 +58,8 @@ public:
 		string findDataAfterAcronim(char acronim);
 		double findValueAfterAcronim(char acronim, double defValue=0);
 		map<char, double> findValuesAfterAcronims();
-		PString&  trimmed();
+		PString& trimmed();
+		PString& trimmedRight();
     vector<PString> split(char sep, SplitBehavior behavior = SkipEmptyParts);
 		StringList splitWithClamps(char sep, char clamps);
 		
