@@ -24,8 +24,10 @@
 				virtual bool seek(int pos) override ;
 				virtual bool write(string &data) override ;
 				virtual bool write(const char *data) override ;
+				virtual bool write(int data) override;
 				virtual bool writeAtTheEnd(string &data)override ;
 				virtual bool writeAtTheEnd(const char *data)override ;
+				virtual bool writeAtTheEnd(int data)override ;
 				virtual string read(int maxSize) override ;
 				virtual int read(char *data, int maxSize) override ;
 				virtual string readLine() override;

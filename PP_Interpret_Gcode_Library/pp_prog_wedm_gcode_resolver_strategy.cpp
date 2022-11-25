@@ -3,7 +3,6 @@
 #include <stdexcept> 
 
 #include "pp_prog_wedm_gcode_resolver_strategy.h"
-#include "pp_text_stream.h"
 #include "pp_math.h"
 #include "pp_math_ext.h"
 #include "pp_param.h"
@@ -21,7 +20,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 		PString data=PString(program);
 	
 		if(destDevice->isOpen()){
-				PTextStream out(destDevice);
+	//			PTextStream out(destDevice);
 
         nr_Gkod=data.findValueAfterAcronim('G', GKOD_NIEINTERPRETOWANY);
 
@@ -35,15 +34,24 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 						else if(nr_Gkod==G92){			//zmiana parametrów pracy
 							
-								out<<((G_KOD<<10) | nr_Gkod)<<" ";
-								out<<getWorkParamFromTextLine(data, 'T')<<" ";
-								out<<getWorkParamFromTextLine(data, 't')<<" ";
-								out<<getWorkParamFromTextLine(data, 'P')<<" ";
-								out<<getWorkParamFromTextLine(data, 'z')<<" ";
-								out<<getWorkParamFromTextLine(data, 'N')<<" ";
-								out<<getWorkParamFromTextLine(data, 'D')<<" ";
-								out<<getWorkParamFromTextLine(data, 'f')<<" ";
-								out<<getWorkParamFromTextLine(data, 'j')<<"\r\n";
+								destDevice->write(((G_KOD<<10) | nr_Gkod));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'T'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 't'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'P'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'z'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'N'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'D'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'f'));
+								destDevice->write(" ");
+								destDevice->write(getWorkParamFromTextLine(data, 'j'));
+								destDevice->write("\r\n");
 
 						}else if(nr_Gkod>=54 && nr_Gkod<=58 && basePoint.rGetAxes().empty()){
 							unsigned int idBPoint=nr_Gkod-54;
@@ -52,9 +60,10 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 								basePoint=basePointsList->at(idBPoint);
 								endPoint=basePoint;
 								
-								out<<((G_KOD<<10) | G50)<<" ";
+								destDevice->write((G_KOD<<10) | G50);
+								destDevice->write(" ");
 								writePointParam(basePoint);
-								out<<"\r\n";
+								destDevice->write("\r\n");
 								
 							}
 //							}catch (const std::out_of_range& oor) {
@@ -132,20 +141,27 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												endPoint.setAxValue('U', endCirclePoint.getX());
 												endPoint.setAxValue('V', endCirclePoint.getY());
 												
-												out<<((G_KOD<<10) | nr_Gkod)<<" ";
-												out<<endPoint.getAxValue('X')<<" ";
-												out<<endPoint.getAxValue('Y')<<" "; 
-												out<<endPoint.getAxValue('Z')<<" "; 
-												out<<circleCenterPoint.getX()<<" ";
-												out<<circleCenterPoint.getY();
-												out<<"\r\n";
+												destDevice->write((G_KOD<<10) | nr_Gkod);
+												destDevice->write(" ");
+												destDevice->write(endPoint.getAxValue('X'));
+												destDevice->write(" ");
+												destDevice->write(endPoint.getAxValue('Y'));
+												destDevice->write(" ");												
+												destDevice->write(endPoint.getAxValue('Z'));
+												destDevice->write(" ");												
+												destDevice->write(circleCenterPoint.getX());
+												destDevice->write(" ");
+												destDevice->write(circleCenterPoint.getY());										
+												destDevice->write("\r\n");
                     }else if(nr_Gkod==G04){	//sterowana przerwa w ruchu
                         int timeOfDelay=0;
 
                         timeOfDelay=data.findValueAfterAcronim('P', 0);
                         timeOfDelay=trim_pp(timeOfDelay, 3600000, 0);
-                        out<<((G_KOD<<10) | nr_Gkod)<<" ";
-                        out<<timeOfDelay<<" \r\n";
+                        destDevice->write((G_KOD<<10) | nr_Gkod);
+												destDevice->write(" ");
+                        destDevice->write(timeOfDelay);
+												destDevice->write("\r\n");
                     }else if(nr_Gkod==G87){	
 												double drillingDepth=data.findValueAfterAcronim('z', 0);	
 												double maxDistance=data.findValueAfterAcronim('s', 0);
@@ -153,9 +169,10 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 												if(endPoint.exists('z') && basePoint.exists('z')){
 													endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-maxDistance);
-													out<<((G_KOD<<10) | G87)<<" ";
+													destDevice->write((G_KOD<<10) | G87);
+													destDevice->write(" ");
 													writePointParam(endPoint);
-													out<<"\r\n";
+													destDevice->write("\r\n");
 
 													endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-drillingDepth);
 													writeG00Line(endPoint);
@@ -169,9 +186,10 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 												if(endPoint.exists('z') && basePoint.exists('z')){
 													endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-maxDistance);
-													out<<((G_KOD<<10) | G88)<<" ";
+													destDevice->write((G_KOD<<10) | G88);
+													destDevice->write(" ");
 													writePointParam(endPoint);
-													out<<"\r\n";
+													destDevice->write("\r\n");
 													
 													endPoint.setAxValue('z', basePoint.getAxValue('z'));
 												}
@@ -187,13 +205,18 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 
 void PProgWedmGcodeResolverStrategy::writePointParam(PPpoint<int> &point){
 
-				PTextStream out(destDevice);
-				out<<point.getAxValue('X')<<" "; 
-				out<<point.getAxValue('Y')<<" "; 
-				out<<point.getAxValue('Z')<<" "; 
-				out<<point.getAxValue('U')<<" ";
-				out<<point.getAxValue('V')<<" ";
-				out<<point.getAxValue('z');
+		//		PTextStream out(destDevice);
+				destDevice->write(point.getAxValue('X'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('Y'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('Z')); 
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('U'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('V'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('z'));;
 }
 
 int PProgWedmGcodeResolverStrategy::getWorkParamFromTextLine(PString data, char acronim){

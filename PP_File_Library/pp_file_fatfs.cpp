@@ -64,18 +64,6 @@ bool PFileFATFS::seek(int pos){
 	
 }
 
-bool PFileFATFS::write(string &data){
-		int writeChars=0;
-
-		writeChars=f_puts(data.c_str(), &file);
-		if(writeChars>0){
-			position+=writeChars;
-			return true;
-		}
-		return false;
-
-}
-
 bool PFileFATFS::write(const char *data){
 		int writeChars=0;
 
@@ -89,14 +77,17 @@ bool PFileFATFS::write(const char *data){
 
 }
 
-bool PFileFATFS::writeAtTheEnd(string &data){
-		bool result=false;
-	
-		if(seek(file.obj.objsize)){
-			result=write(data);
-		}
+bool PFileFATFS::write(string &data){
 
-		return result;
+		return write(data.c_str());
+
+}
+
+bool PFileFATFS::write(int data){
+		int writeChars=0;
+		string str=to_string(data);
+	
+		return write(str.c_str());
 
 }
 
@@ -109,6 +100,20 @@ bool PFileFATFS::writeAtTheEnd(const char *data){
 
 		return result;
 
+}
+
+
+bool PFileFATFS::writeAtTheEnd(string &data){
+
+		return writeAtTheEnd(data.c_str());
+
+}
+
+bool PFileFATFS::writeAtTheEnd(int data){
+		string str=to_string(data);
+
+		return writeAtTheEnd(str.c_str());
+	
 }
 
 //PFile& PFile::operator<<(const char *data){

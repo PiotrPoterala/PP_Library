@@ -31,22 +31,22 @@ DriveStatus defORTX5driveAlgorithms::drive(){
 
 		tick += OS_TICK_FREQ/BASE_FREQUENCY_OF_TIMdrive;   
 		
-		for(auto it:phyStartPoint.axes){
+		for(auto it:phyStartPoint.rGetAxes()){
 
 				auto motor=motorsList->motors.find(it.first);
-				auto indEndP=phyIndEndPoint.axes.find(it.first);
+				auto indEndP=phyIndEndPoint.getAx(it.first);
 				auto cnt_it=counter.find(it.first);
-				if(motor!=motorsList->motors.end() && cnt_it!=counter.end() && indEndP!=phyIndEndPoint.axes.end()){
+				if(motor!=motorsList->motors.end() && cnt_it!=counter.end() && !indEndP.empty()){
 					auto phyCoordAux=motor->second->getPhyCoordClone();
 					if(!phyCoordAux.empty()){
-						int vector=indEndP->second-phyCoordAux.front()->getValue();
+						int vector=indEndP.front()-phyCoordAux.front()->getValue();
 						if(vector!=0){
 							auto velocityAux=motor->second->getVelocityXperSECClone();
 							auto accelerateAux=motor->second->getAccelerationXperSEC2Clone();
 							if(!velocityAux.empty() && !accelerateAux.empty()){
 								
 								if(cnt_it->second>=getClockDividerResponsibleForDriveSpeed(abs_pp(phyCoordAux.front()->getValue()-it.second)/phyCoordAux.front()->getPrecision(), 
-																																					abs_pp(indEndP->second-phyCoordAux.front()->getValue())/phyCoordAux.front()->getPrecision(), 
+																																					abs_pp(indEndP.front()-phyCoordAux.front()->getValue())/phyCoordAux.front()->getPrecision(), 
 																																					fs_mulBy10_pp(accelerateAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-accelerateAux.front()->getUnit()),
 																																					fs_mulBy10_pp(velocityAux.front()->getValue(), phyCoordAux.front()->getUnit()-3-velocityAux.front()->getUnit()), 
 																																					BASE_FREQUENCY_OF_TIMdrive, phyCoordAux.front()->getPrecision())){

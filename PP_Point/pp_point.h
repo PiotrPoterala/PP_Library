@@ -53,10 +53,10 @@ template <typename Type>
 		
 		PPpoint(){};
 		PPpoint(map<char, Type> point){axes=point;}
-		PPpoint(const PPpoint<Type> &point){
-			axes=point.getAxes();
-			limits=point.getLimits();
-		}
+//		PPpoint(const PPpoint<Type> &point){
+//			axes=point.getAxes();
+//			limits=point.getLimits();
+//		}
 		PPpoint(const map<char, Type> &point, const map<char, TLimits> &lim){
 			limits=lim;
 			for(auto it:point){
@@ -238,6 +238,18 @@ template <typename Type>
 		}
 		
 	}
+	
+	
+	vector<Type> getAx(char acronim){
+		vector<Type> value;
+
+		auto it=axes.find(acronim);
+		
+		if(it!=axes.end())value.push_back(it->second);
+		
+		return value;
+	}
+	
 	
 	Type getAxValue(char acronim){
 		auto it=axes.find(acronim);

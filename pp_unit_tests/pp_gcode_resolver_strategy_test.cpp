@@ -8,8 +8,8 @@
 
 TEST_GROUP(PProgWedmGcodeResolverStrategyTestGroup)
 {
-	PFileShrPtr progFile=make_shared<PFileStringMock>("C:/Gc_test/test.txt");
-	PFileShrPtr progAfterItpFile=make_shared<PFileStringMock>("C:/Gc_test/test2.txt");
+	PFileShrPtr progFile; //=make_shared<PFileStringMock>("C:/Gc_test/test.txt");
+	PFileShrPtr progAfterItpFile; //=make_shared<PFileStringMock>("C:/Gc_test/test2.txt");
 	
 	defOParamListShdPtr phyCoord=make_shared<defOParamList>();
 	defOParamListShdPtr baseCoord=make_shared<defOParamList>();

@@ -2,7 +2,6 @@
 #include <array>
 
 #include "pp_prog_edf_resolver_strategy.h"
-#include "pp_text_stream.h"
 #include "pstring.h"
 #include "pp_point.h"
 #include "pp_math_ext.h"
@@ -38,7 +37,7 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 				}
 				
 				
-        PTextStream outDevice(destDevice);
+    //    PTextStream outDevice(destDevice);
         PString line, secondLine;
 				
 
@@ -66,7 +65,8 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 
                 nrOfSegments=0;
                 blocks=0;
-                outDevice<<(START_PROG<<10)<<"\r\n";     //zapisanie do pamięci flash znaku określającego początek programu
+								destDevice->write(START_PROG<<10);
+								destDevice->write("\r\n");
                 if(changeParListIterator!=changeParList.end() && std::get<0>(*changeParListIterator)==-1){
                     interpretTextLineWithChangeParList(*changeParListIterator);	//zapisanie parametrów startowych
                     changeParListIterator++;
@@ -106,13 +106,15 @@ InterpretProgErr PProgEDFResolverStrategy::interpretProg(){
 													blocks++;
 												
 													if(blocks>=(nrOfBlocks/2)){
-														outDevice<<(START_PROG<<10)<<"\r\n";  //zapisanie do pamięci flash znaku określającego koniec programu
+														destDevice->write(START_PROG<<10);
+														destDevice->write("\r\n");
 														break;
 													}
 												
 													if(setBreak){
 															setBreak=false;
-															outDevice<<((M_KOD<<10) | M00)<<"\r\n";
+														  destDevice->write((M_KOD<<10) | M00);
+															destDevice->write("\r\n");
 													}
 											}
 									}
@@ -238,7 +240,7 @@ InterpretProgErr PProgEDFResolverStrategy::getPointOfChangeParFromEDFprog(){
 void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(EDFlinePar &linePar){
 	
         if(destDevice->isOpen()){
-					PTextStream out(destDevice);
+			//		PTextStream out(destDevice);
 	
 					int threshOfWork;
 					int threshOfCircuit;
@@ -255,29 +257,45 @@ void PProgEDFResolverStrategy::interpretTextLineWithChangeParList(EDFlinePar &li
 					
 					std::tie(std::ignore, std::ignore, threshOfWork, threshOfCircuit, timeOfImpulse, timeOfBreak, wireFeed, wireTension, feed, toolsMask1, toolsMask2, toolsMask3, funMask)=linePar;
 					
+					destDevice->write(((G_KOD<<10) | G92));
+					destDevice->write(" ");
 					
-					out<<((G_KOD<<10) | G92)<<" ";
+					destDevice->write(getWorkParamFromParTab('T', timeOfImpulse-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('t', timeOfBreak-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('P', threshOfWork-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('z', threshOfCircuit-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('N', wireTension-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('D', wireFeed-1));
+					destDevice->write(" ");
+					destDevice->write(getWorkParamFromParTab('f', feed-1));
+					destDevice->write(" ");
+					destDevice->write(-1);
+					destDevice->write("\r\n");
 					
-					out<<getWorkParamFromParTab('T', timeOfImpulse-1)<<" ";
-					out<<getWorkParamFromParTab('t', timeOfBreak-1)<<" ";
-					out<<getWorkParamFromParTab('P', threshOfWork-1)<<" ";
-					out<<getWorkParamFromParTab('z', threshOfCircuit-1)<<" ";
-					out<<getWorkParamFromParTab('N', wireTension-1)<<" ";
-					out<<getWorkParamFromParTab('D', wireFeed-1)<<" ";
-					out<<getWorkParamFromParTab('f', feed-1)<<" ";
-					out<<-1<<"\r\n";
+					if(toolsMask1 & 0x1)destDevice->write((M_KOD<<10) | M40);
+					else destDevice->write((M_KOD<<10) | M41);
+
+					destDevice->write("\r\n");
 					
-					if(toolsMask1 & 0x1) out<<((M_KOD<<10) | M40)<<"\r\n";
-					else out<<((M_KOD<<10) | M41)<<"\r\n";
+					if(toolsMask2 & 0x1) destDevice->write((M_KOD<<10) | M44);
+					else destDevice->write((M_KOD<<10) | M45);
+					
+					destDevice->write("\r\n");
 
-					if(toolsMask2 & 0x1) out<<((M_KOD<<10) | M44)<<"\r\n";
-					else out<<((M_KOD<<10) | M45)<<"\r\n";
+					if(toolsMask3 & 0x4) destDevice->write((M_KOD<<10) | M42);
+					else destDevice->write((M_KOD<<10) | M43);
+					
+					destDevice->write("\r\n");
 
-					if(toolsMask3 & 0x4) out<<((M_KOD<<10) | M42)<<"\r\n";
-					else out<<((M_KOD<<10) | M43)<<"\r\n";
-
-					if(funMask==1) out<<((M_KOD<<10) | M38)<<"\r\n";
-					else out<<((M_KOD<<10) | M39)<<"\r\n";
+					if(funMask==1) destDevice->write((M_KOD<<10) | M38);
+					else destDevice->write((M_KOD<<10) | M39);
+					
+					destDevice->write("\r\n");
 
 		}
 }
@@ -332,23 +350,29 @@ double PProgEDFResolverStrategy::getDrillingDepthFromTextLine(PString &program){
 void PProgEDFResolverStrategy::writeG00Line(PPpoint<int> &point){
 
 			if(destDevice->isOpen()){
-				PTextStream out(destDevice);
-				out<<((G_KOD<<10) | G00)<<" ";
+		//		PTextStream out(destDevice);
+				destDevice->write((G_KOD<<10) | G00);
+				destDevice->write(" ");
 				writePointParam(point);
-				out<<"\r\n";
+				destDevice->write("\r\n");
 			}
 }
 
 
 void PProgEDFResolverStrategy::writePointParam(PPpoint<int> &point){
 
-				PTextStream out(destDevice);
-				out<<point.getAxValue('X')<<" "; 
-				out<<point.getAxValue('Y')<<" "; 
-				out<<point.getAxValue('Z')<<" "; 
-				out<<point.getAxValue('U')<<" ";
-				out<<point.getAxValue('V')<<" ";
-				out<<point.getAxValue('z');
+		//		PTextStream out(destDevice);
+				destDevice->write(point.getAxValue('X'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('Y'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('Z')); 
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('U'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('V'));
+				destDevice->write(" ");
+				destDevice->write(point.getAxValue('z'));
 }
 
 
@@ -356,7 +380,6 @@ void PProgEDFResolverStrategy::writePointParam(PPpoint<int> &point){
 void PProgWedmEDFResolverStrategy::interpretTextLineWithCoordinates(PString &program){
 	
 		if(destDevice->isOpen()){
-				PTextStream out(destDevice);
 				auto endPoint=getPointFromTextLine(program);
 			
 				writeG00Line(endPoint);
@@ -369,16 +392,17 @@ void PProgDrillEDFResolverStrategy::interpretTextLineWithCoordinates(PString &pr
 	
 	
 		if(destDevice->isOpen()){
-				PTextStream out(destDevice);
+	//			PTextStream out(destDevice);
 				auto endPoint=getPointFromTextLine(program);
 			
 				writeG00Line(endPoint);
 				if(endPoint.exists('z')){
 					
 				endPoint.setRealAxValue('z', endPoint.getRealAxValue('z')-20);
-				out<<((G_KOD<<10) | G87)<<" ";
+				destDevice->write((G_KOD<<10) | G87);
+				destDevice->write(" ");
 				writePointParam(endPoint);
-				out<<"\r\n";
+				destDevice->write("\r\n");
 
 				endPoint.setRealAxValue('z', basePoint.getRealAxValue('z')-getDrillingDepthFromTextLine(program));
 				writeG00Line(endPoint);

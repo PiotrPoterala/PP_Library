@@ -124,6 +124,14 @@ bool PSTM32Flash::write(int data){
 	
 }
 
+bool PSTM32Flash::writeAtTheEnd(int data){
+		bool result=false;
+		if(seek(size())){
+			result=write(data);
+		}
+		return result;
+}
+
 bool PSTM32Flash::clear(){		
 //To erase a sector, follow the procedure below:
 //1. Check that no Flash memory operation is ongoing by checking the BSY bit in the

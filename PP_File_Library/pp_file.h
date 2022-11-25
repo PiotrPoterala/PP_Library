@@ -29,9 +29,6 @@
 				
 				virtual bool open(OpenMode mode)override {return false;};
 				virtual bool close()override {return false;};
-				
-				virtual bool writeAtTheEnd(string &data)=0;
-				virtual bool writeAtTheEnd(const char *data)=0;
 
 		};
 		

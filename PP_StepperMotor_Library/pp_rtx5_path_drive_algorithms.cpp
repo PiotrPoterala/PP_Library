@@ -37,38 +37,38 @@ DriveStatus defORTX5pathDriveAlgorithms::drive(){
 			if(masterPhyCoordAux.front()->getPrecision()>0){
 				PPpoint<int> phyVector{};
 				
-				for(auto it:phyStartPoint.axes){
-					auto endAx=phyEndPoint.axes.find(it.first);
-					if(endAx!=phyEndPoint.axes.end()){
-						phyVector.axes.insert(PPointIntPair(it.first, endAx->second-it.second));
+				for(auto it:phyStartPoint.rGetAxes()){
+					auto endAx=phyEndPoint.getAx(it.first);
+					if(!endAx.empty()){
+						phyVector.addAx(it.first, endAx.front()-it.second);
 					}
 				}
 				
 				
-				auto startPmasterAx=phyStartPoint.axes.find(masterAxis);
-				auto endPmasterAx=phyEndPoint.axes.find(masterAxis);
-				auto nextStepPmasterAx=phyNextStepPoint.axes.find(masterAxis);
-				auto vectorMasterAx=phyVector.axes.find(masterAxis);
+				auto startPmasterAx=phyStartPoint.getAx(masterAxis);
+				auto endPmasterAx=phyEndPoint.getAx(masterAxis);
+				auto nextStepPmasterAx=phyNextStepPoint.getAx(masterAxis);
+				auto vectorMasterAx=phyVector.getAx(masterAxis);
 				
 				
-				double nPt=(vectorMasterAx->second>0)?nextStepPmasterAx->second+masterPhyCoordAux.front()->getPrecision():nextStepPmasterAx->second-masterPhyCoordAux.front()->getPrecision();		//obliczenie wartości współrzędnych dla kolejnych punktów trajektorii na podstawie wzorów opisujących prostą w przestrzeni
-				if(abs_pp((int)nPt-startPmasterAx->second)<=abs_pp(vectorMasterAx->second)){ //jeżeli jesteśmy w zakresie ruchu to oblicz kolejny punkt trajektorii
+				double nPt=(vectorMasterAx.front()>0)?nextStepPmasterAx.front()+masterPhyCoordAux.front()->getPrecision():nextStepPmasterAx.front()-masterPhyCoordAux.front()->getPrecision();		//obliczenie wartości współrzędnych dla kolejnych punktów trajektorii na podstawie wzorów opisujących prostą w przestrzeni
+				if(abs_pp((int)nPt-startPmasterAx.front())<=abs_pp(vectorMasterAx.front())){ //jeżeli jesteśmy w zakresie ruchu to oblicz kolejny punkt trajektorii
 
 					auto velocityAux=motorsList->getVelocityXperSECClone(masterAxis);
 					auto accelerateAux=motorsList->getAccelerationXperSEC2Clone(masterAxis);
 
 					
-					tick += (OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive)*getClockDividerResponsibleForDriveSpeed(abs_pp(nPt-startPmasterAx->second)/masterPhyCoordAux.front()->getPrecision(), 
-																												abs_pp(nPt-endPmasterAx->second)/masterPhyCoordAux.front()->getPrecision(), 
+					tick += (OS_TICK_FREQ /BASE_FREQUENCY_OF_TIMdrive)*getClockDividerResponsibleForDriveSpeed(abs_pp(nPt-startPmasterAx.front())/masterPhyCoordAux.front()->getPrecision(), 
+																												abs_pp(nPt-endPmasterAx.front())/masterPhyCoordAux.front()->getPrecision(), 
 																												fs_mulBy10_pp(accelerateAux.front()->getValue(), masterPhyCoordAux.front()->getUnit()-3-accelerateAux.front()->getUnit()),
 																												fs_mulBy10_pp(velocityAux.front()->getValue(), masterPhyCoordAux.front()->getUnit()-3-velocityAux.front()->getUnit()), 
 																												BASE_FREQUENCY_OF_TIMdrive, masterPhyCoordAux.front()->getPrecision());
 														
 																					
-					double t=(nPt-startPmasterAx->second)/vectorMasterAx->second;	
+					double t=(nPt-startPmasterAx.front())/vectorMasterAx.front();	
 												
 
-					for(auto vector:phyVector.axes){
+					for(auto vector:phyVector.rGetAxes()){
 						auto auxMotor=motorsList->motors.find(vector.first);
 						if(auxMotor!=motorsList->motors.end()){
 							auto phyCoordAux=auxMotor->second->getPhyCoordClone();
@@ -77,9 +77,9 @@ DriveStatus defORTX5pathDriveAlgorithms::drive(){
 							if(vector.first==masterAxis){
 								nextStepValue=nPt;
 							}else{		
-								auto startP=phyStartPoint.axes.find(vector.first);
+								auto startP=phyStartPoint.getAx(vector.first);
 								
-								nextStepValue=t*(vector.second)+startP->second;
+								nextStepValue=t*(vector.second)+startP.front();
 							}
 							phyNextStepPoint.setAxValue(vector.first, nextStepValue);
 							
@@ -93,10 +93,10 @@ DriveStatus defORTX5pathDriveAlgorithms::drive(){
 				}else{
 					for(auto mot:motorsList->motors){
 						auto phyCoordAux=mot.second->getPhyCoordClone();
-						auto endP=phyEndPoint.axes.find(mot.first);
+						auto endP=phyEndPoint.getAx(mot.first);
 
-						if(!phyCoordAux.empty() && endP!=phyEndPoint.axes.end()){
-							int vectorAx=endP->second-phyCoordAux.front()->getValue();
+						if(!phyCoordAux.empty() && !endP.empty()){
+							int vectorAx=endP.front()-phyCoordAux.front()->getValue();
 
 							if(vectorAx>0)mot.second->rotateForward();
 							else if(vectorAx<0)mot.second->rotateBackwards();	

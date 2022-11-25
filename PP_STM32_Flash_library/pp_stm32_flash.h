@@ -48,6 +48,7 @@
 				virtual bool close() override ;
 				virtual bool seek(int pos) override ;
 				virtual bool write(int data) override ;
+				virtual bool writeAtTheEnd(int data) override;
 				virtual int read() override;
 			
 				bool clear();

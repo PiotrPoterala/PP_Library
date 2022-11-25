@@ -43,14 +43,6 @@ bool PFileStringMock::seek(int pos){
 	
 }
 
-bool PFileStringMock::write(string &data){
-
-		file.insert(position, data);
-		position+=data.size();
-		return true;
-
-}
-
 bool PFileStringMock::write(const char *data){
 
 		file.insert(position, data);
@@ -60,14 +52,17 @@ bool PFileStringMock::write(const char *data){
 
 }
 
-bool PFileStringMock::writeAtTheEnd(string &data){
-		bool result=false;
-	
-		if(seek(size())){
-			result=write(data);
-		}
+bool PFileStringMock::write(string &data){
 
-		return result;
+		return write(data.c_str());
+
+}
+
+bool PFileStringMock::write(int data){
+		int writeChars=0;
+		string str=to_string(data);
+	
+		return write(str.c_str());
 
 }
 
@@ -81,6 +76,20 @@ bool PFileStringMock::writeAtTheEnd(const char *data){
 		return result;
 
 }
+
+bool PFileStringMock::writeAtTheEnd(string &data){
+
+		return writeAtTheEnd(data.c_str());
+
+}
+
+bool PFileStringMock::writeAtTheEnd(int data){
+		string str=to_string(data);
+
+		return writeAtTheEnd(str.c_str());
+	
+}
+
 
 
 string PFileStringMock::read(int maxSize){

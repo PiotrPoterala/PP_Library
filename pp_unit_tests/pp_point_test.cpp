@@ -26,6 +26,16 @@ TEST_GROUP(PPointTestGroup)
 	}
 };
 
+TEST(PPointTestGroup, getAxTest)
+{
+		auto ax=list.getAx('X');
+	
+
+		LONGS_EQUAL(1, ax.size());
+		LONGS_EQUAL(20, ax.front());
+		
+}
+
 
 TEST(PPointTestGroup, set_getAxRealValueTest)
 {

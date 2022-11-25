@@ -22,19 +22,21 @@ InterpretProgErr PProgGcodeResolverStrategy::interpretProg(){
 
 				resetInterpretSettings();
 				
-        PTextStream outDevice(destDevice);
+   //     PTextStream outDevice(destDevice);
 				PString line;
 				int repetitions=0;
 
         line = sourceFile->readLine();
         if(!line.empty()){
             if(line.at(0)=='%'){
-                outDevice<<(START_PROG<<10)<<"\r\n";  //zapisanie do pamięci flash znaku określającego początek programu
+								destDevice->write(START_PROG<<10);
+								destDevice->write("\r\n");
 
                 line = sourceFile->readLine();
                 while(!line.empty()){											//pobieranie programu linijka po linijce z karty SD
                     if(line.at(0)=='%'){
-                        outDevice<<(START_PROG<<10)<<"\r\n";			//zapisanie do pamięci flash znaku określającego koniec programu
+                        destDevice->write(START_PROG<<10);
+												destDevice->write("\r\n");			//zapisanie do pamięci flash znaku określającego koniec programu
                         break;
                     }
 										
@@ -102,10 +104,13 @@ void PProgGcodeResolverStrategy::resetInterpretSettings(){
 void PProgGcodeResolverStrategy::writeG00Line(PPpoint<int> &point){
 
 			if(destDevice->isOpen()){
-				PTextStream out(destDevice);
-				out<<((G_KOD<<10) | G00)<<" ";
+//				PTextStream out(destDevice);
+//				out<<((G_KOD<<10) | G00)<<" ";
+				destDevice->write((G_KOD<<10) | G00);
+				destDevice->write(" ");
 				writePointParam(point);
-				out<<"\r\n";
+				destDevice->write("\r\n");
+//				out<<"\r\n";
 			}
 }
 
@@ -115,20 +120,14 @@ void PProgGcodeResolverStrategy::interpretMcode(PString &program){
         PString data=PString(program);
 
 			if(destDevice->isOpen()){
-				PTextStream out(destDevice);
+			//	PTextStream out(destDevice);
         nr_Mkod=data.findValueAfterAcronim('M', MKOD_NIEINTERPRETOWANY);
 
         if(nr_Mkod!=MKOD_NIEINTERPRETOWANY){
-           out<<((M_KOD<<10) | nr_Mkod)<<" \r\n";
+    //       out<<((M_KOD<<10) | nr_Mkod)<<" \r\n";
+						destDevice->write((M_KOD<<10) | nr_Mkod);
+						destDevice->write("\r\n");
         }
 
 			}
 }
-
-//int PProgGcodeResolverStrategy::trimToRange(int value, int upperLimit, int lowerLimit){
-//	
-//		if(value>=upperLimit)value=upperLimit;
-//    else if(value<=lowerLimit)value=lowerLimit;
-//	
-//		return value;
-//}
