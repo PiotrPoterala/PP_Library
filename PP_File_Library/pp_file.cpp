@@ -3,6 +3,18 @@
 
 PFile::PFile(const string &path){
 			
+		setPath(path);
+}
+
+PFile::PFile(const char* path){
+	
+		setPath(path);
+		
+}
+
+void PFile::setPath(const string &path){
+
+
 	int find=path.find("/");
 	
 	if(find!=string::npos){
@@ -12,23 +24,8 @@ PFile::PFile(const string &path){
 		volume=path;
 		this->path.clear();
 	}
-}
 
-PFile::PFile(const char* path){
-	string newPath=path;	
-	
-	int find=newPath.find("/");
-	
-	if(find!=string::npos){
-		volume=newPath.substr(0, find+1);
-		this->path=newPath.substr(find+1);
-	}else{
-		volume=path;
-		this->path.clear();
-	}
-		
-}
-
+};
 
 
 bool PFile::isOpen(){
@@ -48,4 +45,22 @@ string PFile::absolutePath(){
 	
 	filePath=volume+path;
 	return filePath;
+}
+
+void PFile::setFileName(const string &path){
+	
+		if(isOpen()){
+			close();
+		}
+	
+		setPath(path);
+}
+
+void PFile::setFileName(const char* path){
+	
+		if(isOpen()){
+			close();
+		}
+	
+		setPath(path);
 }

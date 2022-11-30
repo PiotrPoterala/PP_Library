@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F429xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math;..\PP_Interpret_Gcode_Library;..\PP_TextStream_Library;..\PP_Math</IncludePath>
+              <IncludePath>..\PP_String_Library;..\..\PP_library;..\..\cppUtest\include;..\PP_Parameters_Library;..\PP_StepperMotor_Library;..\PP_Point;..\PP_IOdevice_library;..\PP_File_Library;..\..\PP_library_C\PP_Math;..\PP_Interpret_Gcode_Library;..\PP_TextStream_Library;..\PP_Math;..\PP_List_Library</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -482,6 +482,11 @@
               <FileType>8</FileType>
               <FilePath>.\pp_edf_resolver_strategy_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_select_list_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_select_list_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -616,6 +621,16 @@
               <FileName>pp_text_stream.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\PP_TextStream_Library\pp_text_stream.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PP_List_Library</GroupName>
+          <Files>
+            <File>
+              <FileName>pp_select_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\PP_List_Library\pp_select_list.h</FilePath>
             </File>
           </Files>
         </Group>

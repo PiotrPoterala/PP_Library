@@ -33,12 +33,17 @@ void PFileInfo::setFile(const char* path){
 
 void PFileInfo::setPath(const string &path){
 
-
 	int find=path.find("/");
-	volume=path.substr(0, find+1);
-	filePath=path.substr(find+1);
+	
+	if(find!=string::npos){
+		volume=path.substr(0, find+1);
+		filePath=path.substr(find+1);
+	}else{
+		volume=path;
+		filePath.clear();
+	}
 
-};
+}
 	
 string PFileInfo::absoluteFilePath() const{
 	

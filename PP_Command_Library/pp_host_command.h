@@ -15,10 +15,10 @@ class PHostCommand{
 		public:
 			PHostCommand(){};
 		
-			enum{BASEC, PHYC, TRVV, TRVCO, DIRCD, SPF};
+			enum{BASEC, PHYC, TRVV, TRVCO, DIRCD, SPF, SPT};
 		
 			bool executeCommand(string &data){
-				if(command!=nullptr) return command->execute(data);
+				if(command) return command->execute(data);
 				return false;
 			};
 			
@@ -33,7 +33,7 @@ class PHostCommand{
 					command=(*it).second;
 					return true;
 				}else{
-					command=nullptr;
+					command.reset();
 				}
 				
 				return false;
@@ -53,11 +53,11 @@ class PHostCommand{
 		public:
 			PHostAskCommand(){};
 		
-			enum{BASEC, PHYC, DIREL, DIREIL};
+			enum{BASEC, PHYC, DIREL, DIREIL, SPT};
 		
 			string executeCommand(){
 				string ans;
-				if(command!=nullptr)ans=command->execute();
+				if(command)ans=command->execute();
 				return ans;
 			};
 			
@@ -72,7 +72,7 @@ class PHostCommand{
 					command=(*it).second;
 					return true;
 				}else{
-					command=nullptr;
+					command.reset();
 				}
 				return false;
 				

@@ -3,6 +3,7 @@
 	
 	#include "pp_iodevice.h"
 	#include "pp_file.h"
+	#include <map>
 
 constexpr int START_PROG=1;
 constexpr int STOP_PROG=1;
@@ -67,10 +68,8 @@ class PProgramResolverContext{
 		public:
 			PProgramResolverContext()=delete;
 			PProgramResolverContext(PProgramResolverStrategyShrPtr res): resolver(res){};
-//			~PProgramResolverContext(){delete this->resolver;};
 				
     void setResolver(PProgramResolverStrategyShrPtr resolver){
-     //   delete this->resolver;
         this->resolver = resolver;
     }
 
@@ -80,7 +79,46 @@ class PProgramResolverContext{
 		};
 		
 	};
+
 	
-using PProgramResolverContextPtr = unique_ptr<PProgramResolverContext>; 	
+class PProgramResolverSwitchContext{
+		
+		private:
+			PProgramResolverStrategyShrPtr resolver;
+			map<int, PProgramResolverStrategyShrPtr> resolversList;
+		
+		
+		public:
+			PProgramResolverSwitchContext(){};
+		
+			enum{EDF, EDFdrill, GCODE};
+		
+			
+			void addResolver(int type, PProgramResolverStrategyShrPtr comm){
+				resolversList.insert(pair<int, PProgramResolverStrategyShrPtr>(type, comm));
+			};
+			
+			bool setResolver(int type){
+				
+				auto it=resolversList.find(type);
+				if (it != resolversList.end()){
+					resolver=it->second;
+					return true;
+				}else{
+					resolver.reset();
+				}
+				return false;
+				
+			}
+			
+		InterpretProgErr interpretProg(){
+			InterpretProgErr ans=InterpretProgErr::idNO_ERRORS;
+			if(resolver)ans=resolver->interpretProg();
+			return ans;
+		};
+					
+	};
 	
+using PProgramResolverContextShrPtr = shared_ptr<PProgramResolverContext>; 	
+using PProgramResolverSwitchContextShrPtr = shared_ptr<PProgramResolverSwitchContext>; 	
 #endif
