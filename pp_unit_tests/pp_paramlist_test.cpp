@@ -47,7 +47,16 @@ TEST(defOParamTestGroup, getParamCloneTest)
 
 }
 
-TEST(defOParamTestGroup, getStringWithParams)
+
+TEST(defOParamTestGroup, getStringWithParamTest)
+{
+	
+	STRCMP_EQUAL("T4.75", list->getStringWithParam('T').c_str());
+	STRCMP_EQUAL("", list->getStringWithParam('x').c_str());
+
+}
+
+TEST(defOParamTestGroup, getStringWithParamsTest)
 {
 	
 	STRCMP_EQUAL("T4.75 a2 f2500", list->getStringWithParams().c_str());

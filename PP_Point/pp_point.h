@@ -229,7 +229,7 @@ template <typename Type>
 		for(auto&& it:axes){
 			auto limit=limits.find(it.first);
 			if(limit!=limits.end()){
-				setAxValue(it.first, data.findValueAfterAcronim(it.first, static_cast<double>(it.second/pow_pp(10, std::get<3>(limit->second))))*pow_pp(10, std::get<3>(limit->second)));
+				setAxValue(it.first, data.findValueAfterAcronim(it.first, static_cast<double>(it.second)/pow_pp(10, std::get<3>(limit->second)))*pow_pp(10, std::get<3>(limit->second)));
 			}else{
 				setAxValue(it.first, data.findValueAfterAcronim(it.first, it.second));
 			}
@@ -237,6 +237,39 @@ template <typename Type>
 //					it.second=data.findValueAfterAcronim(it.first, it.second);
 		}
 		
+	}
+	
+	
+	string getStringWithAx(char acronim){
+		string answer;
+	
+		auto ax=axes.find(acronim);
+		if(ax!=axes.end()){
+			answer+=acronim;  
+			auto limit=limits.find(acronim);
+			if(limit!=limits.end()){
+				answer+=PString::doubleToString(static_cast<double>(ax->second)/pow_pp(10, std::get<3>(limit->second)), std::get<3>(limit->second));
+			}else{
+				answer+=PString::doubleToString(ax->second, 0);
+			}
+		}
+		
+		return answer;
+	}
+
+	string getStringWithAxes(){
+		
+		string answer;
+		auto it_last_elem=axes.end();
+		
+		it_last_elem--;
+		
+			for(auto it=axes.begin(); it!=axes.end(); it++){
+					answer+=getStringWithAx(it->first);  
+					if(it!=it_last_elem)answer+=" ";
+			}
+		
+		return answer;
 	}
 	
 	
@@ -268,8 +301,8 @@ template <typename Type>
 	
 	bool setAxValue(char acronim, Type val){
     auto it=axes.find(acronim);
-		auto limit=limits.find(acronim);
     if(it!=axes.end()){
+				auto limit=limits.find(acronim);
 				if(limit!=limits.end()){
 					it->second=trimAcc_pp(val, std::get<0>(limit->second), std::get<1>(limit->second), std::get<2>(limit->second));
         }else it->second=val;
@@ -286,8 +319,8 @@ template <typename Type>
 	
 	void setAxesByZero(void){
 			
-			for(auto it=axes.begin(); it!=axes.end(); ++it){
-					setAxValue(it->first, 0);
+		for(auto&& it:axes){
+					setAxValue(it.first, 0);
 		//			(*it).second=0;
 			}
 			

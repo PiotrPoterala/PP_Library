@@ -433,11 +433,6 @@
               <FilePath>.\pstring_test.cpp</FilePath>
             </File>
             <File>
-              <FileName>pp_paramlist_test.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\pp_paramlist_test.cpp</FilePath>
-            </File>
-            <File>
               <FileName>pp_drive_algorithms_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
@@ -458,24 +453,19 @@
               <FilePath>.\pfileInfo_test.cpp</FilePath>
             </File>
             <File>
-              <FileName>pp_point_test.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\pp_point_test.cpp</FilePath>
-            </File>
-            <File>
               <FileName>pp_motorslist_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_motorslist_test.cpp</FilePath>
             </File>
             <File>
-              <FileName>pp_gcode_resolver_strategy_test.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\pp_gcode_resolver_strategy_test.cpp</FilePath>
-            </File>
-            <File>
               <FileName>pp_math_ext_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_math_ext_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_point_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_point_test.cpp</FilePath>
             </File>
             <File>
               <FileName>pp_edf_resolver_strategy_test.cpp</FileName>
@@ -486,6 +476,16 @@
               <FileName>pp_select_list_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_select_list_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_paramlist_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_paramlist_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_gcode_resolver_strategy_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_gcode_resolver_strategy_test.cpp</FilePath>
             </File>
           </Files>
         </Group>

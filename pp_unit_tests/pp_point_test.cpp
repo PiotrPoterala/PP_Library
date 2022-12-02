@@ -228,6 +228,22 @@ TEST(PPointTestGroup, setAxesBasedStringTest)
 	
 }
 
+TEST(PPointTestGroup, getStringWithAxTest)
+{
+	list.addLimit('X', tuple<int, int, int, int>{100000, 0, 5, 3});
+	list.setRealAxValue('X', 24.54);
+	
+	STRCMP_EQUAL("X24.54", list.getStringWithAx('X').c_str());
+	STRCMP_EQUAL("", list.getStringWithAx('B').c_str());
+
+}
+
+TEST(PPointTestGroup, getStringWithAxesTest)
+{
+	
+	STRCMP_EQUAL("X20 Y30 Z40", list.getStringWithAxes().c_str());
+
+}
 
 TEST(PPointTestGroup, setAxValueWithLimitsTest)
 {
