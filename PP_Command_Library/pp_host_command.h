@@ -15,7 +15,7 @@ class PHostCommand{
 		public:
 			PHostCommand(){};
 		
-			enum{BASEC, PHYC, TRVV, TRVCO, DIRCD, SPF, SPT, GBASE};
+			enum{BASEC, PHYC, TRVV, TRVCO, DIRCD, SPF, SPT, GBASE, SaveGBASE};
 		
 			bool executeCommand(string &data){
 				if(command) return command->execute(data);

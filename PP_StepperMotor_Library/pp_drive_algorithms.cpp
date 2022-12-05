@@ -29,21 +29,7 @@ defODriveAlgorithms::defODriveAlgorithms(PMotorsListShdPtr mot):motorsList(mot){
 //funkcje związane z przejazdami w pracy ręcznej
 void defODriveAlgorithms::driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &startP){
 
-	phyStartPoint.clear();
-	phyEndPoint.clear();
-	counter.clear();
-	
-	for(auto it:endP.rGetAxes()){
-		auto startAx=startP.rGetAxes().find(it.first);
-		if(startAx!=startP.rGetAxes().end()){
-			if(it.second!=startAx->second){
-				phyStartPoint.addAx(*startAx);
-				phyEndPoint.addAx(it);
-				counter.insert(pair<char, int>(it.first, 0));
-			}
-		}
-	}
-	
+	setEndsPoints(endP, startP);
 //	for(auto it=phyVector.axes.begin(); it != phyVector.axes.end(); it++){
 //		printf("%s=%i, ", &((*it).first), (*it).second);
 //		
@@ -58,6 +44,29 @@ void defODriveAlgorithms::driveToEndPoint(PPpoint<int> &endP, PPpoint<int> &star
 		drive();
 	}
 														
+}
+
+void defODriveAlgorithms::setEndsPoints(PPpoint<int> &endP, PPpoint<int> &startP){
+
+	phyStartPoint.clear();
+	phyEndPoint.clear();
+	
+	for(auto it:endP.rGetAxes()){
+		auto startAx=startP.rGetAxes().find(it.first);
+		if(startAx!=startP.rGetAxes().end()){
+			if(it.second!=startAx->second){
+				phyStartPoint.addAx(*startAx);
+				phyEndPoint.addAx(it);
+			}
+		}
+	}
+	
+}
+
+void defODriveAlgorithms::swapEndsPoints(void){
+	
+	phyEndPoint.swap(phyStartPoint);
+	
 }
 
 void defODriveAlgorithms::driveForValue(map<char, int> &values){

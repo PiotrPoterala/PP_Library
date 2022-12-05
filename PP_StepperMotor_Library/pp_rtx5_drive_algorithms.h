@@ -36,11 +36,14 @@
 	
 	class defORTX5driveAlgorithms : public defODriveAlgorithms{
 
+		protected:	
+			map<char, int> counter;
+		
 		public:
 			defORTX5driveAlgorithms()=delete;
 			defORTX5driveAlgorithms(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
 		
-		
+			virtual DriveStatus makeStep(void);
 			virtual DriveStatus drive(void);
 		
 		

@@ -3,6 +3,7 @@
 	
 	#include "pp_command.h"
 	#include "pp_point.h"
+	#include "pp_rd_wr_flash_strategy.h"
 	
 	#include <string>
 	#include <map>
@@ -31,20 +32,15 @@ class PSetGBasePointsCommand : public PCommand{
 	class PSaveGBasePointsCommand : public PCommand{
 		
 		private:
-			PPpointIntListShdPtr gBasePoints;
-	
+			PPrdWrFlashStrategyShrPtr rdWrGbasePointsList;
 		public:
-			PSetGBasePointsCommand()=delete;
-			PSetGBasePointsCommand(PPpointIntListShdPtr pointsList):gBasePoints(pointsList){};
+			PSaveGBasePointsCommand()=delete;
+			PSaveGBasePointsCommand(PPrdWrFlashStrategyShrPtr rdWrStrategy):rdWrGbasePointsList(rdWrStrategy){};
 	
 			virtual bool execute(string &data) override{
-					PString str(data);
-					int index=str.findValueAfterAcronim('N', -1);
-					if(index>=0 && index<gBasePoints->size()){
-						gBasePoints->at(index).setAxesBasedString(str);
-						return true;
-					}
-					return false;
+
+					rdWrGbasePointsList->write();
+					return true;
 			};
 
 	};

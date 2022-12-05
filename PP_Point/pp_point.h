@@ -114,6 +114,12 @@ template <typename Type>
 			limits.clear();
 		}
 		
+		void swap(PPpoint<Type> &point){
+			axes.swap(point.rGetAxes());
+			limits.swap(point.rGetLimits());
+		}
+		
+		
 		void addAx(char acronim, Type value){
 			axes.insert(pair<char, Type>(acronim, 0));
 			setAxValue(acronim, value);
@@ -343,6 +349,11 @@ template <typename Type>
 	}
 	
 	map<char, TLimits> getLimits() const{
+		return limits;
+		
+	}
+	
+	map<char, TLimits>& rGetLimits() const{
 		return limits;
 		
 	}

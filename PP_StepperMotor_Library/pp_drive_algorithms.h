@@ -51,7 +51,6 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 			PPpoint<int> phyIndEndPoint;
 			PPpoint<double> phyNextStepPoint;
 		
-			map<char, int> counter;
 			char masterAxis;
 		
 			virtual DriveStatus drive(void)=0;
@@ -60,6 +59,14 @@ enum class DriveStatus{DRIVE_IN_PROGRESS=-1, DRIVE_COMPLETED=0, DRIVE_ABORTED, D
 			DriveStatus status;
 			defODriveAlgorithms()=delete;
 			defODriveAlgorithms(PMotorsListShdPtr mot);
+		
+//			virtual void pauseDrive(void)=0;
+//			virtual void continueDrive(void)=0;
+		
+			virtual DriveStatus makeStep(void)=0;
+		
+			void setEndsPoints(PPpoint<int> &endP, PPpoint<int> &startP);
+			void swapEndsPoints(void);
 		
 			void driveForValue(map<char, int> &values);
 			void driveForValue(PPpoint<int> &values);

@@ -23,9 +23,28 @@
 
 #include "pp_math.h"
 
+
+
+DriveStatus defORTX5driveAlgorithms::makeStep(void){
+	
+	
+	
+	
+	
+	
+}
+
+
 DriveStatus defORTX5driveAlgorithms::drive(){
 
 	int tick = osKernelGetTickCount(); 
+	
+	counter.clear();
+	
+	for(auto it:phyEndPoint.rGetAxes()){
+		counter.insert(pair<char, int>(it.first, 0));
+	}
+	
 
 	while(status!=DriveStatus::DRIVE_COMPLETED && status!=DriveStatus::DRIVE_ABORTED){		
 
