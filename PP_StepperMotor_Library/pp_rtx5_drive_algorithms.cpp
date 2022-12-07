@@ -24,17 +24,6 @@
 #include "pp_math.h"
 
 
-
-DriveStatus defORTX5driveAlgorithms::makeStep(void){
-	
-	
-	
-	
-	
-	
-}
-
-
 DriveStatus defORTX5driveAlgorithms::drive(){
 
 	int tick = osKernelGetTickCount(); 

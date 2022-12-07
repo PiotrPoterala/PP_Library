@@ -26,7 +26,7 @@ TEST_GROUP(PProgWedmEDFResolverStrategyTestGroup)
 			phyCoord->insert(PParamPair('V', make_shared<defOParam>("V", 100000, 0, 999000, 5, 3)));
 			phyCoord->insert(PParamPair('z', make_shared<defOParam>("z", 100000, 0, 999000, 5, 3)));
 
-			gBasePoints->insert(gBasePoints->begin(), 5, PPpoint<int>{phyCoord->getParamsValues(), phyCoord->getParamLimits()});
+			gBasePoints->insert(gBasePoints->begin(), 5, PPpoint<int>{phyCoord->getParamsValues(), phyCoord->getParamsLimits()});
 			if(!gBasePoints->empty()){
 		//		basePoint=gBasePoints->front().;
 			}

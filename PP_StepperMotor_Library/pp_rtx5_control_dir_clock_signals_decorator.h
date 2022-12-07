@@ -30,6 +30,7 @@
 	#define _RTX5_CONTROL_DIR_CLOCK_SIGNALS_DECORATOR_H
 
 #include "cmsis_os2.h"
+#include "def_pins.h"
 
 #include "pp_stepper_motor_driver_decorator.h"
 #include <vector>

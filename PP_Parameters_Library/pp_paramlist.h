@@ -69,7 +69,7 @@ public:
 		PParamPair getParamPair(char acronim) noexcept;
 		map<char, int> getParamsValues();
 		map<char, double> getParamsRealValues();
-		PParamLimits getParamLimits();
+		PParamsLimits getParamsLimits();
 		
 		string getStringWithParam(char acronim);
 		string getStringWithParams();
@@ -93,7 +93,7 @@ public:
 		void setParamsBasedString(string &data);
 		void setParamsBasedString(const char *data);
 		
-		
+		static PParamsLimits getParamsLimits(PParamMap &param);
 		static void setParamsBasedString(PParamMap &param, PString &data);
 };
 

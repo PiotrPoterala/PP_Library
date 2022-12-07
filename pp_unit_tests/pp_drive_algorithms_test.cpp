@@ -1,31 +1,103 @@
 #include "CppUTest/TestHarness.h"
 
-#include "pp_rtos_drive_algorithms_mock.h"
+#include "pp_motorslist.h"
+#include "pp_control_coordinate_decorator.h"
+#include "pp_stepper_motor_2clock_driver.h"
+#include "pp_path_drive_algorithms.h"
+#include "pp_fast_drive_algorithms.h"
+#include "pp_point.h"
 #include "stdio.h"
 
 TEST_GROUP(defODriveAlgorithmsTestGroup)
 {
 	
-	//defODriveAlgorithmsShdPtr motorsAlgorithms;
+	PMotorsListShdPtr motorsList=make_shared<PMotorsList>();
+	defOParamListShdPtr phyCoord=make_shared<defOParamList>();
+	defOParamListShdPtr baseCoord=make_shared<defOParamList>();
+	defOParamListShdPtr workParams=make_shared<defOParamList>();
+	defOParamListShdPtr boltParams;
+	PParamPair accelerationMMperSEC2;
+	
+	PPdriveAlgorithmsContextPtr algContext;
+//	defODriveAlgorithmsShdPtr algorithm;
 	
   void setup() {
-//		motorsAlgorithms=make_shared<defORTOSdriveAlgorithmsMock>();
-
+		phyCoord->insert(PParamPair('X', make_shared<defOParam>("X", 100000, 0, 999000, 5, 3)));
+		phyCoord->insert(PParamPair('Y', make_shared<defOParam>("Y", 100000, 0, 999000, 5, 3)));
+		
+		baseCoord->insert(PParamPair('X', make_shared<defOParam>("X", 100000, -999000, 999000, 5, 3)));
+		baseCoord->insert(PParamPair('Y', make_shared<defOParam>("Y", 100000, -999000, 999000, 5, 3)));
+		
+		boltParams=baseCoord->clone();
+		boltParams->setParamsValue(0);
+		
+		workParams->insert(PParamPair('f', make_shared<defOParam>("velocity", 2500, 1, 2500)));
+		
+		accelerationMMperSEC2=PParamPair('a', make_shared<defOParam>("acc", 2000, 1000, 30000, 100, 3));
+		
+		motorsList->motors.insert(PMotorsPair('X', make_shared<defOControlCoordinateDecorator>
+																	(make_shared<defOStepperMotor2clockDriver>(accelerationMMperSEC2.second, workParams->getParam('f').front(), phyCoord->getParam('X').front(), baseCoord->getParam('X').front(), FULL_STEP),
+																		boltParams->getParam('X').front())));		
+		motorsList->motors.insert(PMotorsPair('Y', make_shared<defOControlCoordinateDecorator>
+																	(make_shared<defOStepperMotor2clockDriver>(accelerationMMperSEC2.second, workParams->getParam('f').front(), phyCoord->getParam('Y').front(), baseCoord->getParam('Y').front(), FULL_STEP),
+																		boltParams->getParam('Y').front())));		
+	//	algorithm=make_shared<defOFastDriveAlgorithms>(motorsList);
+		algContext=make_unique<PPdriveAlgorithmsContext>(make_shared<defOPathDriveAlgorithms>(motorsList));
 	}
 	
   void teardown() {
-
+		motorsList->motors.clear();
+		phyCoord->clear();
+		baseCoord->clear();
+		workParams->clear();
 	}
 };
 
 
-//TEST(defODriveAlgorithmsTestGroup, getFrequencykResponsibleForDriveSpeedTest)
-//{
+TEST(defODriveAlgorithmsTestGroup, driveAheadForValueTest)
+{
+	PPpoint<int> endPoint{};
+		
+	endPoint.addAx('X', 200);
+	endPoint.addAx('Y', 300);
+	
+	
+	algContext->setAlgorithm(make_shared<defOFastDriveAlgorithms>(motorsList));
+	algContext->driveForValue(endPoint);
+	
+	LONGS_EQUAL(100200, phyCoord->getParamValue('X'));
+	LONGS_EQUAL(100300, phyCoord->getParamValue('Y'));
+}
 
-//	LONGS_EQUAL(1000, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 2500));
-//	LONGS_EQUAL(500, defODriveAlgorithms::getFrequencykResponsibleForDriveSpeed(2000, 2000, 2, 2500, 5000));
-//}
+TEST(defODriveAlgorithmsTestGroup, driveBackForValueTest)
+{
+	PPpoint<int> endPoint{};
+		
+	endPoint.addAx('X', -200);
+	endPoint.addAx('Y', -300);
+	
+	
+	algContext->setAlgorithm(make_shared<defOFastDriveAlgorithms>(motorsList));
+	algContext->driveForValue(endPoint);
+	
+	LONGS_EQUAL(99800, phyCoord->getParamValue('X'));
+	LONGS_EQUAL(99700, phyCoord->getParamValue('Y'));
+}
 
+TEST(defODriveAlgorithmsTestGroup, driveAheadForValueTest2)
+{
+	PPpoint<int> endPoint{};
+		
+	endPoint.addAx('X', 203);
+	endPoint.addAx('Y', 303);
+	
+	
+	algContext->setAlgorithm(make_shared<defOFastDriveAlgorithms>(motorsList));
+	algContext->driveForValue(endPoint);
+	
+	LONGS_EQUAL(100205, phyCoord->getParamValue('X'));
+	LONGS_EQUAL(100305, phyCoord->getParamValue('Y'));
+}
 
 //TEST(defODriveAlgorithmsTestGroup, getClockDividerResponsibleForDriveSpeedTest)
 //{

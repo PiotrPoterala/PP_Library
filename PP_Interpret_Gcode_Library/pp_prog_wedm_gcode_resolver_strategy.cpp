@@ -87,7 +87,7 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
                     }else if(nr_Gkod==G00 || nr_Gkod==G01){	
 												auto auxPoint=endPoint;
 											
-												auxPoint.setLimits(baseCoord->getParamLimits());
+												auxPoint.setLimits(baseCoord->getParamsLimits());
 											
                         if(writeInAboluteValues==false)auxPoint.setAxesByZero();
 												auxPoint.setAxesBasedString(data);
@@ -106,8 +106,8 @@ void PProgWedmGcodeResolverStrategy::interpretGcode(PString &program){
 												PPpointXY<int>endCirclePoint;
 												PPpointXY<int>circleCenterPoint;
 											
-												endCirclePoint.setLimits(baseCoord->getParamLimits());
-												circleCenterPoint.setLimits(baseCoord->getParamLimits());
+												endCirclePoint.setLimits(baseCoord->getParamsLimits());
+												circleCenterPoint.setLimits(baseCoord->getParamsLimits());
 												
 												endCirclePoint.setRealX(data.findValueAfterAcronim('X', 0));
 												endCirclePoint.setRealY(data.findValueAfterAcronim('Y', 0));

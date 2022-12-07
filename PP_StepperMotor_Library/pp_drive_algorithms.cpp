@@ -76,9 +76,13 @@ void defODriveAlgorithms::driveForValue(map<char, int> &values){
 }
 
 void defODriveAlgorithms::driveForValue(PPpoint<int> &values){
-	
+
 	PPpoint<int> startP=motorsList->getPhyCoordValues();
 	PPpoint<int> endP=startP;
+	
+	auto baseCoord=motorsList->getBaseCoordClone();
+	endP.setLimits(defOParamList::getParamsLimits(baseCoord));
+	
 	endP+=values;
 	
 	driveToEndPoint(endP, startP);
@@ -93,6 +97,10 @@ void defODriveAlgorithms::driveToBaseCoordinates(PPpoint<int> &values){
 	
 	PPpoint<int> startP=motorsList->getPhyCoordValues();
 	PPpoint<int> endP=startP;
+	
+	auto baseCoord=motorsList->getBaseCoordClone();
+	endP.setLimits(defOParamList::getParamsLimits(baseCoord));
+	
 	endP+=values;
 	endP-=motorsList->getBaseCoordValues();
 	
@@ -102,8 +110,14 @@ void defODriveAlgorithms::driveToBaseCoordinates(PPpoint<int> &values){
 void defODriveAlgorithms::driveToPhyCoordinates(PPpoint<int> &values){
 	
 	PPpoint<int> startP=motorsList->getPhyCoordValues();
+	PPpoint<int> endP;
+
+	auto baseCoord=motorsList->getBaseCoordClone();
+	endP.setLimits(defOParamList::getParamsLimits(baseCoord));
 	
-	driveToEndPoint(values, startP);
+	endP=values;
+	
+	driveToEndPoint(endP, startP);
 }
 
 char defODriveAlgorithms::calculateMasterAxis(){

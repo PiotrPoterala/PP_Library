@@ -108,6 +108,12 @@ int defOParam::getDefaultValue(void) const{
     return defaultValue;
 }
 
+PParamLimits defOParam::getParamLimits()const{
+	
+	return PParamLimits{upperLimit, lowerLimit, precision, unit};
+	
+}
+
 
 void defOParam::setValue(int newValue){
 

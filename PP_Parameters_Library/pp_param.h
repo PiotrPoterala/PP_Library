@@ -37,9 +37,6 @@
 using namespace std;
 
 
-using PParamLimit=tuple<int,int,int,int>;
-using PParamLimits=map<char, PParamLimit>;
-
 class defOParam : public defOParamGeneral
 {
 
@@ -70,6 +67,8 @@ public:
     virtual int getPrecision(void) const noexcept override;
     virtual int getUnit(void) const noexcept override;
     virtual int getDefaultValue(void) const noexcept override;
+			
+		virtual PParamLimits getParamLimits()const noexcept override;
 
     virtual void setValue(int newValue) noexcept override;
 		virtual void setDefaultValue(int newDefaultValue) noexcept override;

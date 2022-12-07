@@ -353,7 +353,7 @@ template <typename Type>
 		
 	}
 	
-	map<char, TLimits>& rGetLimits() const{
+	map<char, TLimits>& rGetLimits(){
 		return limits;
 		
 	}

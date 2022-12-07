@@ -28,6 +28,7 @@
 #ifndef _RTX5_SELECT_CURRENT_DECORATOR_H
 	#define _RTX5_SELECT_CURRENT_DECORATOR_H
 
+#include "def_pins.h"
 #include "cmsis_os2.h"
  #include "RTX_Config.h"
 #include "pp_stepper_motor_driver_decorator.h"

@@ -398,11 +398,6 @@
               <FilePath>..\PP_Parameters_Library\pp_param.cpp</FilePath>
             </File>
             <File>
-              <FileName>pp_drive_algorithms.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\PP_StepperMotor_Library\pp_drive_algorithms.cpp</FilePath>
-            </File>
-            <File>
               <FileName>pp_point.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\PP_Point\pp_point.h</FilePath>
@@ -431,11 +426,6 @@
               <FileName>pstring_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pstring_test.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>pp_drive_algorithms_test.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
             </File>
             <File>
               <FileName>pdir_test.cpp</FileName>
@@ -486,6 +476,11 @@
               <FileName>pp_gcode_resolver_strategy_test.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>.\pp_gcode_resolver_strategy_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_drive_algorithms_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -566,6 +561,26 @@
               <FileName>pp_stepper_motor_2clock_driver.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\PP_StepperMotor_Library\pp_stepper_motor_2clock_driver.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_drive_algorithms.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_drive_algorithms.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_fast_drive_algorithms.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_fast_drive_algorithms.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_path_drive_algorithms.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_path_drive_algorithms.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_control_coordinate_decorator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_StepperMotor_Library\pp_control_coordinate_decorator.cpp</FilePath>
             </File>
           </Files>
         </Group>

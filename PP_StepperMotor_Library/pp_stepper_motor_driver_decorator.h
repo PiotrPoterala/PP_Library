@@ -29,7 +29,7 @@
 	#define _PP_STEPPER_MOTOR_DRIVER_DECORATOR_H
 
 #include "pp_stepper_motor_driver.h"
-#include "def_pins.h"
+//#include "def_pins.h"
 
 using namespace std;
 

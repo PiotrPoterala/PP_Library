@@ -29,22 +29,21 @@
 #ifndef _PP_RTX_DRIVE_ALGORITHMS_H
 	#define _PP_RTX_DRIVE_ALGORITHMS_H
 
-#include "pp_drive_algorithms.h"
+#include "pp_fast_drive_algorithms.h"
 #include "cmsis_os2.h"
 
 #include <vector>
 	
-	class defORTX5driveAlgorithms : public defODriveAlgorithms{
+	class defORTX5driveAlgorithms : public defOFastDriveAlgorithms{
 
 		protected:	
 			map<char, int> counter;
 		
 		public:
 			defORTX5driveAlgorithms()=delete;
-			defORTX5driveAlgorithms(PMotorsListShdPtr motors):defODriveAlgorithms(motors){};
+			defORTX5driveAlgorithms(PMotorsListShdPtr motors):defOFastDriveAlgorithms(motors){};
 		
-			virtual DriveStatus makeStep(void);
-			virtual DriveStatus drive(void);
+			virtual DriveStatus drive(void) override;
 		
 		
 

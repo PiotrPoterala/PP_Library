@@ -141,12 +141,22 @@ map<char, double> defOParamList::getParamsRealValues(){
 	return values;
 }
 
-PParamLimits defOParamList::getParamLimits(){
-	PParamLimits values;
+PParamsLimits defOParamList::getParamsLimits(){
+	PParamsLimits values;
 	
 	for(auto it:param){
-		values.insert(pair<char, PParamLimit>(it.first, PParamLimit{it.second->getUpperLimit(), it.second->getLowerLimit(),it.second->getPrecision(),it.second->getUnit()}));
+		values.insert(pair<char, PParamLimits>(it.first, it.second->getParamLimits()));
 		
+	}
+	
+	return values;
+}
+
+PParamsLimits defOParamList::getParamsLimits(PParamMap &par){
+	PParamsLimits values;
+	
+	for(auto it:par){
+		values.insert(pair<char, PParamLimits>(it.first, it.second->getParamLimits()));
 	}
 	
 	return values;

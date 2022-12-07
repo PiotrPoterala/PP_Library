@@ -29,6 +29,7 @@
 	#define _CONTROL_2CLOCK_SIGNALS_DECORATOR_H
 
 #include "pp_stepper_motor_driver_decorator.h"
+#include "def_pins.h"
 #include <vector>
 #include <map>
 

@@ -33,6 +33,9 @@
 #include <vector>
 using namespace std;
 
+using PParamLimits=tuple<int,int,int,int>;
+using PParamsLimits=map<char, PParamLimits>;
+
 class defOParamGeneral
 {
 
@@ -49,6 +52,8 @@ public:
     virtual int getPrecision(void) const noexcept=0;
     virtual int getUnit(void) const noexcept=0;
     virtual int getDefaultValue(void) const noexcept=0;
+			
+		virtual PParamLimits getParamLimits()const noexcept=0;
 
     virtual void setValue(int newValue) noexcept=0;
 		virtual void setDefaultValue(int newDefaultValue) noexcept=0;
