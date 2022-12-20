@@ -28,11 +28,6 @@ void PFile::setPath(const string &path){
 };
 
 
-bool PFile::isOpen(){
-	
-	return openFlag;
-	
-}
 
 int PFile::pos(){
 	

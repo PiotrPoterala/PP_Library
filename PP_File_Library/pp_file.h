@@ -17,24 +17,19 @@
 			
 				void setPath(const string &path);
 			
-				bool openFlag=false;
-				OpenMode openMode;
+//				bool openFlag=false;
+//				OpenMode openMode;
 				int position;
 			public:
 				PFile(const string &path);
 				PFile(const char* path);	
 			
-				virtual bool isOpen() override ;
 				virtual int pos() override ;
 				string absolutePath();
 			
 				void setFileName(const string &path);
 				void setFileName(const char* path);	
-			
-				virtual OpenMode mode() override {return openMode;};
 				
-//				virtual bool open(OpenMode mode)override {return false;};
-//				virtual bool close()override {return false;};
 
 		};
 		

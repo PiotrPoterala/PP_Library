@@ -78,8 +78,6 @@ class PSerialPortRTX5 : public PIOdevice{
 			void setParity(Parity par);
 		
 			virtual bool open(OpenMode mode)override ;
-			virtual bool isOpen()override ;
-			virtual OpenMode mode() override {return openMode;};
 			virtual bool close()override ;
 			virtual void portListen() override ;
 			virtual bool write(string &data) override;

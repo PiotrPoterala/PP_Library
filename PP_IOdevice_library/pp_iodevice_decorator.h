@@ -45,8 +45,8 @@ class PIOdeviceDecorator: public PIOdevice{
 			PIOdeviceDecorator(PIOdeviceShrPtr device){IOdevice=device;}
 			virtual ~PIOdeviceDecorator(){};
 				
-			virtual bool isOpen()override {return IOdevice->isOpen();};
-			virtual OpenMode mode() override {return IOdevice->mode();};
+			bool isOpen(){return IOdevice->isOpen();};
+			OpenMode mode() {return IOdevice->mode();};
 			
 			virtual bool open(OpenMode mode)override {return IOdevice->open(mode);};
 			virtual bool close()override {return IOdevice->close();};

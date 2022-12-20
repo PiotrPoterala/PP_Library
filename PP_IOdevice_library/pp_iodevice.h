@@ -34,18 +34,25 @@
 		using namespace std;
 
 		class PIOdevice{		
-			
+		
 			public:
 				enum OpenMode{ReadOnly=1, WriteOnly, ReadWrite};
+			
+			protected:
+				bool openFlag=false;
+				OpenMode openMode=ReadWrite;
+			
+			public:
 			
 				PIOdevice(){};	
 				virtual ~PIOdevice(){};
 					
-				virtual bool isOpen()=0;
-				virtual OpenMode mode()=0;
-			
+				bool isOpen(){return openFlag;};
+				OpenMode mode(){return openMode;};
+					
 				virtual bool open(OpenMode mode=ReadWrite)=0;
 				virtual bool close()=0;
+					
 				virtual bool write(string &data){return false;};
 				virtual bool write(const char *data){return false;};
 				virtual bool write(int data){return false;};
@@ -71,6 +78,9 @@
 				virtual void portListen(){};
 				virtual bool waitForReadyRead(int usec){return true;};
 				virtual bool canReadLine(){return true;};
+				
+//				//sram, flash
+//				virtual int sizeToEnd(){return 0;};
 
 
 		};

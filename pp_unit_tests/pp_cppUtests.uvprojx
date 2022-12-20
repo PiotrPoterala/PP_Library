@@ -482,6 +482,16 @@
               <FileType>8</FileType>
               <FilePath>.\pp_drive_algorithms_test.cpp</FilePath>
             </File>
+            <File>
+              <FileName>pp_sram_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_sram_test.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_flash_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\pp_flash_test.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -521,6 +531,16 @@
               <FileName>pp_iodevice.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\PP_IOdevice_library\pp_iodevice.h</FilePath>
+            </File>
+            <File>
+              <FileName>pp_sram.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_IOdevice_library\pp_sram.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>pp_flash.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\PP_IOdevice_library\pp_flash.cpp</FilePath>
             </File>
           </Files>
         </Group>

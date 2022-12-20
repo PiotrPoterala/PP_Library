@@ -146,9 +146,6 @@ bool PSerialPortRTX5::open(OpenMode mode){
 	return true;
 }
 
-bool PSerialPortRTX5::isOpen(){
-	return openFlag;
-}
 
 bool PSerialPortRTX5::close(){
 	
